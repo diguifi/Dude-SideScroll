@@ -1,4 +1,4 @@
-﻿/// <reference path="build/phaser.d.ts" />
+﻿/// <reference path="engine/phaser.d.ts" />
 
 class SimpleGame {
 
@@ -9,7 +9,7 @@ class SimpleGame {
     game: Phaser.Game;
 
     preload() {
-        this.game.load.image('logo', 'dude.png');
+        this.game.load.image('logo', 'assets/images/dude.png');
     }
 
     create() {
