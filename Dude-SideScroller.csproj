@@ -65,16 +65,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
-    <Content Include="build\phaser.js" />
-    <Content Include="build\phaser.min.js" />
-    <Content Include="dude.png" />
+    <Content Include="style\app.css" />
+    <Content Include="engine\phaser.js" />
+    <Content Include="engine\phaser.min.js" />
+    <Content Include="assets\images\dude.png" />
     <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="build\phaser.d.ts" />
+    <TypeScriptCompile Include="scripts\app.ts" />
+    <TypeScriptCompile Include="engine\phaser.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
