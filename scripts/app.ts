@@ -1,4 +1,5 @@
 ﻿/// <reference path="../engine/phaser.d.ts" />
+var repo = 'Dude-SideScroll'
 
 class SimpleGame {
 
@@ -9,7 +10,7 @@ class SimpleGame {
     game: Phaser.Game;
 
     preload() {
-        this.game.load.image('logo', '/assets/images/dude.png');
+        this.game.load.image('logo', repo+'/assets/images/dude.png');
     }
 
     create() {
