@@ -14,23 +14,50 @@ var Diguifi;
         __extends(Player, _super);
         function Player(game, x, y) {
             var _this = _super.call(this, game, x, y, 'dude') || this;
+            _this.scale.setTo(2, 2);
             _this.game.physics.arcade.enableBody(_this);
+            _this.body.collideWorldBounds = true;
+            _this.body.bounce.y = 0.2;
             _this.anchor.setTo(0.5, 0);
+            _this.speed = 100;
+            _this.jumpStrength = 150;
             game.add.existing(_this);
             return _this;
         }
         Player.prototype.update = function () {
             this.body.velocity.x = 0;
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.body.velocity.x = -150;
-                if (this.scale.x == 1) {
-                    this.scale.x = -1;
-                }
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+                this.moveLeft();
+            else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+                this.moveRight();
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+                this.jump();
+            if (this.body.blocked.down)
+                this.jumping = false;
+        };
+        Player.prototype.moveRight = function () {
+            this.body.velocity.x = this.speed;
+            this.movingRight = true;
+            if (this.scale.x == -2) {
+                this.scale.x = 2;
             }
-            else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                this.body.velocity.x = 150;
-                if (this.scale.x == -1) {
-                    this.scale.x = 1;
+        };
+        Player.prototype.moveLeft = function () {
+            this.body.velocity.x = -this.speed;
+            this.movingRight = false;
+            if (this.scale.x == 2) {
+                this.scale.x = -2;
+            }
+        };
+        Player.prototype.jump = function () {
+            if (!this.jumping) {
+                this.body.velocity.y = -this.jumpStrength;
+                this.jumping = true;
+                if (this.movingRight) {
+                    this.scale.x = 2;
+                }
+                else {
+                    this.scale.x = -2;
                 }
             }
         };
