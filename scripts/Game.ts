@@ -25,6 +25,13 @@
         }
 
         create() {
+            if (this.game.device.desktop) {
+                this.game.scale.pageAlignHorizontally = true;
+            }
+            else {
+                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            }
+            
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 200;
             this.game.stage.backgroundColor = "#a9f0ff";
