@@ -16,8 +16,18 @@ var Diguifi;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Level1.prototype.create = function () {
-            this.background = this.add.sprite(0, 0, 'level1');
-            this.player = new Diguifi.Player(this.game, 130, 284, 150, 200);
+            this.map = this.game.add.tilemap('tileMap_level1');
+            this.map.addTilesetImage('tiles', 'tiles_level1');
+            this.map.setCollisionBetween(3, 12, true, 'solid');
+            this.map.createLayer('background');
+            this.layer = this.map.createLayer('solid');
+            this.layer.setScale(2);
+            this.layer.resizeWorld();
+            this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
+            this.game.camera.follow(this.player);
+        };
+        Level1.prototype.update = function () {
+            this.game.physics.arcade.collide(this.player, this.layer);
         };
         return Level1;
     }(Phaser.State));

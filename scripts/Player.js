@@ -14,7 +14,7 @@ var Diguifi;
         __extends(Player, _super);
         function Player(game, x, y, speed, gravity) {
             var _this = _super.call(this, game, x, y, 'dude') || this;
-            _this.size = 0.2;
+            _this.size = 0.15;
             _this.scale.setTo(_this.size, _this.size);
             _this.game.physics.arcade.enableBody(_this);
             _this.body.collideWorldBounds = true;
@@ -22,7 +22,7 @@ var Diguifi;
             _this.body.bounce.y = 0.2;
             _this.anchor.setTo(0.5, 0);
             _this.speed = speed;
-            _this.jumpStrength = gravity + (gravity * 0.33);
+            _this.jumpStrength = gravity + (gravity * 0.4);
             game.add.existing(_this);
             return _this;
         }
@@ -34,8 +34,9 @@ var Diguifi;
                 this.moveRight();
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                 this.jump();
-            if (this.body.blocked.down)
-                this.jumping = false;
+            if (this.jumping)
+                if (this.body.blocked.down)
+                    this.jumping = false;
         };
         Player.prototype.moveRight = function () {
             this.body.velocity.x = this.speed;

@@ -12,10 +12,9 @@
                     create: this.create
                 },
                 false,
-                true,
+                false,
                 Phaser.Physics.Arcade
             );
-
             this.game.state.add('Level1', Level1, false);
         }
 
@@ -23,7 +22,8 @@
 
         preload() {
             this.game.load.image('dude', 'assets/sprites/dudeD0.png?v=1');
-            this.game.load.image('level1', 'assets/levels/level1.png?v=1');
+            this.game.load.spritesheet('tiles_level1', 'assets/levels/level1tiles.png', 16, 16);
+            this.game.load.tilemap('tileMap_level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
         }
 
         create() {

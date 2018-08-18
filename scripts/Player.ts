@@ -5,7 +5,7 @@
         constructor(game: Phaser.Game, x: number, y: number, speed, gravity) {
             super(game, x, y, 'dude');
 
-            this.size = 0.2;
+            this.size = 0.15;
             this.scale.setTo(this.size, this.size);
 
             this.game.physics.arcade.enableBody(this);
@@ -16,7 +16,7 @@
             this.anchor.setTo(0.5, 0);
 
             this.speed = speed;
-            this.jumpStrength = gravity + (gravity * 0.33);
+            this.jumpStrength = gravity + (gravity * 0.4);
 
             game.add.existing(this);
         }
@@ -38,8 +38,9 @@
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                 this.jump();
 
-            if (this.body.blocked.down)
-                this.jumping = false;
+            if(this.jumping)
+                if (this.body.blocked.down)
+                    this.jumping = false;
         }
 
         moveRight() {

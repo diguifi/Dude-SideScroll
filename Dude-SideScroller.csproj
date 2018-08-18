@@ -56,9 +56,10 @@
     <TypeScriptSourceRoot />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="assets\levels\level1.png" />
+    <Content Include="assets\levels\level1tiles.png" />
     <Content Include="assets\sprites\dudeD0.png" />
     <Content Include="build\phaser.map" />
+    <Content Include="assets\levels\level1.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
