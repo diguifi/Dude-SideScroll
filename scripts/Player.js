@@ -12,15 +12,17 @@ var Diguifi;
 (function (Diguifi) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player(game, x, y) {
+        function Player(game, x, y, speed, gravity) {
             var _this = _super.call(this, game, x, y, 'dude') || this;
-            _this.scale.setTo(2, 2);
+            _this.size = 0.2;
+            _this.scale.setTo(_this.size, _this.size);
             _this.game.physics.arcade.enableBody(_this);
             _this.body.collideWorldBounds = true;
+            _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;
             _this.anchor.setTo(0.5, 0);
-            _this.speed = 100;
-            _this.jumpStrength = 150;
+            _this.speed = speed;
+            _this.jumpStrength = gravity + (gravity * 0.33);
             game.add.existing(_this);
             return _this;
         }
@@ -38,15 +40,15 @@ var Diguifi;
         Player.prototype.moveRight = function () {
             this.body.velocity.x = this.speed;
             this.movingRight = true;
-            if (this.scale.x == -2) {
-                this.scale.x = 2;
+            if (this.scale.x == -this.size) {
+                this.scale.x = this.size;
             }
         };
         Player.prototype.moveLeft = function () {
             this.body.velocity.x = -this.speed;
             this.movingRight = false;
-            if (this.scale.x == 2) {
-                this.scale.x = -2;
+            if (this.scale.x == this.size) {
+                this.scale.x = -this.size;
             }
         };
         Player.prototype.jump = function () {
@@ -54,10 +56,10 @@ var Diguifi;
                 this.body.velocity.y = -this.jumpStrength;
                 this.jumping = true;
                 if (this.movingRight) {
-                    this.scale.x = 2;
+                    this.scale.x = this.size;
                 }
                 else {
-                    this.scale.x = -2;
+                    this.scale.x = -this.size;
                 }
             }
         };

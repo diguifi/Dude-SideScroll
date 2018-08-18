@@ -2,13 +2,15 @@ var Diguifi;
 (function (Diguifi) {
     var Game = /** @class */ (function () {
         function Game() {
-            this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', {
+            this.game = new Phaser.Game(800, 400, Phaser.AUTO, 'content', {
                 preload: this.preload,
                 create: this.create
             }, false, true, Phaser.Physics.Arcade);
+            this.game.state.add('Level1', Diguifi.Level1, false);
         }
         Game.prototype.preload = function () {
-            this.game.load.image('dude', 'assets/sprites/dudeD0.png');
+            this.game.load.image('dude', 'assets/sprites/dudeD0.png?v=1');
+            this.game.load.image('level1', 'assets/levels/level1.png?v=1');
         };
         Game.prototype.create = function () {
             if (this.game.device.desktop) {
@@ -20,7 +22,7 @@ var Diguifi;
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 200;
             this.game.stage.backgroundColor = "#a9f0ff";
-            this.player = new Diguifi.Player(this.game, 130, 284);
+            this.game.state.start('Level1');
         };
         return Game;
     }());

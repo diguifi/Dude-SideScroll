@@ -56,6 +56,7 @@
     <TypeScriptSourceRoot />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="assets\levels\level1.png" />
     <Content Include="assets\sprites\dudeD0.png" />
     <Content Include="build\phaser.map" />
     <None Include="Web.Debug.config">
@@ -77,6 +78,7 @@
     <TypeScriptCompile Include="scripts\app.ts" />
     <TypeScriptCompile Include="engine\phaser.d.ts" />
     <TypeScriptCompile Include="scripts\Game.ts" />
+    <TypeScriptCompile Include="scripts\levels\Level1.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />
   </ItemGroup>
   <ItemGroup>

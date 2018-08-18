@@ -4,7 +4,7 @@
 
         constructor() {
             this.game = new Phaser.Game(
-                800, 600,
+                800, 400,
                 Phaser.AUTO,
                 'content',
                 {
@@ -15,13 +15,15 @@
                 true,
                 Phaser.Physics.Arcade
             );
+
+            this.game.state.add('Level1', Level1, false);
         }
 
         game: Phaser.Game;
-        player: Diguifi.Player;
 
         preload() {
-            this.game.load.image('dude', 'assets/sprites/dudeD0.png');
+            this.game.load.image('dude', 'assets/sprites/dudeD0.png?v=1');
+            this.game.load.image('level1', 'assets/levels/level1.png?v=1');
         }
 
         create() {
@@ -36,7 +38,7 @@
             this.game.physics.arcade.gravity.y = 200;
             this.game.stage.backgroundColor = "#a9f0ff";
 
-            this.player = new Diguifi.Player(this.game, 130, 284);
+            this.game.state.start('Level1');
         }
     }
 }

@@ -2,23 +2,26 @@
 
     export class Player extends Phaser.Sprite {
 
-        constructor(game: Phaser.Game, x: number, y: number) {
+        constructor(game: Phaser.Game, x: number, y: number, speed, gravity) {
             super(game, x, y, 'dude');
 
-            this.scale.setTo(2, 2);
+            this.size = 0.2;
+            this.scale.setTo(this.size, this.size);
 
             this.game.physics.arcade.enableBody(this);
             this.body.collideWorldBounds = true;
+            this.body.gravity.y = gravity;
             this.body.bounce.y = 0.2;
 
             this.anchor.setTo(0.5, 0);
 
-            this.speed = 100;
-            this.jumpStrength = 150;
+            this.speed = speed;
+            this.jumpStrength = gravity + (gravity * 0.33);
 
             game.add.existing(this);
         }
 
+        size: number;
         speed: number;
         jumpStrength: number;
         movingRight: boolean;
@@ -43,8 +46,8 @@
             this.body.velocity.x = this.speed;
             this.movingRight = true;
 
-            if (this.scale.x == -2) {
-                this.scale.x = 2;
+            if (this.scale.x == -this.size) {
+                this.scale.x = this.size;
             }
         }
 
@@ -52,8 +55,8 @@
             this.body.velocity.x = -this.speed;
             this.movingRight = false;
 
-            if (this.scale.x == 2) {
-                this.scale.x = -2;
+            if (this.scale.x == this.size) {
+                this.scale.x = -this.size;
             }
         }
 
@@ -63,10 +66,10 @@
                 this.jumping = true;
 
                 if (this.movingRight) {
-                    this.scale.x = 2;
+                    this.scale.x = this.size;
                 }
                 else {
-                    this.scale.x = -2;
+                    this.scale.x = -this.size;
                 }
             }
         }
