@@ -14,20 +14,31 @@ var Diguifi;
         __extends(Player, _super);
         function Player(game, x, y, speed, gravity) {
             var _this = _super.call(this, game, x, y, 'dude') || this;
+            // attributes
+            _this.localGravity = gravity;
+            _this.speedBonus = 50;
+            _this.jumpBonus = 50;
+            _this.speed = speed;
+            _this.jumpStrength = gravity + (gravity * 0.4);
+            // sprite size
             _this.size = 0.15;
             _this.scale.setTo(_this.size, _this.size);
+            // sprite anchor
+            _this.anchor.setTo(0.5, 0);
+            // physics
             _this.game.physics.arcade.enableBody(_this);
             _this.body.collideWorldBounds = true;
             _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;
-            _this.anchor.setTo(0.5, 0);
-            _this.speed = speed;
-            _this.jumpStrength = gravity + (gravity * 0.4);
             game.add.existing(_this);
             return _this;
         }
         Player.prototype.update = function () {
             this.body.velocity.x = 0;
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
+                this.running = true;
+            else
+                this.running = false;
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
                 this.moveLeft();
             else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
@@ -39,14 +50,20 @@ var Diguifi;
                     this.jumping = false;
         };
         Player.prototype.moveRight = function () {
-            this.body.velocity.x = this.speed;
+            if (this.running)
+                this.body.velocity.x = this.speed + this.speedBonus;
+            else
+                this.body.velocity.x = this.speed;
             this.movingRight = true;
             if (this.scale.x == -this.size) {
                 this.scale.x = this.size;
             }
         };
         Player.prototype.moveLeft = function () {
-            this.body.velocity.x = -this.speed;
+            if (this.running)
+                this.body.velocity.x = -this.speed - this.speedBonus;
+            else
+                this.body.velocity.x = -this.speed;
             this.movingRight = false;
             if (this.scale.x == this.size) {
                 this.scale.x = -this.size;
@@ -54,7 +71,13 @@ var Diguifi;
         };
         Player.prototype.jump = function () {
             if (!this.jumping) {
-                this.body.velocity.y = -this.jumpStrength;
+                if (this.running)
+                    if (this.body.velocity.x != 0)
+                        this.body.velocity.y = -this.jumpStrength - this.jumpBonus;
+                    else
+                        this.body.velocity.y = -this.jumpStrength;
+                else
+                    this.body.velocity.y = -this.jumpStrength;
                 this.jumping = true;
                 if (this.movingRight) {
                     this.scale.x = this.size;
