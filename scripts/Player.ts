@@ -6,6 +6,7 @@
             super(game, x, y, 'dude');
 
             // attributes
+            this.playingOnDesktop = this.game.device.desktop;
             this.localGravity = gravity;
             this.speedBonus = 50;
             this.jumpBonus = 50;
@@ -33,26 +34,40 @@
         speedBonus: number;
         jumpStrength: number;
         jumpBonus: number;
-        movingRight: boolean;
         jumping: boolean;
         running: boolean;
         localGravity: number;
+        movingLeft: boolean;
+        movingRight: boolean;
+        playingOnDesktop: boolean;
 
         update() {
             this.body.velocity.x = 0;
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
-                this.running = true;
-            else
-                this.running = false;
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-                this.moveLeft();
-            else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+            if (this.movingRight)
                 this.moveRight();
+            if (this.movingLeft)
+                this.moveLeft();
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
-                this.jump();
+            if (this.playingOnDesktop) {
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
+                    this.running = true;
+                else
+                    this.running = false;
+
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+                    this.movingLeft = true;
+                else
+                    this.movingLeft = false;
+
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+                    this.movingRight = true;
+                else
+                    this.movingRight = false;
+
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+                    this.jump();
+            }
 
             if(this.jumping)
                 if (this.body.blocked.down)
@@ -65,8 +80,6 @@
             else
                 this.body.velocity.x = this.speed;
 
-
-            this.movingRight = true;
             if (this.scale.x == -this.size) {
                 this.scale.x = this.size;
             }
@@ -78,8 +91,6 @@
             else
                 this.body.velocity.x = -this.speed;
 
-
-            this.movingRight = false;
             if (this.scale.x == this.size) {
                 this.scale.x = -this.size;
             }
@@ -105,6 +116,11 @@
                     this.scale.x = -this.size;
                 }
             }
+        }
+
+        setMovingRight(value) {
+            console.log(value);
+            this.movingRight = value;
         }
     }
 }

@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15,6 +18,7 @@ var Diguifi;
         function Player(game, x, y, speed, gravity) {
             var _this = _super.call(this, game, x, y, 'dude') || this;
             // attributes
+            _this.playingOnDesktop = _this.game.device.desktop;
             _this.localGravity = gravity;
             _this.speedBonus = 50;
             _this.jumpBonus = 50;
@@ -35,16 +39,26 @@ var Diguifi;
         }
         Player.prototype.update = function () {
             this.body.velocity.x = 0;
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
-                this.running = true;
-            else
-                this.running = false;
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-                this.moveLeft();
-            else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+            if (this.movingRight)
                 this.moveRight();
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
-                this.jump();
+            if (this.movingLeft)
+                this.moveLeft();
+            if (this.playingOnDesktop) {
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
+                    this.running = true;
+                else
+                    this.running = false;
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+                    this.movingLeft = true;
+                else
+                    this.movingLeft = false;
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+                    this.movingRight = true;
+                else
+                    this.movingRight = false;
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+                    this.jump();
+            }
             if (this.jumping)
                 if (this.body.blocked.down)
                     this.jumping = false;
@@ -54,7 +68,6 @@ var Diguifi;
                 this.body.velocity.x = this.speed + this.speedBonus;
             else
                 this.body.velocity.x = this.speed;
-            this.movingRight = true;
             if (this.scale.x == -this.size) {
                 this.scale.x = this.size;
             }
@@ -64,7 +77,6 @@ var Diguifi;
                 this.body.velocity.x = -this.speed - this.speedBonus;
             else
                 this.body.velocity.x = -this.speed;
-            this.movingRight = false;
             if (this.scale.x == this.size) {
                 this.scale.x = -this.size;
             }
@@ -86,6 +98,10 @@ var Diguifi;
                     this.scale.x = -this.size;
                 }
             }
+        };
+        Player.prototype.setMovingRight = function (value) {
+            console.log(value);
+            this.movingRight = value;
         };
         return Player;
     }(Phaser.Sprite));
