@@ -33,6 +33,9 @@
         }
 
         create() {
+            this.game.time.desiredFps = 60;
+            this.game.renderer.renderSession.roundPixels = true;
+
             if (this.game.device.desktop) {
                 this.game.scale.pageAlignHorizontally = true;
             }

@@ -19,6 +19,8 @@ var Diguifi;
             this.game.load.spritesheet('buttonjump', 'assets/buttons/button-round-b.png', 96, 96);
         };
         Game.prototype.create = function () {
+            this.game.time.desiredFps = 60;
+            this.game.renderer.renderSession.roundPixels = true;
             if (this.game.device.desktop) {
                 this.game.scale.pageAlignHorizontally = true;
             }
