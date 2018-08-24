@@ -40,27 +40,12 @@ var Diguifi;
         }
         Player.prototype.update = function () {
             this.body.velocity.x = 0;
-            if (this.playingOnDesktop) {
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
-                    this.running = true;
-                else
-                    this.running = false;
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-                    this.movingLeft = true;
-                else
-                    this.movingLeft = false;
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-                    this.movingRight = true;
-                else
-                    this.movingRight = false;
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
-                    this.jump();
-            }
-            //this.controller.getKeyboardInput(this);
             if (this.movingRight)
                 this.moveRight();
             if (this.movingLeft)
                 this.moveLeft();
+            if (this.playingOnDesktop)
+                this.controller.getKeyboardInput(this);
             if (this.jumping)
                 if (this.body.blocked.down)
                     this.jumping = false;

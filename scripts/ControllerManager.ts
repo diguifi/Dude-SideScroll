@@ -42,8 +42,7 @@
 
             this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
             this.buttonfire.fixedToCamera = true;
-            this.buttonfire.events.onInputDown.add(function () { player.running = true; });
-            this.buttonfire.events.onInputUp.add(function () { player.running = false; });
+            this.buttonfire.events.onInputDown.add(function () { player.running = !player.running; });
 
             this.buttonleft = this.game.add.button(0, 310, 'buttonhorizontal', null, this, 0, 1, 0, 1);
             this.buttonleft.fixedToCamera = true;
