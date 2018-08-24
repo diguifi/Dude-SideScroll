@@ -26,9 +26,12 @@
             this.body.gravity.y = gravity;
             this.body.bounce.y = 0.2;
 
+            this.controller = new ControllerManager(this, this.game);
+
             game.add.existing(this);
         }
 
+        controller;
         size: number;
         speed: number;
         speedBonus: number;
@@ -49,25 +52,8 @@
             if (this.movingLeft)
                 this.moveLeft();
 
-            if (this.playingOnDesktop) {
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
-                    this.running = true;
-                else
-                    this.running = false;
-
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-                    this.movingLeft = true;
-                else
-                    this.movingLeft = false;
-
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-                    this.movingRight = true;
-                else
-                    this.movingRight = false;
-
-                if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
-                    this.jump();
-            }
+            if (this.playingOnDesktop)
+                this.controller.getKeyboardInput(this);
 
             if(this.jumping)
                 if (this.body.blocked.down)

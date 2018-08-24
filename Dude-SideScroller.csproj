@@ -78,6 +78,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="scripts\app.ts" />
     <TypeScriptCompile Include="engine\phaser.d.ts" />
+    <TypeScriptCompile Include="scripts\ControllerManager.ts" />
     <TypeScriptCompile Include="scripts\Game.ts" />
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />

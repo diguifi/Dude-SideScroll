@@ -5,7 +5,7 @@
         constructor() {
             this.game = new Phaser.Game(
                 800, 400,
-                Phaser.AUTO,
+                Phaser.CANVAS,
                 'content',
                 {
                     preload: this.preload,

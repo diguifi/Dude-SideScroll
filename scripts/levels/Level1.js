@@ -28,8 +28,6 @@ var Diguifi;
             this.layer.resizeWorld();
             this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
             this.game.camera.follow(this.player);
-            if (!this.game.device.desktop)
-                this.placeButtons(this.player);
         };
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.layer);

@@ -2,7 +2,7 @@ var Diguifi;
 (function (Diguifi) {
     var Game = /** @class */ (function () {
         function Game() {
-            this.game = new Phaser.Game(800, 400, Phaser.AUTO, 'content', {
+            this.game = new Phaser.Game(800, 400, Phaser.CANVAS, 'content', {
                 preload: this.preload,
                 create: this.create
             }, false, false, Phaser.Physics.Arcade);

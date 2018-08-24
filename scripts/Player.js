@@ -34,15 +34,12 @@ var Diguifi;
             _this.body.collideWorldBounds = true;
             _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;
+            _this.controller = new Diguifi.ControllerManager(_this, _this.game);
             game.add.existing(_this);
             return _this;
         }
         Player.prototype.update = function () {
             this.body.velocity.x = 0;
-            if (this.movingRight)
-                this.moveRight();
-            if (this.movingLeft)
-                this.moveLeft();
             if (this.playingOnDesktop) {
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
                     this.running = true;
@@ -59,6 +56,11 @@ var Diguifi;
                 if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                     this.jump();
             }
+            //this.controller.getKeyboardInput(this);
+            if (this.movingRight)
+                this.moveRight();
+            if (this.movingLeft)
+                this.moveLeft();
             if (this.jumping)
                 if (this.body.blocked.down)
                     this.jumping = false;
