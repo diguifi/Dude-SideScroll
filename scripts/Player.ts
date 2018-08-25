@@ -98,7 +98,7 @@
                 if (this.movingRight) {
                     this.scale.x = this.size;
                 }
-                else {
+                else if (this.movingLeft) {
                     this.scale.x = -this.size;
                 }
             }
