@@ -20,12 +20,14 @@ var Diguifi;
             else
                 player.movingRight = false;
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
-                player.jump();
+                if (player.body.blocked.down)
+                    player.jump();
         };
         ControllerManager.prototype.getVirtualButtonsInput = function (player) {
             this.buttonjump = this.game.add.button(600, 310, 'buttonjump', null, this, 0, 1, 0, 1);
             this.buttonjump.fixedToCamera = true;
-            this.buttonjump.events.onInputDown.add(function () { player.jump(); });
+            this.buttonjump.events.onInputDown.add(function () { if (player.body.blocked.down)
+                player.jump(); });
             this.buttonjump.events.onInputUp.add(function () { false; });
             this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
             this.buttonfire.fixedToCamera = true;
