@@ -3,7 +3,8 @@
     export class Level1 extends Phaser.State {
 
         music: Phaser.Sound;
-        player: Diguifi.Player;
+        player: Player;
+        enemy: Enemy;
         map;
         layer;
 
@@ -21,10 +22,13 @@
 
             this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
             this.game.camera.follow(this.player);
+
+            this.enemy = new Diguifi.Enemy(this.game, 700, 370, 50, 200);
         }
 
         update() {
             this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.collide(this.enemy, this.layer);
         }
 
     }

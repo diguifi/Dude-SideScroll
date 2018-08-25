@@ -28,9 +28,11 @@ var Diguifi;
             this.layer.resizeWorld();
             this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
             this.game.camera.follow(this.player);
+            this.enemy = new Diguifi.Enemy(this.game, 700, 370, 50, 200);
         };
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.collide(this.enemy, this.layer);
         };
         return Level1;
     }(Phaser.State));
