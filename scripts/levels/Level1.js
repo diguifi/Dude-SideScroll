@@ -16,7 +16,9 @@ var Diguifi;
     var Level1 = /** @class */ (function (_super) {
         __extends(Level1, _super);
         function Level1() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.enemySpeed = 100;
+            return _this;
         }
         Level1.prototype.create = function () {
             this.map = this.game.add.tilemap('tileMap_level1');
@@ -28,11 +30,13 @@ var Diguifi;
             this.layer.resizeWorld();
             this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
             this.game.camera.follow(this.player);
-            this.enemy = new Diguifi.Enemy(this.game, 700, 370, 50, 200);
+            this.enemies = [new Diguifi.Enemy(this.game, 700, 370, 50, this.enemySpeed),
+                new Diguifi.Enemy(this.game, 1000, 370, 50, this.enemySpeed),
+                new Diguifi.Enemy(this.game, 1500, 370, 50, this.enemySpeed)];
         };
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.layer);
-            this.game.physics.arcade.collide(this.enemy, this.layer);
+            this.game.physics.arcade.collide(this.enemies, this.layer);
         };
         return Level1;
     }(Phaser.State));

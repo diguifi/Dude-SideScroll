@@ -4,7 +4,8 @@
 
         music: Phaser.Sound;
         player: Player;
-        enemy: Enemy;
+        enemies;
+        enemySpeed = 100;
         map;
         layer;
 
@@ -23,12 +24,14 @@
             this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
             this.game.camera.follow(this.player);
 
-            this.enemy = new Diguifi.Enemy(this.game, 700, 370, 50, 200);
+            this.enemies = [new Enemy(this.game, 700, 370, 50, this.enemySpeed),
+                            new Enemy(this.game, 1000, 370, 50, this.enemySpeed),
+                            new Enemy(this.game, 1500, 370, 50, this.enemySpeed)]
         }
 
         update() {
             this.game.physics.arcade.collide(this.player, this.layer);
-            this.game.physics.arcade.collide(this.enemy, this.layer);
+            this.game.physics.arcade.collide(this.enemies, this.layer);
         }
 
     }
