@@ -26,12 +26,25 @@
 
             this.enemies = [new Enemy(this.game, 700, 370, 50, this.enemySpeed),
                             new Enemy(this.game, 1000, 370, 50, this.enemySpeed),
-                            new Enemy(this.game, 1500, 370, 50, this.enemySpeed)]
+                            new Enemy(this.game, 1500, 370, 50, this.enemySpeed)];
         }
 
         update() {
             this.game.physics.arcade.collide(this.player, this.layer);
             this.game.physics.arcade.collide(this.enemies, this.layer);
+            this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
+        }
+
+        enemyOverlap(player, enemy) {
+
+            if (player.body.touching.down) {
+                enemy.body.enable = false;
+                player.body.velocity.y = -80;
+                enemy.kill();
+            } else {
+                player.body.enable = false;
+                player.kill();
+            }
         }
 
     }

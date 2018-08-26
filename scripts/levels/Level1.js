@@ -37,6 +37,18 @@ var Diguifi;
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.layer);
             this.game.physics.arcade.collide(this.enemies, this.layer);
+            this.game.physics.arcade.overlap(this.player, this.enemies, this.enemiesOverlap);
+        };
+        Level1.prototype.enemiesOverlap = function (player, enemy) {
+            if (player.body.touching.down) {
+                enemy.body.enable = false;
+                player.body.velocity.y = -80;
+                enemy.kill();
+            }
+            else {
+                player.body.enable = false;
+                player.kill();
+            }
         };
         return Level1;
     }(Phaser.State));
