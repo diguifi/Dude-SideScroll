@@ -6,11 +6,14 @@ var Diguifi;
                 preload: this.preload,
                 create: this.create
             }, false, false, Phaser.Physics.Arcade);
+            this.game.state.add('MainMenu', Diguifi.MainMenu, false);
             this.game.state.add('Level1', Diguifi.Level1, false);
         }
         Game.prototype.preload = function () {
             this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 4);
             this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
+            this.game.load.image('titlepage', 'assets/images/back.png');
+            this.game.load.image('logo', 'assets/images/logo.png');
             this.game.load.spritesheet('tiles_level1', 'assets/levels/level1tiles.png', 16, 16);
             this.game.load.tilemap('tileMap_level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);
@@ -31,7 +34,7 @@ var Diguifi;
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 200;
             this.game.stage.backgroundColor = "#4286f4";
-            this.game.state.start('Level1');
+            this.game.state.start('MainMenu');
         };
         return Game;
     }());

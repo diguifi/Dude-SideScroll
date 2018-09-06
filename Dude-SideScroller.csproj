@@ -56,6 +56,14 @@
     <TypeScriptSourceRoot />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="assets\buttons\button-diagonal.png" />
+    <Content Include="assets\buttons\button-horizontal.png" />
+    <Content Include="assets\buttons\button-round-a.png" />
+    <Content Include="assets\buttons\button-round-b.png" />
+    <Content Include="assets\buttons\button-round.png" />
+    <Content Include="assets\buttons\button-vertical.png" />
+    <Content Include="assets\images\back.png" />
+    <Content Include="assets\images\logo.png" />
     <Content Include="assets\levels\level1tiles.png" />
     <Content Include="assets\sprites\dude_spritesheet.png" />
     <Content Include="build\phaser.map" />
@@ -82,6 +90,7 @@
     <TypeScriptCompile Include="scripts\Enemy.ts" />
     <TypeScriptCompile Include="scripts\Game.ts" />
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
+    <TypeScriptCompile Include="scripts\MainMenu.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />
   </ItemGroup>
   <ItemGroup>
