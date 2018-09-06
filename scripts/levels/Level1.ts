@@ -21,12 +21,15 @@
             this.layer.setScale(2);
             this.layer.resizeWorld();
 
-            this.player = new Diguifi.Player(this.game, 5, 284, 150, 200);
+            this.player = new Diguifi.Player(this.game, 5, 284, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
 
-            this.enemies = [new Enemy(this.game, 700, 370, 50, this.enemySpeed),
-                            new Enemy(this.game, 1000, 370, 50, this.enemySpeed),
-                            new Enemy(this.game, 1500, 370, 50, this.enemySpeed)];
+            this.enemies = [new Enemy(this.game, 700, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 1000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 1500, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 2000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 2500, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 3000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed)];
         }
 
         update() {
