@@ -92,6 +92,7 @@
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
     <TypeScriptCompile Include="scripts\MainMenu.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />
+    <TypeScriptCompile Include="scripts\Preloader.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

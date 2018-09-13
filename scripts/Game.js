@@ -11,6 +11,7 @@ var Diguifi;
             this.game.state.add('Level1', Diguifi.Level1, false);
         }
         Game.prototype.preload = function () {
+            this.game.time.advancedTiming = true;
         };
         Game.prototype.create = function () {
             this.game.time.desiredFps = 60;

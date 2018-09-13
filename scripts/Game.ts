@@ -23,7 +23,7 @@
         game: Phaser.Game;
 
         preload() {
-            
+            this.game.time.advancedTiming = true;
         }
 
         create() {

@@ -21,7 +21,7 @@
             this.layer.setScale(2);
             this.layer.resizeWorld();
 
-            this.player = new Diguifi.Player(this.game, 5, 284, 150, this.game.physics.arcade.gravity.y);
+            this.player = new Diguifi.Player(this.game, 5, 370, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
 
             this.enemies = [new Enemy(this.game, 700, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
@@ -29,7 +29,9 @@
                 new Enemy(this.game, 1500, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
                 new Enemy(this.game, 2000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
                 new Enemy(this.game, 2500, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
-                new Enemy(this.game, 3000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed)];
+                new Enemy(this.game, 2700, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 3000, 370, this.game.physics.arcade.gravity.y, this.enemySpeed),
+                new Enemy(this.game, 3500, 370, this.game.physics.arcade.gravity.y, this.enemySpeed)];
         }
 
         update() {
@@ -39,11 +41,17 @@
         }
 
         enemyOverlap(player, enemy) {
-
             if (player.body.touching.down) {
-                enemy.body.enable = false;
-                player.body.velocity.y = -80;
-                enemy.kill();
+                if ((player.position.y) < (enemy.position.y - (enemy.height))) {
+                    enemy.body.enable = false;
+                    player.body.velocity.y = -80;
+                    enemy.kill();
+                }
+                else {
+                    player.body.enable = false;
+                    player.kill();
+                }
+
             } else {
                 player.body.enable = false;
                 player.kill();
