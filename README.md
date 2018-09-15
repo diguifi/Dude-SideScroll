@@ -7,7 +7,7 @@ This game was created using [Phaser](https://phaser.io/) and written in [TypeScr
 
 ## Todos
 - ~Mobile support (virtual joystick)~
-- Enemies
+- ~Enemies~
 - Some item(s)
 - 10 levels
 - ...
