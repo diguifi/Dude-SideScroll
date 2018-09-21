@@ -39,7 +39,7 @@
             
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
             this.game.physics.arcade.gravity.y = 200;
-            this.game.stage.backgroundColor = "#4286f4";
+            this.game.stage.backgroundColor = "#aedecb";
 
             this.game.state.start('Preloader');
         }

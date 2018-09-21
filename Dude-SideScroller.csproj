@@ -64,10 +64,15 @@
     <Content Include="assets\buttons\button-vertical.png" />
     <Content Include="assets\images\back.png" />
     <Content Include="assets\images\logo.png" />
-    <Content Include="assets\levels\level1tiles.png" />
+    <Content Include="assets\levels\jungle\jungle_tileset.png" />
+    <Content Include="assets\levels\jungle\plx-1.png" />
+    <Content Include="assets\levels\jungle\plx-2.png" />
+    <Content Include="assets\levels\jungle\plx-3.png" />
+    <Content Include="assets\levels\jungle\plx-4.png" />
+    <Content Include="assets\levels\jungle\plx-5.png" />
     <Content Include="assets\sprites\dude_spritesheet.png" />
     <Content Include="build\phaser.map" />
-    <Content Include="assets\levels\level1.json" />
+    <Content Include="assets\levels\junglelvl1.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
