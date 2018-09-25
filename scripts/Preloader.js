@@ -1,10 +1,7 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -29,9 +26,8 @@ var Diguifi;
             this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png');
             this.game.load.image('jungle_paralax3', 'assets/levels/jungle/plx-3.png');
             this.game.load.image('jungle_paralax2', 'assets/levels/jungle/plx-2.png');
-            this.game.load.image('jungle_paralax1', 'assets/levels/jungle/plx-1.png');
             this.game.load.spritesheet('tiles_level1', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
-            this.game.load.tilemap('tileMap_level1', 'assets/levels/junglelvl1.json', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);
             this.game.load.spritesheet('buttonhorizontal', 'assets/buttons/button-horizontal.png', 96, 64);
             this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);

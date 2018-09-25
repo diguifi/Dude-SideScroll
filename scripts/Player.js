@@ -1,10 +1,7 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -33,7 +30,7 @@ var Diguifi;
             _this.animSpeeds = [8, 13];
             // physics
             _this.game.physics.arcade.enableBody(_this);
-            _this.body.collideWorldBounds = true;
+            _this.body.collideWorldBounds = false;
             _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;
             _this.controller = new Diguifi.ControllerManager(_this, _this.game);
@@ -55,29 +52,39 @@ var Diguifi;
                     this.jumping = false;
         };
         Player.prototype.moveRight = function () {
-            if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
-                this.body.velocity.x = this.speed + this.speedBonus;
+            if (this.position.x < this.game.world.bounds.bottomRight.x) {
+                if (this.running) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                    this.body.velocity.x = this.speed + this.speedBonus;
+                }
+                else {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                    this.body.velocity.x = this.speed;
+                }
+                if (this.scale.x == -this.size) {
+                    this.scale.x = this.size;
+                }
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
-                this.body.velocity.x = this.speed;
-            }
-            if (this.scale.x == -this.size) {
-                this.scale.x = this.size;
+                this.position.x = this.game.world.bounds.bottomRight.x - 0.1;
             }
         };
         Player.prototype.moveLeft = function () {
-            if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
-                this.body.velocity.x = -this.speed - this.speedBonus;
+            if (this.position.x > 4) {
+                if (this.running) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                    this.body.velocity.x = -this.speed - this.speedBonus;
+                }
+                else {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                    this.body.velocity.x = -this.speed;
+                }
+                if (this.scale.x == this.size) {
+                    this.scale.x = -this.size;
+                }
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
-                this.body.velocity.x = -this.speed;
-            }
-            if (this.scale.x == this.size) {
-                this.scale.x = -this.size;
+                this.position.x = 4.1;
             }
         };
         Player.prototype.jump = function () {

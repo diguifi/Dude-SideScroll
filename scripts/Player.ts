@@ -24,7 +24,7 @@
 
             // physics
             this.game.physics.arcade.enableBody(this);
-            this.body.collideWorldBounds = true;
+            this.body.collideWorldBounds = false;
             this.body.gravity.y = gravity;
             this.body.bounce.y = 0.2;
 
@@ -67,34 +67,45 @@
         }
 
         moveRight() {
-            if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
-                this.body.velocity.x = this.speed + this.speedBonus;
+            if (this.position.x < this.game.world.bounds.bottomRight.x) {
+                if (this.running) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                    this.body.velocity.x = this.speed + this.speedBonus;
+                }
+                else {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                    this.body.velocity.x = this.speed;
+                }
+
+
+                if (this.scale.x == -this.size) {
+                    this.scale.x = this.size;
+                }
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
-                this.body.velocity.x = this.speed;
+                this.position.x = this.game.world.bounds.bottomRight.x - 0.1;
             }
             
-
-            if (this.scale.x == -this.size) {
-                this.scale.x = this.size;
-            }
         }
 
         moveLeft() {
-            if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
-                this.body.velocity.x = -this.speed - this.speedBonus;
+            if (this.position.x > 4) {
+                if (this.running) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                    this.body.velocity.x = -this.speed - this.speedBonus;
+                }
+                else {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                    this.body.velocity.x = -this.speed;
+                }
+
+
+                if (this.scale.x == this.size) {
+                    this.scale.x = -this.size;
+                }
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
-                this.body.velocity.x = -this.speed;
-            }
-
-
-            if (this.scale.x == this.size) {
-                this.scale.x = -this.size;
+                this.position.x = 4.1;
             }
         }
 

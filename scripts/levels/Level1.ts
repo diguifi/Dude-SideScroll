@@ -62,10 +62,10 @@
             
             this.game.world.bringToTop(this.walls);
 
-            this.player = new Diguifi.Player(this.game, 5, 300, 150, this.game.physics.arcade.gravity.y);
+            this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
 
-            this.enemies = [new Enemy(this.game, 700, 300, this.game.physics.arcade.gravity.y, this.enemySpeed)];
+            this.enemies = [new Enemy(this.game, 900, 300, this.game.physics.arcade.gravity.y, this.enemySpeed)];
         }
 
         update() {
@@ -100,13 +100,11 @@
                     enemy.kill();
                 }
                 else {
-                    player.body.enable = false;
-                    player.kill();
+                    player.position.x = 6;
                 }
 
             } else {
-                player.body.enable = false;
-                player.kill();
+                player.position.x = 6;
             }
         }
 
