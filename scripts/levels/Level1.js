@@ -14,11 +14,12 @@ var Diguifi;
         __extends(Level1, _super);
         function Level1() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.enemies = [];
             _this.enemySpeed = 100;
             return _this;
         }
         Level1.prototype.create = function () {
-            this.lastCameraCositionX = 0;
+            this.lastCameraPositionX = 0;
             this.map = this.game.add.tilemap('tileMap_level1');
             this.map.addTilesetImage('jungletileset', 'tiles_level1');
             this.map.setCollisionBetween(1, 2000, true, 'walls');
@@ -41,27 +42,31 @@ var Diguifi;
             this.game.world.bringToTop(this.walls);
             this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
-            this.enemies = [new Diguifi.Enemy(this.game, 900, 300, this.game.physics.arcade.gravity.y, this.enemySpeed)];
+            this.map.objects.enemies.forEach(function (data) {
+                console.log(data);
+                this.enemies.push(new Diguifi.Enemy(this.game, data.x * 2, data.y, this.game.physics.arcade.gravity.y, this.enemySpeed));
+            }.bind(this));
         };
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.walls);
             this.game.physics.arcade.collide(this.enemies, this.walls);
             this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                if (this.game.camera.position.x != this.lastCameraCositionX) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x += this.player.speed / 1875;
                     this.paralax3.tilePosition.x += this.player.speed / 6000;
                     this.paralax2.tilePosition.x += this.player.speed / 30000;
                 }
             }
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                if (this.game.camera.position.x != this.lastCameraCositionX) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x -= this.player.speed / 1875;
                     this.paralax3.tilePosition.x -= this.player.speed / 6000;
                     this.paralax2.tilePosition.x -= this.player.speed / 30000;
                 }
             }
-            this.lastCameraCositionX = this.game.camera.position.x;
+            this.lastCameraPositionX = this.game.camera.position.x;
+            this.enemyWalk();
         };
         Level1.prototype.enemyOverlap = function (player, enemy) {
             if (player.body.touching.down) {
@@ -77,6 +82,8 @@ var Diguifi;
             else {
                 player.position.x = 6;
             }
+        };
+        Level1.prototype.enemyWalk = function () {
         };
         return Level1;
     }(Phaser.State));

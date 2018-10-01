@@ -4,11 +4,11 @@
 
         music: Phaser.Sound;
         player: Player;
-        enemies;
+        enemies: Enemy[] = [];
         enemySpeed = 100;
         map;
         walls;
-        lastCameraCositionX;
+        lastCameraPositionX;
         paralax1;
         paralax2;
         paralax3;
@@ -16,7 +16,7 @@
         paralax5;
 
         create() {
-            this.lastCameraCositionX = 0;
+            this.lastCameraPositionX = 0;
 
             this.map = this.game.add.tilemap('tileMap_level1');
             this.map.addTilesetImage('jungletileset', 'tiles_level1');
@@ -64,8 +64,11 @@
 
             this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
-
-            this.enemies = [new Enemy(this.game, 900, 300, this.game.physics.arcade.gravity.y, this.enemySpeed)];
+            
+            this.map.objects.enemies.forEach(function (data) {
+                console.log(data);
+                this.enemies.push(new Enemy(this.game, data.x*2, data.y, this.game.physics.arcade.gravity.y, this.enemySpeed));
+            }.bind(this));
         }
 
         update() {
@@ -74,7 +77,7 @@
             this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                if (this.game.camera.position.x != this.lastCameraCositionX) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x += this.player.speed / 1875;
                     this.paralax3.tilePosition.x += this.player.speed / 6000;
                     this.paralax2.tilePosition.x += this.player.speed / 30000;
@@ -82,14 +85,16 @@
             }
                 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                if (this.game.camera.position.x != this.lastCameraCositionX) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x -= this.player.speed / 1875;
                     this.paralax3.tilePosition.x -= this.player.speed / 6000;
                     this.paralax2.tilePosition.x -= this.player.speed / 30000;
                 }
             }
 
-            this.lastCameraCositionX = this.game.camera.position.x;
+            this.lastCameraPositionX = this.game.camera.position.x;
+
+            this.enemyWalk();
         }
 
         enemyOverlap(player, enemy) {
@@ -106,6 +111,10 @@
             } else {
                 player.position.x = 6;
             }
+        }
+
+        enemyWalk() {
+
         }
 
     }
