@@ -23,6 +23,8 @@ var Diguifi;
             this.map = this.game.add.tilemap('tileMap_level1');
             this.map.addTilesetImage('jungletileset', 'tiles_level1');
             this.map.setCollisionBetween(1, 2000, true, 'walls');
+            this.back = this.map.createLayer('back');
+            this.back.setScale(2);
             this.walls = this.map.createLayer('walls');
             this.walls.setScale(2);
             this.walls.resizeWorld();
@@ -39,18 +41,25 @@ var Diguifi;
             this.paralax5.tileScale.x = 2;
             this.paralax5.tileScale.y = 2;
             this.paralax5.checkWorldBounds = true;
+            this.game.world.bringToTop(this.back);
             this.game.world.bringToTop(this.walls);
             this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
             this.map.objects.enemies.forEach(function (data) {
-                console.log(data);
                 this.enemies.push(new Diguifi.Enemy(this.game, data.x * 2, data.y, this.game.physics.arcade.gravity.y, this.enemySpeed));
+            }.bind(this));
+            this.gems = this.game.add.physicsGroup();
+            this.map.createFromObjects('gems', 'gem1', 'greygem', 0, true, false, this.gems);
+            this.gems.forEach(function (gem) {
+                gem = this.gemSetup(gem);
             }.bind(this));
         };
         Level1.prototype.update = function () {
             this.game.physics.arcade.collide(this.player, this.walls);
             this.game.physics.arcade.collide(this.enemies, this.walls);
+            this.game.physics.arcade.collide(this.gems, this.walls);
             this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
+            this.game.physics.arcade.overlap(this.player, this.gems, this.gemsCollect, null, this);
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
                 if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x += this.player.speed / 1875;
@@ -66,7 +75,6 @@ var Diguifi;
                 }
             }
             this.lastCameraPositionX = this.game.camera.position.x;
-            this.enemyWalk();
         };
         Level1.prototype.enemyOverlap = function (player, enemy) {
             if (player.body.touching.down) {
@@ -83,7 +91,17 @@ var Diguifi;
                 player.position.x = 6;
             }
         };
-        Level1.prototype.enemyWalk = function () {
+        Level1.prototype.gemSetup = function (gem) {
+            gem.x = gem.x * 2;
+            gem.scale.setTo(1.8);
+            gem.body.immovable = true;
+            gem.body.bounce.y = 0.3;
+            gem.animations.add('shine', [0, 1, 2, 3], 7, true);
+            gem.animations.play('shine');
+            return gem;
+        };
+        Level1.prototype.gemsCollect = function (player, gem) {
+            gem.kill();
         };
         return Level1;
     }(Phaser.State));

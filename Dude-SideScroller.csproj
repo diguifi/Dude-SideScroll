@@ -72,7 +72,7 @@
     <Content Include="assets\levels\jungle\plx-5.png" />
     <Content Include="assets\sprites\dude_spritesheet.png" />
     <Content Include="build\phaser.map" />
-    <Content Include="assets\levels\junglelvl1.json" />
+    <Content Include="assets\levels\jungle1.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,3 +11,7 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 - Some item(s)
 - 10 levels
 - ...
+
+## Art
+[Jesse M - Jungle Pack](https://jesse-m.itch.io/jungle-pack)
+[La Red Games - Gems / Coins Free](https://piclet.itch.io/gems-coins-free)
