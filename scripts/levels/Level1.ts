@@ -4,6 +4,7 @@
 
         music: Phaser.Sound;
         player: Player;
+        hud: Hud;
         gems;
         enemies: Enemy[] = [];
         enemySpeed = 100;
@@ -81,6 +82,9 @@
             this.gems.forEach(function (gem) {
                 gem = this.gemSetup(gem);
             }.bind(this));
+
+            this.hud = new Hud(this.game, this.player);
+            this.game.world.bringToTop(this.hud);
         }
 
         update() {
@@ -130,14 +134,19 @@
             gem.scale.setTo(1.8);
             gem.body.immovable = true;
             gem.body.bounce.y = 0.3;
-            gem.animations.add('shine', [0, 1, 2, 3], 7, true);
+            gem.animations.add('shine', [0, 1, 2, 3], 8, true);
             gem.animations.play('shine');
 
             return gem;
         }
 
         gemsCollect(player, gem) {
+            player.gems++;
             gem.kill();
+        }
+
+        render() {
+            this.game.debug.text(": "+this.player.gems.toString(), 662, 40);
         }
 
     }

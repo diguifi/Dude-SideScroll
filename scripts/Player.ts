@@ -5,6 +5,8 @@
         constructor(game: Phaser.Game, x: number, y: number, speed, gravity) {
             super(game, x, y, 'dude', 0);
 
+            this.gems = 0;
+
             // attributes
             this.playingOnDesktop = this.game.device.desktop;
             this.localGravity = gravity;
@@ -35,6 +37,7 @@
 
         animSpeeds;
         controller;
+        gems: number;
         size: number;
         speed: number;
         speedBonus: number;

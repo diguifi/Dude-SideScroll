@@ -15,6 +15,8 @@
             this.game.load.image('titlepage', 'assets/images/back.png');
             this.game.load.image('logo', 'assets/images/logo.png');
 
+            this.game.load.image('hud', 'assets/images/hud.png');
+
             this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png');
             this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png');
             this.game.load.image('jungle_paralax3', 'assets/levels/jungle/plx-3.png');
