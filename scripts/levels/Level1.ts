@@ -88,6 +88,9 @@
         }
 
         update() {
+            if (this.player.lives < 0)
+                this.game.state.start('MainMenu');
+
             this.game.physics.arcade.collide(this.player, this.walls);
             this.game.physics.arcade.collide(this.enemies, this.walls);
             this.game.physics.arcade.collide(this.gems, this.walls);
@@ -121,10 +124,12 @@
                     enemy.kill();
                 }
                 else {
+                    player.lives--;
                     player.position.x = 6;
                 }
 
             } else {
+                player.lives--;
                 player.position.x = 6;
             }
         }

@@ -6,6 +6,7 @@
             super(game, x, y, 'dude', 0);
 
             this.gems = 0;
+            this.lives = 3;
 
             // attributes
             this.playingOnDesktop = this.game.device.desktop;
@@ -37,6 +38,7 @@
 
         animSpeeds;
         controller;
+        lives: number;
         gems: number;
         size: number;
         speed: number;

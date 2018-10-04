@@ -11,11 +11,13 @@
             this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
 
             this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
+            this.game.load.image('heart', 'assets/sprites/itens/heart.png');
 
             this.game.load.image('titlepage', 'assets/images/back.png');
             this.game.load.image('logo', 'assets/images/logo.png');
 
             this.game.load.image('hud', 'assets/images/hud.png');
+            this.game.load.image('heart2', 'assets/images/heart.png');
 
             this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png');
             this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png');

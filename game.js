@@ -8,25 +8,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-/// <reference path="../engine/phaser.d.ts" />
-var SimpleGame = /** @class */ (function () {
-    function SimpleGame() {
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', { preload: this.preload, create: this.create });
-    }
-    SimpleGame.prototype.preload = function () {
-        this.game.load.image('logo', 'assets/images/dude.png');
-    };
-    SimpleGame.prototype.create = function () {
-        var logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
-        logo.scale.setTo(0.2, 0.2);
-        this.game.add.tween(logo.scale).to({ x: 1, y: 1 }, 2000, Phaser.Easing.Bounce.Out, true);
-    };
-    return SimpleGame;
-}());
-window.onload = function () {
-    var game = new SimpleGame();
-};
 var Diguifi;
 (function (Diguifi) {
     var ControllerManager = /** @class */ (function () {
@@ -170,17 +151,30 @@ var Diguifi;
         __extends(Hud, _super);
         function Hud(game, player) {
             var _this = _super.call(this, game, 0, 0, 'hud', 0) || this;
+            _this.hearts = [];
             _this.fixedToCamera = true;
             _this.player = player;
+            _this.lives = player.lives;
+            _this.fillLives();
             game.add.existing(_this);
             return _this;
         }
         Hud.prototype.update = function () {
+            if (this.lives != this.player.lives) {
+                this.lives = this.player.lives;
+                this.fillLives();
+            }
         };
-        Hud.prototype.render = function () {
-            this.game.debug.text("This is debug text", 200, 200);
-            this.game.debug.geom(new Phaser.Rectangle(100, 100, 100, 100), 'rgba(255,0,0,1)');
-            console.log("is it working?");
+        Hud.prototype.fillLives = function () {
+            this.hearts.forEach(function (heart) {
+                heart.destroy();
+            });
+            this.hearts = [];
+            for (var i = 0; i < this.lives; i++)
+                this.hearts.push(this.game.add.sprite(35 * i + 30, 23, 'heart2'));
+            this.hearts.forEach(function (heart) {
+                heart.fixedToCamera = true;
+            });
         };
         return Hud;
     }(Phaser.Sprite));
@@ -235,6 +229,8 @@ var Diguifi;
             this.game.world.bringToTop(this.hud);
         };
         Level1.prototype.update = function () {
+            if (this.player.lives < 0)
+                this.game.state.start('MainMenu');
             this.game.physics.arcade.collide(this.player, this.walls);
             this.game.physics.arcade.collide(this.enemies, this.walls);
             this.game.physics.arcade.collide(this.gems, this.walls);
@@ -264,10 +260,12 @@ var Diguifi;
                     enemy.kill();
                 }
                 else {
+                    player.lives--;
                     player.position.x = 6;
                 }
             }
             else {
+                player.lives--;
                 player.position.x = 6;
             }
         };
@@ -326,6 +324,7 @@ var Diguifi;
         function Player(game, x, y, speed, gravity) {
             var _this = _super.call(this, game, x, y, 'dude', 0) || this;
             _this.gems = 0;
+            _this.lives = 3;
             // attributes
             _this.playingOnDesktop = _this.game.device.desktop;
             _this.localGravity = gravity;
@@ -434,9 +433,11 @@ var Diguifi;
             this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 4);
             this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
             this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
+            this.game.load.image('heart', 'assets/sprites/itens/heart.png');
             this.game.load.image('titlepage', 'assets/images/back.png');
             this.game.load.image('logo', 'assets/images/logo.png');
             this.game.load.image('hud', 'assets/images/hud.png');
+            this.game.load.image('heart2', 'assets/images/heart.png');
             this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png');
             this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png');
             this.game.load.image('jungle_paralax3', 'assets/levels/jungle/plx-3.png');

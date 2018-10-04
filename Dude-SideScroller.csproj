@@ -76,6 +76,8 @@
     <Content Include="assets\buttons\button-round.png" />
     <Content Include="assets\buttons\button-vertical.png" />
     <Content Include="assets\images\back.png" />
+    <Content Include="assets\images\heart.png" />
+    <Content Include="assets\images\hud.png" />
     <Content Include="assets\images\logo.png" />
     <Content Include="assets\levels\jungle\jungle_tileset.png" />
     <Content Include="assets\levels\jungle\plx-1.png" />
@@ -84,6 +86,12 @@
     <Content Include="assets\levels\jungle\plx-4.png" />
     <Content Include="assets\levels\jungle\plx-5.png" />
     <Content Include="assets\sprites\dude_spritesheet.png" />
+    <Content Include="assets\sprites\enemy.png" />
+    <Content Include="assets\sprites\itens\heart.png" />
+    <Content Include="assets\sprites\itens\spr_coin_ama.png" />
+    <Content Include="assets\sprites\itens\spr_coin_azu.png" />
+    <Content Include="assets\sprites\itens\spr_coin_cin.png" />
+    <Content Include="assets\sprites\itens\spr_coin_ver.png" />
     <Content Include="build\phaser.map" />
     <Content Include="assets\levels\jungle1.json" />
     <None Include="Web.Debug.config">
@@ -102,7 +110,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="scripts\app.ts" />
     <TypeScriptCompile Include="engine\phaser.d.ts" />
     <TypeScriptCompile Include="scripts\ControllerManager.ts" />
     <TypeScriptCompile Include="scripts\Enemy.ts" />
