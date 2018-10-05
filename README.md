@@ -13,5 +13,5 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 - ...
 
 ## Art
-[Jesse M - Jungle Pack](https://jesse-m.itch.io/jungle-pack)
+[Jesse M - Jungle Pack](https://jesse-m.itch.io/jungle-pack)  
 [La Red Games - Gems / Coins Free](https://piclet.itch.io/gems-coins-free)
