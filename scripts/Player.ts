@@ -15,6 +15,7 @@
             this.jumpBonus = 50;
             this.speed = speed;
             this.jumpStrength = gravity + (gravity * 0.4);
+            this.jumping = false;
 
             // sprite size
             this.size = 1.8;
@@ -66,9 +67,10 @@
             if (this.playingOnDesktop)
                 this.controller.getKeyboardInput(this);
 
-            if(this.jumping)
-                if (this.body.blocked.down)
+            if (this.jumping)
+                if (this.body.blocked.down) {
                     this.jumping = false;
+                }
         }
 
         moveRight() {
@@ -126,6 +128,7 @@
 
                 
                 this.jumping = true;
+                this.body.blocked.down = false;
 
                 if (this.movingRight) {
                     this.scale.x = this.size;
@@ -133,6 +136,15 @@
                 else if (this.movingLeft) {
                     this.scale.x = -this.size;
                 }
+            }
+        }
+
+        fall() {
+            if (this.jumping) {
+                this.jumping = false;
+
+                if (this.body.velocity.y < 0)
+                    this.body.velocity.y = -this.body.velocity.y/4;
             }
         }
     }

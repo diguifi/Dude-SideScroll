@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -32,13 +35,17 @@ var Diguifi;
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                 if (player.body.blocked.down)
                     player.jump();
+            if (!this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+                if (!player.body.blocked.down)
+                    player.fall();
         };
         ControllerManager.prototype.getVirtualButtonsInput = function (player) {
             this.buttonjump = this.game.add.button(600, 310, 'buttonjump', null, this, 0, 1, 0, 1);
             this.buttonjump.fixedToCamera = true;
             this.buttonjump.events.onInputDown.add(function () { if (player.body.blocked.down)
                 player.jump(); });
-            this.buttonjump.events.onInputUp.add(function () { false; });
+            this.buttonjump.events.onInputUp.add(function () { if (!player.body.blocked.down)
+                player.fall(); });
             this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
             this.buttonfire.fixedToCamera = true;
             this.buttonfire.events.onInputDown.add(function () { player.running = !player.running; });
@@ -215,7 +222,7 @@ var Diguifi;
             this.paralax5.checkWorldBounds = true;
             this.game.world.bringToTop(this.back);
             this.game.world.bringToTop(this.walls);
-            this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
             this.map.objects.enemies.forEach(function (data) {
                 this.enemies.push(new Diguifi.Enemy(this.game, data.x * 2, data.y, this.game.physics.arcade.gravity.y, this.enemySpeed));
@@ -332,6 +339,7 @@ var Diguifi;
             _this.jumpBonus = 50;
             _this.speed = speed;
             _this.jumpStrength = gravity + (gravity * 0.4);
+            _this.jumping = false;
             // sprite size
             _this.size = 1.8;
             _this.scale.setTo(_this.size, _this.size);
@@ -359,8 +367,9 @@ var Diguifi;
             if (this.playingOnDesktop)
                 this.controller.getKeyboardInput(this);
             if (this.jumping)
-                if (this.body.blocked.down)
+                if (this.body.blocked.down) {
                     this.jumping = false;
+                }
         };
         Player.prototype.moveRight = function () {
             if (this.position.x < this.game.world.bounds.bottomRight.x) {
@@ -408,12 +417,20 @@ var Diguifi;
                 else
                     this.body.velocity.y = -this.jumpStrength;
                 this.jumping = true;
+                this.body.blocked.down = false;
                 if (this.movingRight) {
                     this.scale.x = this.size;
                 }
                 else if (this.movingLeft) {
                     this.scale.x = -this.size;
                 }
+            }
+        };
+        Player.prototype.fall = function () {
+            if (this.jumping) {
+                this.jumping = false;
+                if (this.body.velocity.y < 0)
+                    this.body.velocity.y = -this.body.velocity.y / 4;
             }
         };
         return Player;

@@ -69,7 +69,7 @@
             this.game.world.bringToTop(this.back);
             this.game.world.bringToTop(this.walls);
 
-            this.player = new Diguifi.Player(this.game, 6, 300, 150, this.game.physics.arcade.gravity.y);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y);
             this.game.camera.follow(this.player);
             
             this.map.objects.enemies.forEach(function (data) {
