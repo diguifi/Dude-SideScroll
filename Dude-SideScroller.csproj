@@ -85,6 +85,8 @@
     <Content Include="assets\levels\jungle\plx-3.png" />
     <Content Include="assets\levels\jungle\plx-4.png" />
     <Content Include="assets\levels\jungle\plx-5.png" />
+    <Content Include="assets\sprites\arrows.png" />
+    <Content Include="assets\sprites\cross.png" />
     <Content Include="assets\sprites\dude_spritesheet.png" />
     <Content Include="assets\sprites\enemy.png" />
     <Content Include="assets\sprites\itens\heart.png" />
@@ -92,6 +94,7 @@
     <Content Include="assets\sprites\itens\spr_coin_azu.png" />
     <Content Include="assets\sprites\itens\spr_coin_cin.png" />
     <Content Include="assets\sprites\itens\spr_coin_ver.png" />
+    <Content Include="assets\sprites\shift.png" />
     <Content Include="build\phaser.map" />
     <Content Include="assets\levels\jungle1.json" />
     <None Include="Web.Debug.config">

@@ -26,6 +26,9 @@
             this.game.load.spritesheet('tiles_level1', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
             this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json', null, Phaser.Tilemap.TILED_JSON);
 
+            this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
+            this.game.load.image('shift', 'assets/sprites/shift.png');
+
             this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);
             this.game.load.spritesheet('buttonhorizontal', 'assets/buttons/button-horizontal.png', 96, 64);
             this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);
