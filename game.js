@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -75,6 +78,7 @@ var Diguifi;
             _this.anchor.setTo(0.5, 0);
             // physics
             _this.game.physics.arcade.enableBody(_this);
+            _this.body.setSize(23, 19, 0, 0);
             _this.body.collideWorldBounds = true;
             _this.body.gravity.y = gravity;
             // initialize movement
@@ -279,7 +283,7 @@ var Diguifi;
         };
         Level1.prototype.enemyOverlap = function (player, enemy) {
             if (player.body.touching.down) {
-                if ((player.position.y) < (enemy.position.y - (enemy.height))) {
+                if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
                     enemy.body.enable = false;
                     player.body.velocity.y = -80;
                     enemy.kill();
@@ -367,6 +371,7 @@ var Diguifi;
             _this.animSpeeds = [8, 13];
             // physics
             _this.game.physics.arcade.enableBody(_this);
+            _this.body.setSize(16, 21, 0, 0);
             _this.body.collideWorldBounds = false;
             _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;

@@ -18,6 +18,7 @@
 
             // physics
             this.game.physics.arcade.enableBody(this);
+            this.body.setSize(23, 19, 0, 0);
             this.body.collideWorldBounds = true;
             this.body.gravity.y = gravity;
 

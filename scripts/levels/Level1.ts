@@ -152,7 +152,7 @@
 
         enemyOverlap(player, enemy) {
             if (player.body.touching.down) {
-                if ((player.position.y) < (enemy.position.y - (enemy.height))) {
+                if ((player.position.y) < (enemy.position.y - (enemy.height-5))) {
                     enemy.body.enable = false;
                     player.body.velocity.y = -80;
                     enemy.kill();
@@ -185,7 +185,7 @@
         }
 
         render() {
-            this.game.debug.text(": "+this.player.gems.toString(), 662, 40);
+            this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
         }
 
     }
