@@ -2,11 +2,11 @@
 
     export class Player extends Phaser.Sprite {
 
-        constructor(game: Phaser.Game, x: number, y: number, speed, gravity) {
+        constructor(game: Phaser.Game, x: number, y: number, speed: number, gravity: number, gems: number, lives: number) {
             super(game, x, y, 'dude', 0);
 
-            this.gems = 0;
-            this.lives = 3;
+            this.gems = gems;
+            this.lives = lives;
 
             // attributes
             this.playingOnDesktop = this.game.device.desktop;

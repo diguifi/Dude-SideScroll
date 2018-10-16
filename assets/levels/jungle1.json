@@ -258,8 +258,30 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "name":"redgems",
+         "objects":[
+                {
+                 "gid":747,
+                 "height":16,
+                 "id":28,
+                 "name":"redgem",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2384,
+                 "y":161
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":28,
+ "nextobjectid":32,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.6",
@@ -299,6 +321,19 @@
          "imagewidth":64,
          "margin":0,
          "name":"gems",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":16,
+         "tilewidth":16
+        }, 
+        {
+         "columns":4,
+         "firstgid":747,
+         "image":"..\/sprites\/itens\/spr_coin_ver.png",
+         "imageheight":16,
+         "imagewidth":64,
+         "margin":0,
+         "name":"redgem",
          "spacing":0,
          "tilecount":4,
          "tileheight":16,

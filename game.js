@@ -1,10 +1,7 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -128,6 +125,7 @@ var Diguifi;
             this.game.state.add('Preloader', Diguifi.Preloader, false);
             this.game.state.add('MainMenu', Diguifi.MainMenu, false);
             this.game.state.add('Level1', Diguifi.Level1, false);
+            this.game.state.add('Level2', Diguifi.Level2, false);
         }
         Game.prototype.preload = function () {
             this.game.time.advancedTiming = true;
@@ -202,7 +200,7 @@ var Diguifi;
             this.lastCameraPositionX = 0;
             // ---- map and layers
             this.map = this.game.add.tilemap('tileMap_level1');
-            this.map.addTilesetImage('jungletileset', 'tiles_level1');
+            this.map.addTilesetImage('jungletileset', 'jungle_tileset');
             this.map.setCollisionBetween(1, 2000, true, 'walls');
             this.back = this.map.createLayer('back');
             this.back.setScale(2);
@@ -210,16 +208,16 @@ var Diguifi;
             this.walls.setScale(2);
             this.walls.resizeWorld();
             // ---- paralax
-            this.paralax2 = this.game.add.tileSprite(0, this.game.world.height - 420, this.game.world.width, this.game.world.height, 'jungle_paralax2');
+            this.paralax2 = this.game.add.tileSprite(0, this.game.world.height - 430, this.game.world.width, this.game.world.height, 'jungle_paralax2');
             this.paralax2.tileScale.x = 2;
             this.paralax2.tileScale.y = 2;
-            this.paralax3 = this.game.add.tileSprite(0, this.game.world.height - 420, this.game.world.width, this.game.world.height, 'jungle_paralax3');
+            this.paralax3 = this.game.add.tileSprite(0, this.game.world.height - 435, this.game.world.width, this.game.world.height, 'jungle_paralax3');
             this.paralax3.tileScale.x = 2;
             this.paralax3.tileScale.y = 2;
-            this.paralax4 = this.game.add.tileSprite(0, this.game.world.height - 420, this.game.world.width, this.game.world.height, 'jungle_paralax4');
+            this.paralax4 = this.game.add.tileSprite(0, this.game.world.height - 450, this.game.world.width, this.game.world.height, 'jungle_paralax4');
             this.paralax4.tileScale.x = 2;
             this.paralax4.tileScale.y = 2;
-            this.paralax5 = this.game.add.tileSprite(0, this.game.world.height - 420, this.game.world.width, this.game.world.height, 'jungle_paralax5');
+            this.paralax5 = this.game.add.tileSprite(0, this.game.world.height - 460, this.game.world.width, this.game.world.height, 'jungle_paralax5');
             this.paralax5.tileScale.x = 2;
             this.paralax5.tileScale.y = 2;
             this.paralax5.checkWorldBounds = true;
@@ -233,7 +231,7 @@ var Diguifi;
             this.shiftSprite.scale.setTo(2.5);
             this.shiftSprite.alpha = 0;
             // ---- player
-            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3);
             this.game.camera.follow(this.player);
             // ---- enemies
             this.map.objects.enemies.forEach(function (data) {
@@ -243,6 +241,12 @@ var Diguifi;
             this.gems = this.game.add.physicsGroup();
             this.map.createFromObjects('gems', 'gem1', 'greygem', 0, true, false, this.gems);
             this.gems.forEach(function (gem) {
+                gem = this.gemSetup(gem);
+            }.bind(this));
+            // ---- red gem
+            this.redGems = this.game.add.physicsGroup();
+            this.map.createFromObjects('redgems', 'redgem', 'redgem', 0, true, false, this.redGems);
+            this.redGems.forEach(function (gem) {
                 gem = this.gemSetup(gem);
             }.bind(this));
             // ---- hud and game
@@ -263,8 +267,10 @@ var Diguifi;
             this.game.physics.arcade.collide(this.player, this.walls);
             this.game.physics.arcade.collide(this.enemies, this.walls);
             this.game.physics.arcade.collide(this.gems, this.walls);
+            this.game.physics.arcade.collide(this.redGems, this.walls);
             this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
             this.game.physics.arcade.overlap(this.player, this.gems, this.gemsCollect, null, this);
+            this.game.physics.arcade.overlap(this.player, this.redGems, this.nextLevel, null, this);
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
                 if (this.game.camera.position.x != this.lastCameraPositionX) {
                     this.paralax4.tilePosition.x += this.player.speed / 1875;
@@ -300,6 +306,7 @@ var Diguifi;
         };
         Level1.prototype.gemSetup = function (gem) {
             gem.x = gem.x * 2;
+            gem.y = gem.y * 1.7;
             gem.scale.setTo(1.8, 2);
             gem.body.immovable = true;
             gem.body.bounce.y = 0.3;
@@ -311,12 +318,150 @@ var Diguifi;
             player.gems++;
             gem.kill();
         };
+        Level1.prototype.nextLevel = function (player) {
+            this.game.state.start('Level2', true, false, player);
+        };
         Level1.prototype.render = function () {
             this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
         };
         return Level1;
     }(Phaser.State));
     Diguifi.Level1 = Level1;
+})(Diguifi || (Diguifi = {}));
+var Diguifi;
+(function (Diguifi) {
+    var Level2 = /** @class */ (function (_super) {
+        __extends(Level2, _super);
+        function Level2() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.enemies = [];
+            _this.enemySpeed = 100;
+            return _this;
+        }
+        Level2.prototype.init = function (player) {
+            this.lastPlayer = player;
+        };
+        Level2.prototype.create = function () {
+            this.lastCameraPositionX = 0;
+            // ---- map and layers
+            this.map = this.game.add.tilemap('tileMap_level2');
+            this.map.addTilesetImage('jungletileset', 'jungle_tileset');
+            this.map.setCollisionBetween(1, 400, true, 'walls');
+            this.back = this.map.createLayer('back');
+            this.back.setScale(2);
+            this.walls = this.map.createLayer('walls');
+            this.walls.setScale(2);
+            this.walls.resizeWorld();
+            // ---- paralax
+            this.paralax2 = this.game.add.tileSprite(0, this.game.world.height - 430, this.game.world.width, this.game.world.height + 100, 'jungle_paralax2');
+            this.paralax2.tileScale.x = 2;
+            this.paralax2.tileScale.y = 2;
+            this.paralax3 = this.game.add.tileSprite(0, this.game.world.height - 435, this.game.world.width, this.game.world.height + 100, 'jungle_paralax3');
+            this.paralax3.tileScale.x = 2;
+            this.paralax3.tileScale.y = 2;
+            this.paralax4 = this.game.add.tileSprite(0, this.game.world.height - 450, this.game.world.width, this.game.world.height + 100, 'jungle_paralax4');
+            this.paralax4.tileScale.x = 2;
+            this.paralax4.tileScale.y = 2;
+            this.paralax5 = this.game.add.tileSprite(0, this.game.world.height - 460, this.game.world.width, this.game.world.height + 100, 'jungle_paralax5');
+            this.paralax5.tileScale.x = 2;
+            this.paralax5.tileScale.y = 2;
+            this.paralax5.checkWorldBounds = true;
+            this.game.world.bringToTop(this.back);
+            this.game.world.bringToTop(this.walls);
+            // ---- player
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives);
+            this.game.camera.follow(this.player);
+            // ---- enemies
+            this.map.objects.enemies.forEach(function (data) {
+                this.enemies.push(new Diguifi.Enemy(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y, this.enemySpeed));
+            }.bind(this));
+            // ---- gems
+            this.gems = this.game.add.physicsGroup();
+            this.map.createFromObjects('gems', 'gem1', 'greygem', 0, true, false, this.gems);
+            this.gems.forEach(function (gem) {
+                gem = this.gemSetup(gem);
+            }.bind(this));
+            // ---- red gem
+            this.redGems = this.game.add.physicsGroup();
+            this.map.createFromObjects('redgems', 'redgem', 'redgem', 0, true, false, this.redGems);
+            this.redGems.forEach(function (gem) {
+                gem = this.gemSetup(gem);
+            }.bind(this));
+            // ---- hud and game
+            this.hud = new Diguifi.Hud(this.game, this.player);
+            this.game.world.bringToTop(this.hud);
+        };
+        Level2.prototype.update = function () {
+            if (this.player.lives < 0)
+                this.game.state.start('MainMenu');
+            if (this.player.y > 450)
+                this.killPlayer();
+            this.game.physics.arcade.collide(this.player, this.walls);
+            this.game.physics.arcade.collide(this.enemies, this.walls);
+            this.game.physics.arcade.collide(this.gems, this.walls);
+            this.game.physics.arcade.collide(this.redGems, this.walls);
+            this.game.physics.arcade.overlap(this.player, this.enemies, this.enemyOverlap);
+            this.game.physics.arcade.overlap(this.player, this.gems, this.gemsCollect, null, this);
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
+                    this.paralax4.tilePosition.x += this.player.speed / 1875;
+                    this.paralax3.tilePosition.x += this.player.speed / 6000;
+                    this.paralax2.tilePosition.x += this.player.speed / 30000;
+                }
+            }
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+                if (this.game.camera.position.x != this.lastCameraPositionX) {
+                    this.paralax4.tilePosition.x -= this.player.speed / 1875;
+                    this.paralax3.tilePosition.x -= this.player.speed / 6000;
+                    this.paralax2.tilePosition.x -= this.player.speed / 30000;
+                }
+            }
+            this.lastCameraPositionX = this.game.camera.position.x;
+        };
+        Level2.prototype.enemyOverlap = function (player, enemy) {
+            if (player.body.touching.down) {
+                if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
+                    enemy.body.enable = false;
+                    player.body.velocity.y = -80;
+                    enemy.kill();
+                }
+                else {
+                    player.lives--;
+                    player.position.x = 15;
+                    player.position.y = 300;
+                }
+            }
+            else {
+                player.lives--;
+                player.position.x = 15;
+                player.position.y = 300;
+            }
+        };
+        Level2.prototype.killPlayer = function () {
+            this.player.lives--;
+            this.player.position.x = 15;
+            this.player.position.y = 300;
+        };
+        Level2.prototype.gemSetup = function (gem) {
+            gem.x = gem.x * 2;
+            gem.y = gem.y * 1.7;
+            gem.scale.setTo(1.8, 2);
+            gem.body.immovable = true;
+            gem.body.bounce.y = 0.3;
+            gem.animations.add('shine', [0, 1, 2, 3], 8, true);
+            gem.animations.play('shine');
+            return gem;
+        };
+        Level2.prototype.gemsCollect = function (player, gem) {
+            player.gems++;
+            gem.kill();
+        };
+        Level2.prototype.render = function () {
+            this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
+        };
+        return Level2;
+    }(Phaser.State));
+    Diguifi.Level2 = Level2;
 })(Diguifi || (Diguifi = {}));
 var Diguifi;
 (function (Diguifi) {
@@ -350,10 +495,10 @@ var Diguifi;
 (function (Diguifi) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player(game, x, y, speed, gravity) {
+        function Player(game, x, y, speed, gravity, gems, lives) {
             var _this = _super.call(this, game, x, y, 'dude', 0) || this;
-            _this.gems = 0;
-            _this.lives = 3;
+            _this.gems = gems;
+            _this.lives = lives;
             // attributes
             _this.playingOnDesktop = _this.game.device.desktop;
             _this.localGravity = gravity;
@@ -473,17 +618,19 @@ var Diguifi;
             this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 4);
             this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
             this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
+            this.game.load.spritesheet('redgem', 'assets/sprites/itens/spr_coin_ver.png?v=1', 16, 16, 4);
             this.game.load.image('heart', 'assets/sprites/itens/heart.png');
             this.game.load.image('titlepage', 'assets/images/back.png');
             this.game.load.image('logo', 'assets/images/logo.png');
             this.game.load.image('hud', 'assets/images/hud.png');
             this.game.load.image('heart2', 'assets/images/heart.png');
-            this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png');
-            this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png');
-            this.game.load.image('jungle_paralax3', 'assets/levels/jungle/plx-3.png');
-            this.game.load.image('jungle_paralax2', 'assets/levels/jungle/plx-2.png');
-            this.game.load.spritesheet('tiles_level1', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
-            this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png?v=1');
+            this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png?v=1');
+            this.game.load.image('jungle_paralax3', 'assets/levels/jungle/plx-3.png?v=1');
+            this.game.load.image('jungle_paralax2', 'assets/levels/jungle/plx-2.png?v=1');
+            this.game.load.spritesheet('jungle_tileset', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
+            this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json?v=1', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.tilemap('tileMap_level2', 'assets/levels/jungle2.json?v=1', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
             this.game.load.image('shift', 'assets/sprites/shift.png');
             this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);
