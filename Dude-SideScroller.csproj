@@ -97,6 +97,7 @@
     <Content Include="assets\sprites\shift.png" />
     <Content Include="build\phaser.map" />
     <Content Include="assets\levels\jungle1.json" />
+    <Content Include="assets\levels\jungle2.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -119,6 +120,7 @@
     <TypeScriptCompile Include="scripts\Game.ts" />
     <TypeScriptCompile Include="scripts\Hud.ts" />
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
+    <TypeScriptCompile Include="scripts\levels\Level2.ts" />
     <TypeScriptCompile Include="scripts\MainMenu.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />
     <TypeScriptCompile Include="scripts\Preloader.ts" />
