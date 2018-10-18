@@ -121,6 +121,8 @@
     <TypeScriptCompile Include="scripts\Hud.ts" />
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
     <TypeScriptCompile Include="scripts\levels\Level2.ts" />
+    <TypeScriptCompile Include="scripts\levels\LevelBase.ts" />
+    <TypeScriptCompile Include="scripts\levels\LevelManager.ts" />
     <TypeScriptCompile Include="scripts\MainMenu.ts" />
     <TypeScriptCompile Include="scripts\Player.ts" />
     <TypeScriptCompile Include="scripts\Preloader.ts" />
