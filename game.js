@@ -270,6 +270,7 @@ var Diguifi;
             this.levelManager.updateBasicLevelStuff(this.player);
         };
         Level2.prototype.killPlayer = function () {
+            this.soundManager.damage.play();
             this.player.lives--;
             this.player.position.x = 15;
             this.player.position.y = 300;
@@ -328,16 +329,16 @@ var Diguifi;
             this.level.walls.resizeWorld();
         };
         LevelManager.prototype.createParallax = function () {
-            this.level.paralax2 = this.game.add.tileSprite(0, this.game.world.height - 430, this.game.world.width, this.game.world.height, 'jungle_paralax2');
+            this.level.paralax2 = this.game.add.tileSprite(0, this.game.world.height - 430, this.game.world.width, this.game.world.height + 100, 'jungle_paralax2');
             this.level.paralax2.tileScale.x = 2;
             this.level.paralax2.tileScale.y = 2;
-            this.level.paralax3 = this.game.add.tileSprite(0, this.game.world.height - 435, this.game.world.width, this.game.world.height, 'jungle_paralax3');
+            this.level.paralax3 = this.game.add.tileSprite(0, this.game.world.height - 435, this.game.world.width, this.game.world.height + 100, 'jungle_paralax3');
             this.level.paralax3.tileScale.x = 2;
             this.level.paralax3.tileScale.y = 2;
-            this.level.paralax4 = this.game.add.tileSprite(0, this.game.world.height - 450, this.game.world.width, this.game.world.height, 'jungle_paralax4');
+            this.level.paralax4 = this.game.add.tileSprite(0, this.game.world.height - 450, this.game.world.width, this.game.world.height + 100, 'jungle_paralax4');
             this.level.paralax4.tileScale.x = 2;
             this.level.paralax4.tileScale.y = 2;
-            this.level.paralax5 = this.game.add.tileSprite(0, this.game.world.height - 460, this.game.world.width, this.game.world.height, 'jungle_paralax5');
+            this.level.paralax5 = this.game.add.tileSprite(0, this.game.world.height - 460, this.game.world.width, this.game.world.height + 100, 'jungle_paralax5');
             this.level.paralax5.tileScale.x = 2;
             this.level.paralax5.tileScale.y = 2;
             this.level.paralax5.checkWorldBounds = true;
@@ -572,7 +573,6 @@ var Diguifi;
         };
         Player.prototype.fall = function () {
             if (this.jumping) {
-                this.jumping = false;
                 if (this.body.velocity.y < 0)
                     this.body.velocity.y = -this.body.velocity.y / 4;
             }

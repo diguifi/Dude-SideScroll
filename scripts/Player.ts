@@ -149,8 +149,6 @@
 
         fall() {
             if (this.jumping) {
-                this.jumping = false;
-
                 if (this.body.velocity.y < 0)
                     this.body.velocity.y = -this.body.velocity.y/4;
             }

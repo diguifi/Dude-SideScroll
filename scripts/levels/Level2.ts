@@ -46,6 +46,7 @@
         }
 
         killPlayer() {
+            this.soundManager.damage.play();
             this.player.lives--;
             this.player.position.x = 15;
             this.player.position.y = 300;
