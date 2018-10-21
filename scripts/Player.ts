@@ -2,7 +2,8 @@
 
     export class Player extends Phaser.Sprite {
 
-        constructor(game: Phaser.Game, x: number, y: number, speed: number, gravity: number, gems: number, lives: number) {
+        constructor(game: Phaser.Game, x: number, y: number, speed: number,
+            gravity: number, gems: number, lives: number, soundManager: SoundManager) {
             super(game, x, y, 'dude', 0);
 
             this.gems = gems;
@@ -33,13 +34,18 @@
             this.body.gravity.y = gravity;
             this.body.bounce.y = 0.2;
 
+            // controls
             this.controller = new ControllerManager(this, this.game);
+
+            // sound
+            this.soundManager = soundManager;
 
             game.add.existing(this);
         }
 
         animSpeeds;
         controller;
+        soundManager: SoundManager;
         lives: number;
         gems: number;
         size: number;
@@ -70,6 +76,7 @@
 
             if (this.jumping)
                 if (this.body.blocked.down) {
+                    this.soundManager.fall.play();
                     this.jumping = false;
                 }
         }
@@ -127,7 +134,7 @@
                 else
                     this.body.velocity.y = -this.jumpStrength;
 
-                
+                this.soundManager.jump.play();
                 this.jumping = true;
                 this.body.blocked.down = false;
 

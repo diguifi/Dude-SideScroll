@@ -1,10 +1,7 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -196,9 +193,13 @@ var Diguifi;
         function Level1() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        Level1.prototype.init = function (soundManager) {
+            this.soundManager = soundManager;
+        };
         Level1.prototype.create = function () {
+            this.soundManager.music.volume = 0.1;
             this.levelBase = new Diguifi.LevelBase();
-            this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level2');
+            this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level2', this.soundManager);
             // ---- level genesis
             this.levelManager.createBasicLevelStuff('tileMap_level1');
             // ---- tutorial sprites
@@ -209,7 +210,7 @@ var Diguifi;
             this.shiftSprite.scale.setTo(2.5);
             this.shiftSprite.alpha = 0;
             // ---- player
-            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
             this.game.camera.follow(this.player);
             // ---- hud and game
             this.hud = new Diguifi.Hud(this.game, this.player);
@@ -218,11 +219,11 @@ var Diguifi;
         Level1.prototype.update = function () {
             if (this.player.lives < 0)
                 this.game.state.start('MainMenu');
-            if (this.player.x > this.arrowKeysSprite.x - 80 && this.player.x < this.arrowKeysSprite.x + 80)
+            if (this.player.x > this.arrowKeysSprite.x - 120 && this.player.x < this.arrowKeysSprite.x + 100)
                 this.game.add.tween(this.arrowKeysSprite).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
             else
                 this.game.add.tween(this.arrowKeysSprite).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
-            if (this.player.x > this.shiftSprite.x - 80 && this.player.x < this.shiftSprite.x + 140)
+            if (this.player.x > this.shiftSprite.x - 120 && this.player.x < this.shiftSprite.x + 150)
                 this.game.add.tween(this.shiftSprite).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
             else
                 this.game.add.tween(this.shiftSprite).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
@@ -243,16 +244,18 @@ var Diguifi;
         function Level2() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Level2.prototype.init = function (player) {
+        Level2.prototype.init = function (player, soundManager) {
             this.lastPlayer = player;
+            this.soundManager = soundManager;
+            player.kill();
         };
         Level2.prototype.create = function () {
             this.levelBase = new Diguifi.LevelBase();
-            this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level3');
+            this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level3', this.soundManager);
             // ---- level genesis
             this.levelManager.createBasicLevelStuff('tileMap_level2');
             // ---- player
-            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
             this.game.camera.follow(this.player);
             // ---- hud and game
             this.hud = new Diguifi.Hud(this.game, this.player);
@@ -292,11 +295,12 @@ var Diguifi;
 var Diguifi;
 (function (Diguifi) {
     var LevelManager = /** @class */ (function () {
-        function LevelManager(game, level, nextLevel) {
+        function LevelManager(game, level, nextLevel, soundManager) {
             this.game = game;
             this.level = level;
             this.nextLevel = nextLevel;
             this.level.lastCameraPositionX = 0;
+            this.soundManager = soundManager;
         }
         LevelManager.prototype.createBasicLevelStuff = function (jsonTilemap) {
             this.createMap(jsonTilemap);
@@ -376,29 +380,32 @@ var Diguifi;
         };
         LevelManager.prototype.updateEnemiesInteraction = function (player) {
             this.game.physics.arcade.collide(this.level.enemies, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap);
+            this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap.bind(this));
         };
         LevelManager.prototype.updateGemsInteraction = function (player) {
             this.game.physics.arcade.collide(this.level.gems, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.gems, this.gemsCollect, null, this);
+            this.game.physics.arcade.overlap(player, this.level.gems, this.gemsCollect.bind(this), null, this);
         };
         LevelManager.prototype.updateRedGemsInteraction = function (player) {
             this.game.physics.arcade.collide(this.level.redGems, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel, null, this);
+            this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel.bind(this), null, this);
         };
         LevelManager.prototype.enemyOverlap = function (player, enemy) {
             if (player.body.touching.down) {
                 if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
+                    this.soundManager.enemydamage.play();
                     enemy.body.enable = false;
                     player.body.velocity.y = -80;
                     enemy.kill();
                 }
                 else {
+                    this.soundManager.damage.play();
                     player.lives--;
                     player.position.x = 6;
                 }
             }
             else {
+                this.soundManager.damage.play();
                 player.lives--;
                 player.position.x = 6;
             }
@@ -414,11 +421,13 @@ var Diguifi;
             return gem;
         };
         LevelManager.prototype.gemsCollect = function (player, gem) {
+            this.soundManager.gemcatch.play();
             player.gems++;
             gem.kill();
         };
         LevelManager.prototype.goNextLevel = function (player) {
-            this.game.state.start(this.nextLevel, true, false, player);
+            this.soundManager.gemcatch.play();
+            this.game.state.start(this.nextLevel, true, false, player, this.soundManager);
         };
         return LevelManager;
     }());
@@ -439,6 +448,7 @@ var Diguifi;
             this.add.tween(this.logo).to({ y: 120 }, 1000, Phaser.Easing.Elastic.Out, true, 2000);
             this.add.tween(this.background).to({ alpha: 1 }, 2000, Phaser.Easing.Bounce.InOut, true);
             this.input.onDown.addOnce(this.fadeOut, this);
+            this.soundManager = new Diguifi.SoundManager(this.game);
         };
         MainMenu.prototype.fadeOut = function () {
             this.add.tween(this.background).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
@@ -446,7 +456,7 @@ var Diguifi;
             tween.onComplete.add(this.startGame, this);
         };
         MainMenu.prototype.startGame = function () {
-            this.game.state.start('Level1', true, false);
+            this.game.state.start('Level1', true, false, this.soundManager);
         };
         return MainMenu;
     }(Phaser.State));
@@ -456,7 +466,7 @@ var Diguifi;
 (function (Diguifi) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player(game, x, y, speed, gravity, gems, lives) {
+        function Player(game, x, y, speed, gravity, gems, lives, soundManager) {
             var _this = _super.call(this, game, x, y, 'dude', 0) || this;
             _this.gems = gems;
             _this.lives = lives;
@@ -481,7 +491,10 @@ var Diguifi;
             _this.body.collideWorldBounds = false;
             _this.body.gravity.y = gravity;
             _this.body.bounce.y = 0.2;
+            // controls
             _this.controller = new Diguifi.ControllerManager(_this, _this.game);
+            // sound
+            _this.soundManager = soundManager;
             game.add.existing(_this);
             return _this;
         }
@@ -497,6 +510,7 @@ var Diguifi;
                 this.controller.getKeyboardInput(this);
             if (this.jumping)
                 if (this.body.blocked.down) {
+                    this.soundManager.fall.play();
                     this.jumping = false;
                 }
         };
@@ -545,6 +559,7 @@ var Diguifi;
                         this.body.velocity.y = -this.jumpStrength;
                 else
                     this.body.velocity.y = -this.jumpStrength;
+                this.soundManager.jump.play();
                 this.jumping = true;
                 this.body.blocked.down = false;
                 if (this.movingRight) {
@@ -599,6 +614,12 @@ var Diguifi;
             this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);
             this.game.load.spritesheet('buttonfire', 'assets/buttons/button-round-a.png', 96, 96);
             this.game.load.spritesheet('buttonjump', 'assets/buttons/button-round-b.png', 96, 96);
+            this.game.load.audio('coincatch', 'assets/sounds/sfx/coin-catch.mp3');
+            this.game.load.audio('damage', 'assets/sounds/sfx/damage.mp3');
+            this.game.load.audio('enemydamage', 'assets/sounds/sfx/enemy-damage.mp3');
+            this.game.load.audio('fall', 'assets/sounds/sfx/fall.mp3');
+            this.game.load.audio('jump', 'assets/sounds/sfx/jump.mp3');
+            this.game.load.audio('bgmusic', 'assets/sounds/music/bg.mp3');
         };
         Preloader.prototype.create = function () {
             this.game.state.start('MainMenu');
@@ -606,5 +627,30 @@ var Diguifi;
         return Preloader;
     }(Phaser.State));
     Diguifi.Preloader = Preloader;
+})(Diguifi || (Diguifi = {}));
+var Diguifi;
+(function (Diguifi) {
+    var SoundManager = /** @class */ (function () {
+        function SoundManager(game) {
+            this.loaded = false;
+            this.game = game;
+            this.gemcatch = this.game.add.audio('coincatch');
+            this.damage = this.game.add.audio('damage');
+            this.enemydamage = this.game.add.audio('enemydamage');
+            this.fall = this.game.add.audio('fall');
+            this.jump = this.game.add.audio('jump');
+            this.music = this.game.add.audio('bgmusic');
+            this.game.sound.setDecodedCallback([this.gemcatch, this.damage,
+                this.enemydamage, this.fall,
+                this.jump, this.music], this.loadComplete, this);
+        }
+        SoundManager.prototype.loadComplete = function () {
+            this.music.loop = true;
+            this.music.play();
+            this.loaded = true;
+        };
+        return SoundManager;
+    }());
+    Diguifi.SoundManager = SoundManager;
 })(Diguifi || (Diguifi = {}));
 //# sourceMappingURL=game.js.map

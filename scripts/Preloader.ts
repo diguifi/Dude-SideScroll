@@ -37,6 +37,13 @@
             this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);
             this.game.load.spritesheet('buttonfire', 'assets/buttons/button-round-a.png', 96, 96);
             this.game.load.spritesheet('buttonjump', 'assets/buttons/button-round-b.png', 96, 96);
+
+            this.game.load.audio('coincatch', 'assets/sounds/sfx/coin-catch.mp3');
+            this.game.load.audio('damage', 'assets/sounds/sfx/damage.mp3');
+            this.game.load.audio('enemydamage', 'assets/sounds/sfx/enemy-damage.mp3');
+            this.game.load.audio('fall', 'assets/sounds/sfx/fall.mp3');
+            this.game.load.audio('jump', 'assets/sounds/sfx/jump.mp3');
+            this.game.load.audio('bgmusic', 'assets/sounds/music/bg.mp3');
         }
 
         create() {

@@ -4,6 +4,7 @@
 
         logo: Phaser.Sprite;
         background: Phaser.Sprite;
+        soundManager: SoundManager;
 
         create() {
             this.background = this.add.sprite(0, 0, 'titlepage');
@@ -16,6 +17,8 @@
             this.add.tween(this.background).to({ alpha: 1 }, 2000, Phaser.Easing.Bounce.InOut, true);
 
             this.input.onDown.addOnce(this.fadeOut, this);
+
+            this.soundManager = new SoundManager(this.game);
         }
 
         fadeOut() {
@@ -28,7 +31,7 @@
         }
 
         startGame() {
-            this.game.state.start('Level1', true, false);
+            this.game.state.start('Level1', true, false, this.soundManager);
         }
 
     }

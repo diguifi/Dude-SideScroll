@@ -8,10 +8,17 @@
         shiftSprite;
         levelManager: LevelManager;
         levelBase: LevelBase;
+        soundManager: SoundManager;
+
+        init(soundManager) {
+            this.soundManager = soundManager;
+        }
 
         create() {
+            this.soundManager.music.volume = 0.1;
+
             this.levelBase = new LevelBase();
-            this.levelManager = new LevelManager(this.game, this.levelBase, 'Level2');
+            this.levelManager = new LevelManager(this.game, this.levelBase, 'Level2', this.soundManager);
 
             // ---- level genesis
 
@@ -29,7 +36,7 @@
 
             // ---- player
 
-            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
             this.game.camera.follow(this.player);
 
             // ---- hud and game
@@ -42,12 +49,12 @@
             if (this.player.lives < 0)
                 this.game.state.start('MainMenu');
 
-            if (this.player.x > this.arrowKeysSprite.x - 80 && this.player.x < this.arrowKeysSprite.x + 80)
+            if (this.player.x > this.arrowKeysSprite.x - 120 && this.player.x < this.arrowKeysSprite.x + 100)
                 this.game.add.tween(this.arrowKeysSprite).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
             else
                 this.game.add.tween(this.arrowKeysSprite).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
 
-            if (this.player.x > this.shiftSprite.x - 80 && this.player.x < this.shiftSprite.x + 140)
+            if (this.player.x > this.shiftSprite.x - 120 && this.player.x < this.shiftSprite.x + 150)
                 this.game.add.tween(this.shiftSprite).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
             else
                 this.game.add.tween(this.shiftSprite).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);

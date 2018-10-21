@@ -4,12 +4,14 @@
         private level: LevelBase;
         private game: Phaser.Game;
         private nextLevel: string;
+        private soundManager: SoundManager;
 
-        constructor(game, level, nextLevel) {
+        constructor(game, level, nextLevel, soundManager) {
             this.game = game;
             this.level = level;
             this.nextLevel = nextLevel;
             this.level.lastCameraPositionX = 0;
+            this.soundManager = soundManager;
         }
 
         public createBasicLevelStuff(jsonTilemap: string) {
@@ -124,32 +126,35 @@
 
         public updateEnemiesInteraction(player: Player) {
             this.game.physics.arcade.collide(this.level.enemies, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap);
+            this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap.bind(this));
         }
 
         public updateGemsInteraction(player: Player) {
             this.game.physics.arcade.collide(this.level.gems, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.gems, this.gemsCollect, null, this);
+            this.game.physics.arcade.overlap(player, this.level.gems, this.gemsCollect.bind(this), null, this);
         }
 
         public updateRedGemsInteraction(player: Player) {
             this.game.physics.arcade.collide(this.level.redGems, this.level.walls);
-            this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel, null, this);
+            this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel.bind(this), null, this);
         }
 
         private enemyOverlap(player, enemy) {
             if (player.body.touching.down) {
                 if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
+                    this.soundManager.enemydamage.play();
                     enemy.body.enable = false;
                     player.body.velocity.y = -80;
                     enemy.kill();
                 }
                 else {
+                    this.soundManager.damage.play();
                     player.lives--;
                     player.position.x = 6;
                 }
 
             } else {
+                this.soundManager.damage.play();
                 player.lives--;
                 player.position.x = 6;
             }
@@ -168,12 +173,14 @@
         }
 
         private gemsCollect(player, gem) {
+            this.soundManager.gemcatch.play();
             player.gems++;
             gem.kill();
         }
 
         private goNextLevel(player) {
-            this.game.state.start(this.nextLevel, true, false, player);
+            this.soundManager.gemcatch.play();
+            this.game.state.start(this.nextLevel, true, false, player, this.soundManager);
         }
     }
 }

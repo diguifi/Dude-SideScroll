@@ -8,21 +8,24 @@
         hud: Hud;
         levelManager: LevelManager;
         levelBase: LevelBase;
+        soundManager: SoundManager;
 
-        init (player) {
+        init (player, soundManager) {
             this.lastPlayer = player;
+            this.soundManager = soundManager;
+            player.kill();
         }
 
         create() {
             this.levelBase = new LevelBase();
-            this.levelManager = new LevelManager(this.game, this.levelBase, 'Level3');
+            this.levelManager = new LevelManager(this.game, this.levelBase, 'Level3', this.soundManager);
 
             // ---- level genesis
 
             this.levelManager.createBasicLevelStuff('tileMap_level2');
 
             // ---- player
-            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives);
+            this.player = new Diguifi.Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
             this.game.camera.follow(this.player);
 
             // ---- hud and game
