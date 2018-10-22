@@ -30,9 +30,14 @@
             else
                 player.movingRight = false;
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+                player.pressingUp = true;
                 if (player.body.blocked.down)
                     player.jump();
+            }
+            else {
+                player.pressingUp = false;
+            }
 
             if (!this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                 if (!player.body.blocked.down)
@@ -42,8 +47,8 @@
         getVirtualButtonsInput(player) {
             this.buttonjump = this.game.add.button(600, 310, 'buttonjump', null, this, 0, 1, 0, 1);
             this.buttonjump.fixedToCamera = true;
-            this.buttonjump.events.onInputDown.add(function () { if (player.body.blocked.down)player.jump(); });
-            this.buttonjump.events.onInputUp.add(function () { if (!player.body.blocked.down) player.fall(); });
+            this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)player.jump(); });
+            this.buttonjump.events.onInputUp.add(function () { player.pressingUp = false; if (!player.body.blocked.down) player.fall(); });
 
             this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
             this.buttonfire.fixedToCamera = true;

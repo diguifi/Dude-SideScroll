@@ -144,7 +144,11 @@
                 if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
                     this.soundManager.enemydamage.play();
                     enemy.body.enable = false;
-                    player.body.velocity.y = -80;
+                    player.jumping = false;
+                    if (player.pressingUp)
+                        player.body.velocity.y = -player.jumpStrength - player.jumpBonus - 2;
+                    else
+                        player.body.velocity.y = -player.jumpStrength/2;
                     enemy.kill();
                 }
                 else {

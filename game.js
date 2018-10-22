@@ -29,9 +29,14 @@ var Diguifi;
                 player.movingRight = true;
             else
                 player.movingRight = false;
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+                player.pressingUp = true;
                 if (player.body.blocked.down)
                     player.jump();
+            }
+            else {
+                player.pressingUp = false;
+            }
             if (!this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
                 if (!player.body.blocked.down)
                     player.fall();
@@ -39,9 +44,9 @@ var Diguifi;
         ControllerManager.prototype.getVirtualButtonsInput = function (player) {
             this.buttonjump = this.game.add.button(600, 310, 'buttonjump', null, this, 0, 1, 0, 1);
             this.buttonjump.fixedToCamera = true;
-            this.buttonjump.events.onInputDown.add(function () { if (player.body.blocked.down)
+            this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)
                 player.jump(); });
-            this.buttonjump.events.onInputUp.add(function () { if (!player.body.blocked.down)
+            this.buttonjump.events.onInputUp.add(function () { player.pressingUp = false; if (!player.body.blocked.down)
                 player.fall(); });
             this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
             this.buttonfire.fixedToCamera = true;
@@ -396,7 +401,11 @@ var Diguifi;
                 if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
                     this.soundManager.enemydamage.play();
                     enemy.body.enable = false;
-                    player.body.velocity.y = -80;
+                    player.jumping = false;
+                    if (player.pressingUp)
+                        player.body.velocity.y = -player.jumpStrength - player.jumpBonus - 2;
+                    else
+                        player.body.velocity.y = -player.jumpStrength / 2;
                     enemy.kill();
                 }
                 else {
@@ -479,6 +488,7 @@ var Diguifi;
             _this.speed = speed;
             _this.jumpStrength = gravity + (gravity * 0.4);
             _this.jumping = false;
+            _this.pressingUp = false;
             // sprite size
             _this.size = 1.8;
             _this.scale.setTo(_this.size, _this.size);
@@ -509,11 +519,13 @@ var Diguifi;
                 this.animations.frame = 0;
             if (this.playingOnDesktop)
                 this.controller.getKeyboardInput(this);
-            if (this.jumping)
+            if (this.jumping) {
                 if (this.body.blocked.down) {
+                    this.soundManager.fall.volume = 0.3;
                     this.soundManager.fall.play();
                     this.jumping = false;
                 }
+            }
         };
         Player.prototype.moveRight = function () {
             if (this.position.x < this.game.world.bounds.bottomRight.x) {

@@ -17,6 +17,7 @@
             this.speed = speed;
             this.jumpStrength = gravity + (gravity * 0.4);
             this.jumping = false;
+            this.pressingUp = false;
 
             // sprite size
             this.size = 1.8;
@@ -54,6 +55,7 @@
         jumpStrength: number;
         jumpBonus: number;
         jumping: boolean;
+        pressingUp: boolean;
         running: boolean;
         localGravity: number;
         movingLeft: boolean;
@@ -74,11 +76,13 @@
             if (this.playingOnDesktop)
                 this.controller.getKeyboardInput(this);
 
-            if (this.jumping)
+            if (this.jumping) {
                 if (this.body.blocked.down) {
+                    this.soundManager.fall.volume = 0.3;
                     this.soundManager.fall.play();
                     this.jumping = false;
                 }
+            }
         }
 
         moveRight() {
