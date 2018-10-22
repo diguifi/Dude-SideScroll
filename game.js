@@ -269,16 +269,8 @@ var Diguifi;
         Level2.prototype.update = function () {
             if (this.player.lives < 0)
                 this.game.state.start('MainMenu');
-            if (this.player.y > 450)
-                this.killPlayer();
             this.game.physics.arcade.collide(this.player, this.levelBase.walls);
             this.levelManager.updateBasicLevelStuff(this.player);
-        };
-        Level2.prototype.killPlayer = function () {
-            this.soundManager.damage.play();
-            this.player.lives--;
-            this.player.position.x = 15;
-            this.player.position.y = 300;
         };
         Level2.prototype.render = function () {
             this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
@@ -409,15 +401,11 @@ var Diguifi;
                     enemy.kill();
                 }
                 else {
-                    this.soundManager.damage.play();
-                    player.lives--;
-                    player.position.x = 6;
+                    player.playerDamage();
                 }
             }
             else {
-                this.soundManager.damage.play();
-                player.lives--;
-                player.position.x = 6;
+                player.playerDamage();
             }
         };
         LevelManager.prototype.gemSetup = function (gem) {
@@ -526,6 +514,14 @@ var Diguifi;
                     this.jumping = false;
                 }
             }
+            if (this.y > 450)
+                this.playerDamage();
+        };
+        Player.prototype.playerDamage = function () {
+            this.soundManager.damage.play();
+            this.lives--;
+            this.position.x = 10;
+            this.position.y = 300;
         };
         Player.prototype.moveRight = function () {
             if (this.position.x < this.game.world.bounds.bottomRight.x) {

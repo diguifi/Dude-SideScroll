@@ -83,6 +83,16 @@
                     this.jumping = false;
                 }
             }
+
+            if (this.y > 450)
+                this.playerDamage();
+        }
+
+        public playerDamage() {
+            this.soundManager.damage.play();
+            this.lives--;
+            this.position.x = 10;
+            this.position.y = 300;
         }
 
         moveRight() {

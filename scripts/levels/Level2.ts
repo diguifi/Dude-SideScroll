@@ -37,19 +37,9 @@
         update() {
             if (this.player.lives < 0)
                 this.game.state.start('MainMenu');
-
-            if (this.player.y > 450)
-                this.killPlayer();
-
+            
             this.game.physics.arcade.collide(this.player, this.levelBase.walls);
             this.levelManager.updateBasicLevelStuff(this.player);
-        }
-
-        killPlayer() {
-            this.soundManager.damage.play();
-            this.player.lives--;
-            this.player.position.x = 15;
-            this.player.position.y = 300;
         }
 
         render() {

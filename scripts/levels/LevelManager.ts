@@ -152,15 +152,11 @@
                     enemy.kill();
                 }
                 else {
-                    this.soundManager.damage.play();
-                    player.lives--;
-                    player.position.x = 6;
+                    player.playerDamage();
                 }
 
             } else {
-                this.soundManager.damage.play();
-                player.lives--;
-                player.position.x = 6;
+                player.playerDamage();
             }
         }
 
