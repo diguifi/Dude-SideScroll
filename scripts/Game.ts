@@ -19,6 +19,7 @@
             this.game.state.add('MainMenu', MainMenu, false);
             this.game.state.add('Level1', Level1, false);
             this.game.state.add('Level2', Level2, false);
+            this.game.state.add('Level3', Level3, false);
         }
 
         game: Phaser.Game;

@@ -131,6 +131,7 @@ var Diguifi;
             this.game.state.add('MainMenu', Diguifi.MainMenu, false);
             this.game.state.add('Level1', Diguifi.Level1, false);
             this.game.state.add('Level2', Diguifi.Level2, false);
+            this.game.state.add('Level3', Diguifi.Level3, false);
         }
         Game.prototype.preload = function () {
             this.game.time.advancedTiming = true;
@@ -278,6 +279,43 @@ var Diguifi;
         return Level2;
     }(Phaser.State));
     Diguifi.Level2 = Level2;
+})(Diguifi || (Diguifi = {}));
+var Diguifi;
+(function (Diguifi) {
+    var Level3 = /** @class */ (function (_super) {
+        __extends(Level3, _super);
+        function Level3() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Level3.prototype.init = function (player, soundManager) {
+            this.lastPlayer = player;
+            this.soundManager = soundManager;
+            player.kill();
+        };
+        Level3.prototype.create = function () {
+            this.levelBase = new Diguifi.LevelBase();
+            this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
+            // ---- level genesis
+            this.levelManager.createBasicLevelStuff('tileMap_level3');
+            // ---- player
+            this.player = new Diguifi.Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
+            this.game.camera.follow(this.player);
+            // ---- hud and game
+            this.hud = new Diguifi.Hud(this.game, this.player);
+            this.game.world.bringToTop(this.hud);
+        };
+        Level3.prototype.update = function () {
+            if (this.player.lives < 0)
+                this.game.state.start('MainMenu');
+            this.game.physics.arcade.collide(this.player, this.levelBase.walls);
+            this.levelManager.updateBasicLevelStuff(this.player);
+        };
+        Level3.prototype.render = function () {
+            this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
+        };
+        return Level3;
+    }(Phaser.State));
+    Diguifi.Level3 = Level3;
 })(Diguifi || (Diguifi = {}));
 var Diguifi;
 (function (Diguifi) {
@@ -615,6 +653,7 @@ var Diguifi;
             this.game.load.spritesheet('jungle_tileset', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
             this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json?v=1', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.tilemap('tileMap_level2', 'assets/levels/jungle2.json?v=1', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.tilemap('tileMap_level3', 'assets/levels/jungle3.json?v=1', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
             this.game.load.image('shift', 'assets/sprites/shift.png');
             this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);

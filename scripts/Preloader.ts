@@ -29,6 +29,8 @@
 
             this.game.load.tilemap('tileMap_level2', 'assets/levels/jungle2.json?v=1', null, Phaser.Tilemap.TILED_JSON);
 
+            this.game.load.tilemap('tileMap_level3', 'assets/levels/jungle3.json?v=1', null, Phaser.Tilemap.TILED_JSON);
+
             this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
             this.game.load.image('shift', 'assets/sprites/shift.png');
 

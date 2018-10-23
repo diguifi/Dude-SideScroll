@@ -38,8 +38,9 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
-    <TypeScriptOutFile>game.js</TypeScriptOutFile>
-    <TypeScriptOutDir />
+    <TypeScriptOutFile>dist\game.js</TypeScriptOutFile>
+    <TypeScriptOutDir>
+    </TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
@@ -98,6 +99,7 @@
     <Content Include="build\phaser.map" />
     <Content Include="assets\levels\jungle1.json" />
     <Content Include="assets\levels\jungle2.json" />
+    <Content Include="assets\levels\jungle3.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -121,6 +123,7 @@
     <TypeScriptCompile Include="scripts\Hud.ts" />
     <TypeScriptCompile Include="scripts\levels\Level1.ts" />
     <TypeScriptCompile Include="scripts\levels\Level2.ts" />
+    <TypeScriptCompile Include="scripts\levels\Level3.ts" />
     <TypeScriptCompile Include="scripts\levels\LevelBase.ts" />
     <TypeScriptCompile Include="scripts\levels\LevelManager.ts" />
     <TypeScriptCompile Include="scripts\MainMenu.ts" />
