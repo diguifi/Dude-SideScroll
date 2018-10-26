@@ -1,7 +1,7 @@
 ﻿module Diguifi {
 
     export class LevelManager {
-        private level: LevelBase;
+        public level: LevelBase;
         private game: Phaser.Game;
         private nextLevel: string;
         private soundManager: SoundManager;

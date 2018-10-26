@@ -12,6 +12,7 @@
 
             this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
             this.game.load.spritesheet('redgem', 'assets/sprites/itens/spr_coin_ver.png?v=1', 16, 16, 4);
+            this.game.load.spritesheet('torch', 'assets/sprites/animated_torch.png?v=1', 8, 26, 9);
             this.game.load.image('heart', 'assets/sprites/itens/heart.png');
 
             this.game.load.image('titlepage', 'assets/images/back.png');

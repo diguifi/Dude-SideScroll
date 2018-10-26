@@ -297,8 +297,10 @@ var Diguifi;
             this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
             // ---- level genesis
             this.levelManager.createBasicLevelStuff('tileMap_level3');
+            // ---- Torch
+            this.torches = [new Diguifi.Torch(this.game, 200, 250)];
             // ---- player
-            this.player = new Diguifi.Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
+            this.player = new Diguifi.Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
             this.game.camera.follow(this.player);
             // ---- hud and game
             this.hud = new Diguifi.Hud(this.game, this.player);
@@ -641,6 +643,7 @@ var Diguifi;
             this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
             this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
             this.game.load.spritesheet('redgem', 'assets/sprites/itens/spr_coin_ver.png?v=1', 16, 16, 4);
+            this.game.load.spritesheet('torch', 'assets/sprites/animated_torch.png?v=1', 8, 26, 9);
             this.game.load.image('heart', 'assets/sprites/itens/heart.png');
             this.game.load.image('titlepage', 'assets/images/back.png');
             this.game.load.image('logo', 'assets/images/logo.png');
@@ -699,5 +702,53 @@ var Diguifi;
         return SoundManager;
     }());
     Diguifi.SoundManager = SoundManager;
+})(Diguifi || (Diguifi = {}));
+var Diguifi;
+(function (Diguifi) {
+    var Torch = /** @class */ (function (_super) {
+        __extends(Torch, _super);
+        function Torch(game, x, y) {
+            var _this = _super.call(this, game, x, y, 'torch', 0) || this;
+            _this.lightSize = 8;
+            _this.tweenCycle = 0;
+            _this.game = game;
+            // testeeeeeeeeeee
+            _this.shadowTexture = _this.game.add.bitmapData(_this.game.width + 100, _this.game.height + 100);
+            _this.lightSprite = _this.game.add.image(_this.game.camera.x, _this.game.camera.y, _this.shadowTexture);
+            _this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+            // --------------
+            // sprite size
+            _this.size = 2.5;
+            _this.scale.setTo(_this.size, _this.size);
+            // animation
+            _this.frame = 3;
+            _this.animations.add('fire', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true);
+            _this.animations.play('fire');
+            // sprite anchor
+            _this.anchor.setTo(0.5, 0);
+            game.add.existing(_this);
+            return _this;
+        }
+        Torch.prototype.update = function () {
+            this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
+            this.updateShadowTexture();
+        };
+        Torch.prototype.updateShadowTexture = function () {
+            this.shadowTexture.clear();
+            this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.75)';
+            this.shadowTexture.context.fillRect(-25, -25, this.game.width + 100, this.game.height + 100);
+            var radius = 150 + this.game.rnd.integerInRange(1, 20), torchX = this.x - this.game.camera.x, torchY = this.y - this.game.camera.y;
+            var gradient = this.shadowTexture.context.createRadialGradient(torchX, torchY, 100 * 0.75, torchX, torchY, radius);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+            this.shadowTexture.context.beginPath();
+            this.shadowTexture.context.fillStyle = gradient;
+            this.shadowTexture.context.arc(torchX, torchY, radius, 0, Math.PI * 2, false);
+            this.shadowTexture.context.fill();
+            this.shadowTexture.dirty = true;
+        };
+        return Torch;
+    }(Phaser.Sprite));
+    Diguifi.Torch = Torch;
 })(Diguifi || (Diguifi = {}));
 //# sourceMappingURL=game.js.map
