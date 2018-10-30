@@ -250,13 +250,15 @@ var Diguifi;
         function Level2() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Level2.prototype.init = function (player, soundManager) {
+        Level2.prototype.init = function (player, soundManager, previousLevelBase, previousLevelManager) {
             this.lastPlayer = player;
             this.soundManager = soundManager;
-            player.kill();
+            this.levelBase = previousLevelBase;
+            player.destroy();
+            previousLevelBase = null;
+            previousLevelManager = null;
         };
         Level2.prototype.create = function () {
-            this.levelBase = new Diguifi.LevelBase();
             this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level3', this.soundManager);
             // ---- level genesis
             this.levelManager.createBasicLevelStuff('tileMap_level2');
@@ -287,13 +289,15 @@ var Diguifi;
         function Level3() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Level3.prototype.init = function (player, soundManager) {
+        Level3.prototype.init = function (player, soundManager, previousLevelBase, previousLevelManager) {
             this.lastPlayer = player;
             this.soundManager = soundManager;
-            player.kill();
+            this.levelBase = previousLevelBase;
+            player.destroy();
+            previousLevelBase = null;
+            previousLevelManager = null;
         };
         Level3.prototype.create = function () {
-            this.levelBase = new Diguifi.LevelBase();
             this.levelManager = new Diguifi.LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
             // ---- level genesis
             this.levelManager.createBasicLevelStuff('tileMap_level3');
@@ -438,7 +442,7 @@ var Diguifi;
                         player.body.velocity.y = -player.jumpStrength - player.jumpBonus - 2;
                     else
                         player.body.velocity.y = -player.jumpStrength / 2;
-                    enemy.kill();
+                    enemy.destroy();
                 }
                 else {
                     player.playerDamage();
@@ -461,11 +465,14 @@ var Diguifi;
         LevelManager.prototype.gemsCollect = function (player, gem) {
             this.soundManager.gemcatch.play();
             player.gems++;
-            gem.kill();
+            gem.destroy();
         };
         LevelManager.prototype.goNextLevel = function (player) {
             this.soundManager.gemcatch.play();
-            this.game.state.start(this.nextLevel, true, false, player, this.soundManager);
+            this.level.enemies.forEach(function (enemy) {
+                enemy.destroy();
+            });
+            this.game.state.start(this.nextLevel, true, false, player, this.soundManager, this.level, this);
         };
         return LevelManager;
     }());

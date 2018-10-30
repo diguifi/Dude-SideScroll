@@ -149,7 +149,7 @@
                         player.body.velocity.y = -player.jumpStrength - player.jumpBonus - 2;
                     else
                         player.body.velocity.y = -player.jumpStrength/2;
-                    enemy.kill();
+                    enemy.destroy();
                 }
                 else {
                     player.playerDamage();
@@ -175,12 +175,15 @@
         private gemsCollect(player, gem) {
             this.soundManager.gemcatch.play();
             player.gems++;
-            gem.kill();
+            gem.destroy();
         }
 
         private goNextLevel(player) {
             this.soundManager.gemcatch.play();
-            this.game.state.start(this.nextLevel, true, false, player, this.soundManager);
+            this.level.enemies.forEach(function (enemy) {
+                enemy.destroy();
+            });
+            this.game.state.start(this.nextLevel, true, false, player, this.soundManager, this.level, this);
         }
     }
 }

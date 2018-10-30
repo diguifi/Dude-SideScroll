@@ -10,14 +10,18 @@
         levelBase: LevelBase;
         soundManager: SoundManager;
 
-        init (player, soundManager) {
+        init(player: Player, soundManager: SoundManager,
+            previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
             this.lastPlayer = player;
             this.soundManager = soundManager;
-            player.kill();
+            this.levelBase = previousLevelBase;
+            player.destroy();
+
+            previousLevelBase = null;
+            previousLevelManager = null;
         }
 
         create() {
-            this.levelBase = new LevelBase();
             this.levelManager = new LevelManager(this.game, this.levelBase, 'Level3', this.soundManager);
 
             // ---- level genesis

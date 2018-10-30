@@ -11,14 +11,19 @@
         soundManager: SoundManager;
         torches: Torch[];
 
-        init(player, soundManager) {
+        init(player: Player, soundManager: SoundManager,
+            previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
             this.lastPlayer = player;
             this.soundManager = soundManager;
-            player.kill();
+            this.levelBase = previousLevelBase;
+            player.destroy();
+
+            previousLevelBase = null;
+            previousLevelManager = null;
         }
 
         create() {
-            this.levelBase = new LevelBase();
+            
             this.levelManager = new LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
 
             // ---- level genesis
