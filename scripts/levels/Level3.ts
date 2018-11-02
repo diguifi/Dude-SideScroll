@@ -35,7 +35,7 @@
             this.torches = [new Torch(this.game, 200, 250)];
 
             // ---- player
-            this.player = new Diguifi.Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
+            this.player = new Diguifi.Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
             this.game.camera.follow(this.player);
 
             // ---- hud and game
