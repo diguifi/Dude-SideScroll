@@ -1,0 +1,37 @@
+{
+  "name": "Dude-SideScroll",
+  "version": "1.0.0",
+  "main": "Game.ts",
+  "dependencies": {
+    "phaser-ce": "2.11.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.2.1",
+    "typescript": "^3.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "scripts": {
+    "dev": "webpack --mode development && webpack-dev-server --mode development",
+    "build": "webpack --mode production && webpack-dev-server --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diguifi/Dude-SideScroll.git"
+  },
+  "keywords": [
+    "Phaser",
+    "Phaser3",
+    "Game",
+    "Games",
+    "Gaming",
+    "Typescript"
+  ],
+  "author": "Diego Penha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diguifi/Dude-SideScroll/issues"
+  },
+  "homepage": "https://github.com/diguifi/Dude-SideScroll#readme"
+}
