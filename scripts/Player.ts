@@ -11,6 +11,8 @@ export class Player extends Phaser.Sprite {
         this.lives = lives;
 
         // attributes
+        this.spawnX = x;
+        this.spawnY = y;
         this.playingOnDesktop = this.game.device.desktop;
         this.localGravity = gravity;
         this.speedBonus = 50;
@@ -45,6 +47,8 @@ export class Player extends Phaser.Sprite {
         game.add.existing(this);
     }
 
+    spawnX: number;
+    spawnY: number;
     animSpeeds;
     controller;
     soundManager: SoundManager;
@@ -92,8 +96,8 @@ export class Player extends Phaser.Sprite {
     public playerDamage() {
         this.soundManager.damage.play();
         this.lives--;
-        this.position.x = 10;
-        this.position.y = 300;
+        this.position.x = this.spawnX;
+        this.position.y = this.spawnY;
     }
 
     moveRight() {

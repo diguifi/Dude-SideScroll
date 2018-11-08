@@ -4,6 +4,7 @@ import { SoundManager } from "../SoundManager";
 import { LevelManager } from "./LevelManager";
 import { LevelBase } from "./LevelBase";
 import { Hud } from "../Hud";
+import { Bat } from "../Bat";
 
 export class Level3 extends Phaser.State {
 
@@ -31,9 +32,14 @@ export class Level3 extends Phaser.State {
             
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
 
-        // ---- level genesis
+        // ---- level genesis (without parallax, so must set each one)
 
-        this.levelManager.createBasicLevelStuff('tileMap_level3');
+        this.levelManager.createMap('tileMap_level3');
+        this.game.world.bringToTop(this.levelManager.level.back);
+        this.game.world.bringToTop(this.levelManager.level.walls);
+        this.levelManager.createGreenEnemies();
+        this.levelManager.createGems();
+        this.levelManager.createRedGems();
 
         // ---- Torch
 
@@ -42,6 +48,10 @@ export class Level3 extends Phaser.State {
         // ---- player
         this.player = new Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
         this.game.camera.follow(this.player);
+
+        // ---- bats
+
+        this.levelManager.createBats(this.player);
 
         // ---- hud and game
 
@@ -54,7 +64,10 @@ export class Level3 extends Phaser.State {
             this.game.state.start('MainMenu');
 
         this.game.physics.arcade.collide(this.player, this.levelBase.walls);
-        this.levelManager.updateBasicLevelStuff(this.player);
+        this.levelManager.updateRedGemsInteraction(this.player);
+        this.levelManager.updateGemsInteraction(this.player);
+        this.levelManager.updateEnemiesInteraction(this.player);
+        this.levelManager.updateBatsInteraction(this.player);
     }
 
     render() {

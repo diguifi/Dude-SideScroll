@@ -98,20 +98,4 @@ export class Bat extends Phaser.Sprite {
             this.player.position.x < this.position.x + this.fieldOfView) && 
             this.player.position.y < this.position.y + this.fieldOfView);
     }
-
-    private moveRight() {
-        this.body.velocity.x = this.speed;
-
-        if (this.scale.x == -this.size) {
-            this.scale.x = this.size;
-        }
-    }
-
-    private moveLeft() {
-        this.body.velocity.x = -this.speed;
-
-        if (this.scale.x == this.size) {
-            this.scale.x = -this.size;
-        }
-    }
 }

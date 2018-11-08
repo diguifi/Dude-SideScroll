@@ -2,12 +2,14 @@
 import { LevelBase } from "./LevelBase";
 import { Player } from "../Player";
 import { Enemy } from "../Enemy";
+import { Bat } from "../Bat";
 
 export class LevelManager {
     public level: LevelBase;
     private game: Phaser.Game;
     private nextLevel: string;
     private soundManager: SoundManager;
+    private playerRef: Player;
 
     constructor(game, level, nextLevel, soundManager) {
         this.game = game;
@@ -89,6 +91,13 @@ export class LevelManager {
         }.bind(this));
     }
 
+    public createBats(player: Player) {
+        this.playerRef = player;
+        this.level.map.objects.bats.forEach(function (data) {
+            this.level.bats.push(new Bat(this.game, data.x * 2, data.y * 1.5, this.game.physics.arcade.gravity.y, 125, this.playerRef));
+        }.bind(this));
+    }
+
     public createGems() {
         this.level.gems = this.game.add.physicsGroup();
         this.level.map.createFromObjects('gems', 'gem1', 'greygem', 0, true, false, this.level.gems);
@@ -130,6 +139,11 @@ export class LevelManager {
     public updateEnemiesInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.enemies, this.level.walls);
         this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap.bind(this));
+    }
+
+    public updateBatsInteraction(player: Player) {
+        this.game.physics.arcade.collide(this.level.bats, this.level.walls);
+        this.game.physics.arcade.overlap(player, this.level.bats, this.enemyOverlap.bind(this));
     }
 
     public updateGemsInteraction(player: Player) {

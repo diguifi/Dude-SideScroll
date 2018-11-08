@@ -1,6 +1,7 @@
 ﻿import { Player } from "../Player";
 import { Hud } from "../Hud";
 import { Enemy } from "../Enemy";
+import { Bat } from "../Bat";
 
 export class LevelBase {
     music: Phaser.Sound;
@@ -8,6 +9,7 @@ export class LevelBase {
     hud: Hud;
     gems;
     redGems;
+    bats: Bat[] = [];
     enemies: Enemy[] = [];
     enemySpeed = 100;
     map;
