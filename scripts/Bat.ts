@@ -51,9 +51,7 @@ export class Bat extends Phaser.Sprite {
         this.body.velocity.x = 0;
 
         if (this.isSleeping) {
-            if((this.player.position.x > this.position.x - this.fieldOfView &&
-               this.player.position.x < this.position.x + this.fieldOfView) && 
-               this.player.position.y < this.position.y + this.fieldOfView){
+            if(this.checkIfPlayerIsInRange()){
                 this.wake();
             } 
         }
@@ -63,18 +61,25 @@ export class Bat extends Phaser.Sprite {
         }
     }
 
-    wake() {
+    private wake() {
         this.wakeAnim.play();
+        this.fieldOfView += 75;
         this.isSleeping = false;
     }
 
-    startFly() {
+    private startFly() {
         this.flyAnim.play();
         this.isChasing = true;
     }
 
-    chase() {
-        this.game.physics.arcade.moveToObject(this, this.player, this.speed);
+    private chase() {
+        if(this.checkIfPlayerIsInRange()){
+            this.game.physics.arcade.moveToObject(this, this.player, this.speed);
+        }
+        else {
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+        }
 
         if (this.body.velocity.x < 0) {
             if (this.scale.x == this.size) {
@@ -88,7 +93,13 @@ export class Bat extends Phaser.Sprite {
         }
     }
 
-    moveRight() {
+    private checkIfPlayerIsInRange() {
+        return ((this.player.position.x > this.position.x - this.fieldOfView &&
+            this.player.position.x < this.position.x + this.fieldOfView) && 
+            this.player.position.y < this.position.y + this.fieldOfView);
+    }
+
+    private moveRight() {
         this.body.velocity.x = this.speed;
 
         if (this.scale.x == -this.size) {
@@ -96,7 +107,7 @@ export class Bat extends Phaser.Sprite {
         }
     }
 
-    moveLeft() {
+    private moveLeft() {
         this.body.velocity.x = -this.speed;
 
         if (this.scale.x == this.size) {
