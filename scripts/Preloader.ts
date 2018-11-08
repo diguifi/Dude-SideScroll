@@ -9,6 +9,7 @@ export class Preloader extends Phaser.State {
     preload() {
         this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 4);
         this.game.load.image('enemy1', 'assets/sprites/enemy.png?v=1');
+        this.game.load.spritesheet('bat', 'assets/sprites/bat_spritesheet.png?v=1', 16, 16, 10);
 
         this.game.load.spritesheet('greygem', 'assets/sprites/itens/spr_coin_cin.png?v=1', 16, 16, 4);
         this.game.load.spritesheet('redgem', 'assets/sprites/itens/spr_coin_ver.png?v=1', 16, 16, 4);

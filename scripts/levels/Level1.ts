@@ -1,4 +1,5 @@
 ﻿import { Player } from "../Player";
+import { Bat } from "../Bat";
 import { SoundManager } from "../SoundManager";
 import { LevelManager } from "./LevelManager";
 import { LevelBase } from "./LevelBase";
@@ -13,6 +14,7 @@ export class Level1 extends Phaser.State {
     levelManager: LevelManager;
     levelBase: LevelBase;
     soundManager: SoundManager;
+    bat: Bat;
 
     init(soundManager) {
         this.soundManager = soundManager;
@@ -42,6 +44,8 @@ export class Level1 extends Phaser.State {
 
         this.player = new Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
         this.game.camera.follow(this.player);
+
+        // this.bat = new Bat(this.game, 300, 20, this.game.physics.arcade.gravity.y, 125, this.player);
 
         // ---- hud and game
 
