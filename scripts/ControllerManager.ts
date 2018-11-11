@@ -9,10 +9,10 @@ export class ControllerManager {
     }
 
     game: Phaser.Game;
-    buttonjump;
-    buttonfire;
-    buttonright;
-    buttonleft;
+    buttonjump: Phaser.Button;
+    buttonfire: Phaser.Button;
+    buttonright: Phaser.Button;
+    buttonleft: Phaser.Button;
 
     getKeyboardInput(player) {
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))

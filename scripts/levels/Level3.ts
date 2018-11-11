@@ -4,7 +4,6 @@ import { SoundManager } from "../SoundManager";
 import { LevelManager } from "./LevelManager";
 import { LevelBase } from "./LevelBase";
 import { Hud } from "../Hud";
-import { Bat } from "../Bat";
 
 export class Level3 extends Phaser.State {
 
