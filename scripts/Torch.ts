@@ -3,8 +3,6 @@
     light: Phaser.Sprite;
     lightSize: number = 8;
     size: number;
-    tween;
-    tweenCycle: number = 0;
     shadowTexture: Phaser.BitmapData;
     lightSprite: Phaser.Image;
 
@@ -12,7 +10,7 @@
         super(game, x, y, 'torch', 0);
         this.game = game;
 
-        // testeeeeeeeeeee
+        // shadow setup
         this.shadowTexture = this.game.add.bitmapData(this.game.width + 100, this.game.height + 100);
 
         this.lightSprite = this.game.add.image(this.game.camera.x, this.game.camera.y, this.shadowTexture);
@@ -36,11 +34,12 @@
     }
 
     update() {
-        this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
         this.updateShadowTexture();
     }
 
     updateShadowTexture() {
+        this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
+
         this.shadowTexture.clear();
         this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.75)';
         this.shadowTexture.context.fillRect(-25, -25, this.game.width + 100, this.game.height + 100);

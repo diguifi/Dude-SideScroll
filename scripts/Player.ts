@@ -50,7 +50,7 @@ export class Player extends Phaser.Sprite {
     spawnX: number;
     spawnY: number;
     animSpeeds;
-    controller;
+    controller: ControllerManager;
     soundManager: SoundManager;
     lives: number;
     gems: number;
