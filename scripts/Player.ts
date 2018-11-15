@@ -90,14 +90,22 @@ export class Player extends Phaser.Sprite {
         }
 
         if (this.y > 450)
-            this.playerDamage();
+            this.playerDamage(this.soundManager);
     }
 
-    public playerDamage() {
+    public playerDamage(soundManager: SoundManager) {
         this.soundManager.damage.play();
         this.lives--;
         this.position.x = this.spawnX;
         this.position.y = this.spawnY;
+
+        if (this.lives < 0){
+            this.soundManager.music.stop();
+            soundManager.music.stop();
+            this.soundManager = null;
+            soundManager = null;
+            this.game.state.start('MainMenu');
+        }
     }
 
     moveRight() {

@@ -50,9 +50,6 @@ export class Level1 extends Phaser.State {
     }
 
     update() {
-        if (this.player.lives < 0)
-            this.game.state.start('MainMenu');
-
         if (this.game.device.desktop)
             this.showDesktopButtons();
         else

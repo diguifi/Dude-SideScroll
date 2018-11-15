@@ -169,11 +169,11 @@ export class LevelManager {
                 enemy.destroy();
             }
             else {
-                player.playerDamage();
+                player.playerDamage(this.soundManager);
             }
 
         } else {
-            player.playerDamage();
+            player.playerDamage(this.soundManager);
         }
     }
 
