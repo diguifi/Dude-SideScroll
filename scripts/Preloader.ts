@@ -28,10 +28,9 @@ export class Preloader extends Phaser.State {
         this.game.load.image('jungle_paralax2', 'assets/levels/jungle/plx-2.png?v=1');
         this.game.load.spritesheet('jungle_tileset', 'assets/levels/jungle/jungle_tileset.png', 16, 16);
         this.game.load.tilemap('tileMap_level1', 'assets/levels/jungle1.json?v=1', null, Phaser.Tilemap.TILED_JSON);
-
         this.game.load.tilemap('tileMap_level2', 'assets/levels/jungle2.json?v=1', null, Phaser.Tilemap.TILED_JSON);
-
         this.game.load.tilemap('tileMap_level3', 'assets/levels/jungle3.json?v=1', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('tileMap_level4', 'assets/levels/jungle4.json?v=1', null, Phaser.Tilemap.TILED_JSON);
 
         this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
         this.game.load.image('shift', 'assets/sprites/shift.png');
