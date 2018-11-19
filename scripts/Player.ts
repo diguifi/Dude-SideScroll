@@ -21,6 +21,8 @@ export class Player extends Phaser.Sprite {
         this.jumpStrength = gravity + (gravity * 0.4);
         this.jumping = false;
         this.pressingUp = false;
+        this.dead = false;
+        this.fadeComplete = false;
 
         // sprite size
         this.size = 1.8;
@@ -29,6 +31,7 @@ export class Player extends Phaser.Sprite {
         // sprite anchor
         this.anchor.setTo(0.5, 0);
         this.animations.add('walk', [0, 1, 2, 3], 10, true);
+        this.animations.add('damaged', [4, 5, 6, 7], 10, false);
         this.animSpeeds = [8, 13];
 
         // physics
@@ -53,6 +56,8 @@ export class Player extends Phaser.Sprite {
     controller: ControllerManager;
     soundManager: SoundManager;
     lives: number;
+    dead: boolean;
+    fadeComplete: boolean;
     gems: number;
     size: number;
     speed: number;
@@ -69,43 +74,62 @@ export class Player extends Phaser.Sprite {
 
     update() {
         this.body.velocity.x = 0;
-
-        if (this.movingRight)
+        if (!this.dead){
+            if (this.movingRight)
             this.moveRight();
-        else if (this.movingLeft)
-            this.moveLeft();
-        else
-            this.animations.frame = 0
+            else if (this.movingLeft)
+                this.moveLeft();
+            else
+                this.animations.frame = 0
 
 
-        if (this.playingOnDesktop)
-            this.controller.getKeyboardInput(this);
+            if (this.playingOnDesktop)
+                this.controller.getKeyboardInput(this);
 
-        if (this.jumping) {
-            if (this.body.blocked.down) {
-                this.soundManager.fall.volume = 0.3;
-                this.soundManager.fall.play();
-                this.jumping = false;
+            if (this.jumping) {
+                if (this.body.blocked.down) {
+                    this.soundManager.fall.volume = 0.3;
+                    this.soundManager.fall.play();
+                    this.jumping = false;
+                }
             }
-        }
 
-        if (this.y > 450)
-            this.playerDamage(this.soundManager);
+            if (this.y > 450)
+                this.playerDamage(this.soundManager);
+        }
+        else {
+            if (this.fadeComplete)
+            this.playerDamageEffects(this.soundManager);
+        }
     }
 
     public playerDamage(soundManager: SoundManager) {
         this.soundManager.damage.play();
+        this.dead = true;
+        this.body.enable = false;
+        this.animations.play('damaged');
+        this.game.camera.fade(0x00000, 500);
+        this.game.camera.onFadeComplete.add(this.fadeCompleted,this);
+    }
+
+    private fadeCompleted(){
+        this.fadeComplete = true;
+    }
+
+    private playerDamageEffects(soundManager: SoundManager) {
+        this.game.camera.resetFX();
+        this.body.enable = true;
         this.lives--;
         this.position.x = this.spawnX;
         this.position.y = this.spawnY;
+        this.dead = false;
 
         if (this.lives < 0){
             this.soundManager.music.stop();
-            soundManager.music.stop();
             this.soundManager = null;
-            soundManager = null;
             this.game.state.start('MainMenu');
         }
+        this.fadeComplete = false;
     }
 
     moveRight() {
