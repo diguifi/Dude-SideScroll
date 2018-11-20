@@ -3,6 +3,7 @@ import { SoundManager } from "../SoundManager";
 import { LevelManager } from "./LevelManager";
 import { LevelBase } from "./LevelBase";
 import { Hud } from "../Hud";
+import { Shield } from "../items/Shield";
 
 export class Level1 extends Phaser.State {
 
@@ -13,6 +14,7 @@ export class Level1 extends Phaser.State {
     levelManager: LevelManager;
     levelBase: LevelBase;
     soundManager: SoundManager;
+    shield;
 
     init(soundManager) {
         this.soundManager = soundManager;
@@ -43,6 +45,8 @@ export class Level1 extends Phaser.State {
         this.player = new Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
         this.game.camera.follow(this.player);
 
+        //this.shield = new Shield(this.game, 300, 200, this.game.physics.arcade.gravity.y);
+
         // ---- hud and game
 
         this.hud = new Hud(this.game, this.player);
@@ -56,6 +60,7 @@ export class Level1 extends Phaser.State {
             this.showMobileButtons();
 
         this.game.physics.arcade.collide(this.player, this.levelBase.walls);
+        //this.game.physics.arcade.collide(this.shield, this.levelBase.walls);
         this.levelManager.updateBasicLevelStuff(this.player);
     }
 
