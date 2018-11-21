@@ -3,6 +3,7 @@ import { LevelBase } from "./LevelBase";
 import { Player } from "../Player";
 import { Enemy } from "../Enemy";
 import { Bat } from "../Bat";
+import { Shield } from "../items/Shield";
 
 export class LevelManager {
     public level: LevelBase;
@@ -27,12 +28,14 @@ export class LevelManager {
         this.createGreenEnemies();
         this.createGems();
         this.createRedGems();
+        this.createItems();
     }
 
     public updateBasicLevelStuff(player: Player) {
         this.updateRedGemsInteraction(player);
         this.updateGemsInteraction(player);
         this.updateEnemiesInteraction(player);
+        this.updateItemsInteraction(player);
         this.updateParallax(player.speed);
     }
 
@@ -91,6 +94,14 @@ export class LevelManager {
         }.bind(this));
     }
 
+    public createItems() {
+        this.level.map.objects.items.forEach(function (data) {
+            if(data.name == 'shield') {
+                this.level.items.push(new Shield(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
+            }
+        }.bind(this));
+    }
+
     public createBats(player: Player) {
         this.playerRef = player;
         this.level.map.objects.bats.forEach(function (data) {
@@ -141,6 +152,11 @@ export class LevelManager {
         this.game.physics.arcade.overlap(player, this.level.enemies, this.enemyOverlap.bind(this));
     }
 
+    public updateItemsInteraction(player: Player) {
+        this.game.physics.arcade.collide(this.level.items, this.level.walls);
+        this.game.physics.arcade.overlap(player, this.level.items, this.getItem.bind(this));
+    }
+
     public updateBatsInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.bats, this.level.walls);
         this.game.physics.arcade.overlap(player, this.level.bats, this.enemyOverlap.bind(this));
@@ -156,7 +172,7 @@ export class LevelManager {
         this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel.bind(this), null, this);
     }
 
-    private enemyOverlap(player, enemy) {
+    private enemyOverlap(player: Player, enemy) {
         if (player.body.touching.down) {
             if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
                 this.soundManager.enemydamage.play();
@@ -169,12 +185,21 @@ export class LevelManager {
                 enemy.destroy();
             }
             else {
-                player.playerDamage(this.soundManager);
+                if (!player.hasShield)
+                    player.playerDamage(this.soundManager);
             }
 
         } else {
-            player.playerDamage(this.soundManager);
+            if (!player.hasShield)
+                player.playerDamage(this.soundManager);
         }
+    }
+
+    private getItem(player: Player, item) {
+        if(item.name == 'shield') {
+            player.hasShield = true;
+        }
+        item.destroy();
     }
 
     private gemSetup(gem) {

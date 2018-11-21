@@ -11,6 +11,7 @@ export class LevelBase {
     redGems;
     bats: Bat[] = [];
     enemies: Enemy[] = [];
+    items: [] = [];
     enemySpeed = 100;
     map;
     walls;

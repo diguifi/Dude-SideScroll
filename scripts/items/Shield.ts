@@ -1,10 +1,7 @@
 export class Shield extends Phaser.Sprite {
     game: Phaser.Game;
-    light: Phaser.Sprite;
-    lightSize: number = 8;
     size: number;
-    shadowTexture: Phaser.BitmapData;
-    lightSprite: Phaser.Image;
+    name: string = 'shield';
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {
         super(game, x, y, 'shield', 0);

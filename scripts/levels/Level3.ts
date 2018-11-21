@@ -36,6 +36,7 @@ export class Level3 extends Phaser.State {
         this.game.world.bringToTop(this.levelManager.level.back);
         this.game.world.bringToTop(this.levelManager.level.walls);
         this.levelManager.createGreenEnemies();
+        this.levelManager.createItems();
         this.levelManager.createGems();
         this.levelManager.createRedGems();
 
@@ -67,6 +68,7 @@ export class Level3 extends Phaser.State {
         this.levelManager.updateRedGemsInteraction(this.player);
         this.levelManager.updateGemsInteraction(this.player);
         this.levelManager.updateEnemiesInteraction(this.player);
+        this.levelManager.updateItemsInteraction(this.player);
         this.levelManager.updateBatsInteraction(this.player);
     }
 

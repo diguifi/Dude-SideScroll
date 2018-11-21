@@ -24,6 +24,14 @@ export class Player extends Phaser.Sprite {
         this.dead = false;
         this.fadeComplete = false;
 
+        // shield attributes
+        this.hasShield = false;
+        this.shieldTimer = false;
+        this.shieldSprite = this.game.add.sprite(this.x, this.y + 10, 'shield');
+        this.shieldSprite.scale.setTo(2, 2);
+        this.shieldSprite.anchor.setTo(0.5, 0);
+        this.shieldSprite.visible = false;
+
         // sprite size
         this.size = 1.8;
         this.scale.setTo(this.size, this.size);
@@ -50,6 +58,9 @@ export class Player extends Phaser.Sprite {
         game.add.existing(this);
     }
 
+    hasShield: boolean;
+    shieldTimer: boolean;
+    shieldSprite: Phaser.Sprite;
     spawnX: number;
     spawnY: number;
     animSpeeds;
@@ -96,11 +107,18 @@ export class Player extends Phaser.Sprite {
 
             if (this.y > 450)
                 this.playerDamage(this.soundManager);
+
+            this.checkShield();
         }
         else {
             if (this.fadeComplete)
             this.playerDamageEffects(this.soundManager);
         }
+    }
+
+    public removeShield() {
+        this.hasShield = false;
+        this.shieldSprite.visible = false;
     }
 
     public playerDamage(soundManager: SoundManager) {
@@ -110,6 +128,26 @@ export class Player extends Phaser.Sprite {
         this.animations.play('damaged');
         this.game.camera.fade(0x00000, 500);
         this.game.camera.onFadeComplete.add(this.fadeCompleted,this);
+    }
+
+    private checkShield() {
+        if (this.hasShield) {
+            if (!this.shieldTimer) {
+                this.game.world.bringToTop(this.shieldSprite);
+                this.shieldSprite.visible = true;
+                this.game.time.events.add(10000, this.removeShield, this);
+                this.shieldTimer = true;
+            }
+            else {
+                this.shieldSprite.x = this.x - 1 * this.shieldSprite.scale.x;
+                this.shieldSprite.y = this.y + 10;
+            }
+        }
+        else {
+            if(this.shieldTimer) {
+                this.shieldTimer = false;
+            }
+        }
     }
 
     private fadeCompleted(){
@@ -146,6 +184,7 @@ export class Player extends Phaser.Sprite {
 
             if (this.scale.x == -this.size) {
                 this.scale.x = this.size;
+                this.shieldSprite.scale.x = -2;
             }
         }
         else {
@@ -168,6 +207,7 @@ export class Player extends Phaser.Sprite {
 
             if (this.scale.x == this.size) {
                 this.scale.x = -this.size;
+                this.shieldSprite.scale.x = 2;
             }
         }
         else {
@@ -191,9 +231,11 @@ export class Player extends Phaser.Sprite {
 
             if (this.movingRight) {
                 this.scale.x = this.size;
+                this.shieldSprite.scale.x = -2;
             }
             else if (this.movingLeft) {
                 this.scale.x = -this.size;
+                this.shieldSprite.scale.x = 2;
             }
         }
     }
