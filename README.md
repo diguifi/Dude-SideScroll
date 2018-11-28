@@ -22,7 +22,7 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 - ~Enemies~
 - ~Music and sound effects~
 - ~Main menu~
-- Some item(s)
+- ~Some item(s)~
 - 10 levels
 - ...
 

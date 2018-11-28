@@ -14,14 +14,18 @@ export class Level1 extends Phaser.State {
     levelBase: LevelBase;
     soundManager: SoundManager;
 
-    init(soundManager) {
+    init(soundManager: SoundManager,
+        previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
         this.soundManager = soundManager;
+        this.levelBase = previousLevelBase;
+
+        previousLevelBase = null;
+        previousLevelManager = null;
     }
 
     create() {
         this.soundManager.music.volume = 0.1;
 
-        this.levelBase = new LevelBase();
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level2', this.soundManager);
 
         // ---- level genesis

@@ -22,7 +22,7 @@ export class LevelManager {
 
     public createBasicLevelStuff(jsonTilemap: string) {
         this.createMap(jsonTilemap);
-        this.createParallax();
+        this.createParallax(430);
         this.game.world.bringToTop(this.level.back);
         this.game.world.bringToTop(this.level.walls);
         this.createGreenEnemies();
@@ -52,9 +52,9 @@ export class LevelManager {
         this.level.walls.resizeWorld();
     }
 
-    public createParallax() {
+    public createParallax(compensationHeight: number) {
         this.level.paralax2 = this.game.add.tileSprite(0,
-            this.game.world.height - 430,
+            this.game.world.height - compensationHeight,
             this.game.world.width,
             this.game.world.height + 100,
             'jungle_paralax2'
@@ -62,7 +62,7 @@ export class LevelManager {
         this.level.paralax2.tileScale.x = 2;
         this.level.paralax2.tileScale.y = 2;
         this.level.paralax3 = this.game.add.tileSprite(0,
-            this.game.world.height - 435,
+            this.game.world.height - compensationHeight - 5,
             this.game.world.width,
             this.game.world.height + 100,
             'jungle_paralax3'
@@ -70,7 +70,7 @@ export class LevelManager {
         this.level.paralax3.tileScale.x = 2;
         this.level.paralax3.tileScale.y = 2;
         this.level.paralax4 = this.game.add.tileSprite(0,
-            this.game.world.height - 450,
+            this.game.world.height - compensationHeight - 20,
             this.game.world.width,
             this.game.world.height + 100,
             'jungle_paralax4'
@@ -78,7 +78,7 @@ export class LevelManager {
         this.level.paralax4.tileScale.x = 2;
         this.level.paralax4.tileScale.y = 2;
         this.level.paralax5 = this.game.add.tileSprite(0,
-            this.game.world.height - 460,
+            this.game.world.height - compensationHeight - 30,
             this.game.world.width,
             this.game.world.height + 100,
             'jungle_paralax5'

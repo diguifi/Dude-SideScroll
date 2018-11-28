@@ -31,7 +31,7 @@ export class MainMenu extends Phaser.State {
     }
 
     startGame() {
-        this.game.state.start('Level1', true, false, this.soundManager);
+        this.game.state.start('Cutscene1', true, false, this.soundManager);
     }
 
 }
