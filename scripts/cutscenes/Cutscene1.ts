@@ -87,7 +87,7 @@ export class Cutscene1 extends Phaser.State {
             this.soundManager.jump.play();
             this.dudeSprite.visible = true;
         }
-        if (this.index == 4 || this.index == 8){
+        if (this.index == 4 || this.index == 8 || this.index == 9){
             this.dudeSprite.frame = 4;
         }
         if (this.index == 10){
