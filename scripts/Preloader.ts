@@ -3,7 +3,6 @@
 export class Preloader extends Phaser.State {
 
     preloadBar: Phaser.Sprite;
-    background: Phaser.Sprite;
     ready: boolean = false;
 
     preload() {
@@ -17,7 +16,6 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('shield', 'assets/sprites/shield.png?v=1', 16, 17, 6);
         this.game.load.image('heart', 'assets/sprites/itens/heart.png');
 
-        this.game.load.image('titlepage', 'assets/images/back.png');
         this.game.load.image('logo', 'assets/images/logo.png');
 
         this.game.load.image('hud', 'assets/images/hud.png');
@@ -43,6 +41,8 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);
         this.game.load.spritesheet('buttonfire', 'assets/buttons/button-round-a.png', 96, 96);
         this.game.load.spritesheet('buttonjump', 'assets/buttons/button-round-b.png', 96, 96);
+        this.game.load.spritesheet('buttonstart', 'assets/buttons/startbutton.png', 48, 16);
+        this.game.load.spritesheet('buttonsound', 'assets/buttons/soundbutton.png', 16, 16);
 
         this.game.load.audio('coincatch', 'assets/sounds/sfx/coin-catch.mp3');
         this.game.load.audio('damage', 'assets/sounds/sfx/damage.mp3');

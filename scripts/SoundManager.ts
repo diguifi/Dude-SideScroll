@@ -6,7 +6,8 @@
     public enemydamage: Phaser.Sound;
     public fall: Phaser.Sound;
     public jump: Phaser.Sound;
-    public music: Phaser.Sound
+    public music: Phaser.Sound;
+    public musicMuted: boolean = false;
 
     constructor(game: Phaser.Game) {
         this.game = game;
