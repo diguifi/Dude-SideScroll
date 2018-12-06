@@ -1,7 +1,7 @@
-﻿import { Player } from "../Player";
-import { Hud } from "../Hud";
-import { Enemy } from "../Enemy";
-import { Bat } from "../Bat";
+﻿import { Player } from "../elements/player/Player";
+import { Hud } from "../managers/Hud";
+import { Enemy } from "../elements/enemies/Enemy";
+import { Bat } from "../elements/enemies/Bat";
 
 export class LevelBase {
     music: Phaser.Sound;

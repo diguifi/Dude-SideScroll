@@ -1,4 +1,4 @@
-﻿import { Player } from "./Player";
+﻿import { Player } from "../elements/player/Player";
 
 export class Hud extends Phaser.Sprite {
     player: Player;

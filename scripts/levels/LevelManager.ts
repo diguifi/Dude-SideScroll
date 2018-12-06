@@ -1,9 +1,9 @@
-﻿import { SoundManager } from "../SoundManager";
+﻿import { SoundManager } from "../managers/SoundManager";
 import { LevelBase } from "./LevelBase";
-import { Player } from "../Player";
-import { Enemy } from "../Enemy";
-import { Bat } from "../Bat";
-import { Shield } from "../items/Shield";
+import { Player } from "../elements/player/Player";
+import { Enemy } from "../elements/enemies/Enemy";
+import { Bat } from "../elements/enemies/Bat";
+import { Shield } from "../elements/items/Shield";
 
 export class LevelManager {
     public level: LevelBase;

@@ -1,8 +1,8 @@
-﻿import { Player } from "../Player";
-import { SoundManager } from "../SoundManager";
+﻿import { Player } from "../elements/player/Player";
+import { SoundManager } from "../managers/SoundManager";
 import { LevelManager } from "./LevelManager";
 import { LevelBase } from "./LevelBase";
-import { Hud } from "../Hud";
+import { Hud } from "../managers/Hud";
 
 export class Level4 extends Phaser.State {
 

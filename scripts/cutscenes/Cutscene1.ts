@@ -1,4 +1,4 @@
-import { SoundManager } from "../SoundManager";
+import { SoundManager } from "../managers/SoundManager";
 import { LevelManager } from "../levels/LevelManager";
 import { LevelBase } from "../levels/LevelBase";
 

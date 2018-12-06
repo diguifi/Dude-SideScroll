@@ -1,5 +1,5 @@
-﻿import { SoundManager } from "./SoundManager";
-import { ControllerManager } from "./ControllerManager";
+﻿import { SoundManager } from "../../managers/SoundManager";
+import { ControllerManager } from "../../managers/ControllerManager";
 
 export class Player extends Phaser.Sprite {
 
