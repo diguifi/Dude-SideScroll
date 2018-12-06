@@ -55,8 +55,9 @@ export class Cutscene1 extends Phaser.State {
         "Let's do this!",
     ];
 
-    init(soundManager) {
+    init(soundManager, mainMenu) {
         this.soundManager = soundManager;
+        mainMenu = null;
     }
 
     create() {

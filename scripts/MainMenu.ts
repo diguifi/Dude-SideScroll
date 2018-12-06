@@ -16,17 +16,17 @@ export class MainMenu extends Phaser.State {
     create() {
         this.createParallax(450);
 
-        this.logo = this.add.sprite(this.world.centerX, -300, 'logo');
+        this.logo = this.add.sprite(this.game.camera.width/2, -300, 'logo');
         this.logo.anchor.setTo(0.5, 0.5);
         this.logo.tint = 0x159b30;
         this.add.tween(this.logo).to({ y: 120 }, 1000, Phaser.Easing.Elastic.Out, true, 1000);
 
-        this.startButton = this.game.add.button(this.game.world.centerX - 72, 275, 'buttonstart', this.fadeOut, this, 0, 0, 1, 0);
+        this.startButton = this.game.add.button(this.game.camera.width/2 - 72, 275, 'buttonstart', this.fadeOut, this, 0, 0, 1, 0);
         this.startButton.scale.setTo(3);
         this.startButton.alpha = 0;
         this.add.tween(this.startButton).to({ alpha: 1 }, 1000, "Linear", true);
 
-        this.soundButton = this.game.add.button(this.game.world.centerX/2 - this.game.world.centerX/2.5, 350, 'buttonsound', this.toggleMusic, this);
+        this.soundButton = this.game.add.button(this.game.camera.width/2 - this.game.camera.width/2.5, 350, 'buttonsound', this.toggleMusic, this);
         this.soundButton.scale.setTo(2);
         this.soundButton.onInputUp.add(this.btnSoundUp, this);
         this.soundButton.onInputDown.add(this.btnSoundDown, this);
@@ -116,7 +116,7 @@ export class MainMenu extends Phaser.State {
 
     startGame() {
         this.game.camera.onFadeComplete.removeAll();
-        this.game.state.start('Cutscene1', true, false, this.soundManager);
+        this.game.state.start('Cutscene1', true, false, this.soundManager, this);
     }
 
 }
