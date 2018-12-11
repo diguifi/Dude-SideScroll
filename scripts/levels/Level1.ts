@@ -15,12 +15,13 @@ export class Level1 extends Phaser.State {
     soundManager: SoundManager;
 
     init(soundManager: SoundManager,
-        previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
+        previousLevelBase: LevelBase, previousLevelManager: LevelManager, cutscene1) {
         this.soundManager = soundManager;
         this.levelBase = previousLevelBase;
 
         previousLevelBase = null;
         previousLevelManager = null;
+        cutscene1 = null;
     }
 
     create() {

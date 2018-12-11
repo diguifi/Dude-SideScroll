@@ -125,8 +125,9 @@ export class Cutscene1 extends Phaser.State {
     }
 
     startGame() {
+        this.index = 0;
         this.game.camera.onFadeComplete.removeAll();
-        this.game.state.start('Level1', true, false, this.soundManager, this.levelBase, this.levelManager);
+        this.game.state.start('Level1', true, false, this.soundManager, this.levelBase, this.levelManager, this);
     }
 
 }
