@@ -41,7 +41,7 @@ export class Level3 extends Phaser.State {
         this.levelManager.createRedGems();
 
         // ---- player
-        this.player = new Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
+        this.player = new Player(this.game, 80, 50, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.redGems, this.lastPlayer.lives, this.soundManager);
         this.game.camera.follow(this.player);
 
         // ---- bats

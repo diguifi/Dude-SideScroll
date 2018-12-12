@@ -46,7 +46,7 @@ export class Level1 extends Phaser.State {
 
         // ---- player
 
-        this.player = new Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 3, this.soundManager);
+        this.player = new Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 0, 3, this.soundManager);
         this.game.camera.follow(this.player);
 
         // ---- hud and game

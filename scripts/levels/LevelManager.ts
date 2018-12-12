@@ -169,7 +169,7 @@ export class LevelManager {
 
     public updateRedGemsInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.redGems, this.level.walls);
-        this.game.physics.arcade.overlap(player, this.level.redGems, this.goNextLevel.bind(this), null, this);
+        this.game.physics.arcade.overlap(player, this.level.redGems, this.redGemsCollect.bind(this), null, this);
     }
 
     private enemyOverlap(player: Player, enemy) {
@@ -217,6 +217,12 @@ export class LevelManager {
     private gemsCollect(player, gem) {
         this.soundManager.gemcatch.play();
         player.gems++;
+        gem.destroy();
+    }
+
+    private redGemsCollect(player, gem) {
+        this.soundManager.gemcatch.play();
+        player.redGems++;
         gem.destroy();
     }
 

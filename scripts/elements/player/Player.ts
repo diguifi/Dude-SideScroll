@@ -4,10 +4,11 @@ import { ControllerManager } from "../../managers/ControllerManager";
 export class Player extends Phaser.Sprite {
 
     constructor(game: Phaser.Game, x: number, y: number, speed: number,
-        gravity: number, gems: number, lives: number, soundManager: SoundManager) {
+        gravity: number, gems: number, redGems:number, lives: number, soundManager: SoundManager) {
         super(game, x, y, 'dude', 0);
 
         this.gems = gems;
+        this.redGems = redGems;
         this.lives = lives;
 
         // attributes
@@ -70,6 +71,7 @@ export class Player extends Phaser.Sprite {
     dead: boolean;
     fadeComplete: boolean;
     gems: number;
+    redGems: number;
     size: number;
     speed: number;
     speedBonus: number;

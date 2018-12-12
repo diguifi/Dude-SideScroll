@@ -33,7 +33,7 @@ export class Level4 extends Phaser.State {
         this.levelManager.createBasicLevelStuff('tileMap_level4');
 
         // ---- player
-        this.player = new Player(this.game, 100, 200, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.lives, this.soundManager);
+        this.player = new Player(this.game, 100, 200, 150, this.game.physics.arcade.gravity.y, this.lastPlayer.gems, this.lastPlayer.redGems, this.lastPlayer.lives, this.soundManager);
         this.game.camera.follow(this.player);
 
         // ---- hud and game
