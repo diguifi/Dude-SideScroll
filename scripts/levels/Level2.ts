@@ -43,7 +43,6 @@ export class Level2 extends Phaser.State {
     }
 
     update() {
-        this.game.physics.arcade.collide(this.player, this.levelBase.walls);
         this.levelManager.updateBasicLevelStuff(this.player);
     }
 

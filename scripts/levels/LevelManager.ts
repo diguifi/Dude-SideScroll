@@ -32,6 +32,7 @@ export class LevelManager {
     }
 
     public updateBasicLevelStuff(player: Player) {
+        this.updatePlayer(player);
         this.updateRedGemsInteraction(player);
         this.updateGemsInteraction(player);
         this.updateEnemiesInteraction(player);
@@ -125,6 +126,12 @@ export class LevelManager {
         this.level.redGems.forEach(function (gem) {
             gem = this.gemSetup(gem);
         }.bind(this));
+    }
+
+    public updatePlayer(player: Player) {
+        this.game.physics.arcade.collide(player, this.level.walls);
+        if (player.position.x + 0.1 >= this.game.world.bounds.bottomRight.x)
+            this.goNextLevel(player);
     }
 
     public updateParallax(playerSpeed: number) {
@@ -227,7 +234,6 @@ export class LevelManager {
     }
 
     private goNextLevel(player) {
-        this.soundManager.gemcatch.play();
         this.level.enemies.forEach(function (enemy) {
             enemy.destroy();
         });

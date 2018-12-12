@@ -61,7 +61,6 @@ export class Level1 extends Phaser.State {
         else
             this.showMobileButtons();
 
-        this.game.physics.arcade.collide(this.player, this.levelBase.walls);
         this.levelManager.updateBasicLevelStuff(this.player);
     }
 

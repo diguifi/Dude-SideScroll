@@ -64,7 +64,7 @@ export class Level3 extends Phaser.State {
     update() {
         this.updateShadowTexture();
 
-        this.game.physics.arcade.collide(this.player, this.levelBase.walls);
+        this.levelManager.updatePlayer(this.player);
         this.levelManager.updateRedGemsInteraction(this.player);
         this.levelManager.updateGemsInteraction(this.player);
         this.levelManager.updateEnemiesInteraction(this.player);
