@@ -48,6 +48,7 @@ export class Level2 extends Phaser.State {
 
     render() {
         this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
+        this.game.debug.text(": " + this.player.redGems.toString(), 562, 40);
     }
 
 }
