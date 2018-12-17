@@ -72,11 +72,6 @@ export class Level3 extends Phaser.State {
         this.levelManager.updateBatsInteraction(this.player);
     }
 
-    render() {
-        this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
-        this.game.debug.text(": " + this.player.redGems.toString(), 562, 40);
-    }
-
     updateShadowTexture() {
         this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
 

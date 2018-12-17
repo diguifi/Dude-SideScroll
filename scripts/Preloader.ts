@@ -20,6 +20,8 @@ export class Preloader extends Phaser.State {
 
         this.game.load.image('hud', 'assets/images/hud.png');
         this.game.load.image('heart2', 'assets/images/heart.png');
+        
+        this.game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
         this.game.load.image('jungle_paralax5', 'assets/levels/jungle/plx-5.png?v=1');
         this.game.load.image('jungle_paralax4', 'assets/levels/jungle/plx-4.png?v=1');

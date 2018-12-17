@@ -95,9 +95,4 @@ export class Level1 extends Phaser.State {
     checkProximitySecondTutorial(){
         return (this.player.x > this.shiftSprite.x - 120 && this.player.x < this.shiftSprite.x + 150);
     }
-
-    render() {
-        this.game.debug.text(": " + this.player.gems.toString(), 662, 40);
-        this.game.debug.text(": " + this.player.redGems.toString(), 562, 40);
-    }
 }

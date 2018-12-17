@@ -4,6 +4,10 @@ export class Hud extends Phaser.Sprite {
     player: Player;
     lives: number;
     hearts: Phaser.Sprite[] = [];
+    gemsFontSize: number = 16;
+    redGemsFontSize: number = 16;
+    hudGemsText: Phaser.BitmapText;
+    hudRedGemsText: Phaser.BitmapText;
 
     constructor(game: Phaser.Game, player: Player) {
         super(game, 0, 0, 'hud', 0);            
@@ -14,12 +18,23 @@ export class Hud extends Phaser.Sprite {
 
         this.lives = player.lives;
 
+        this.adjustFontSize();
+
+        this.hudGemsText = game.add.bitmapText(672, 29, 'carrier_command', this.player.gems.toString(), this.gemsFontSize);
+        this.hudRedGemsText = game.add.bitmapText(572, 29, 'carrier_command', this.player.redGems.toString(), this.redGemsFontSize);
+        this.addChild(this.hudGemsText);
+        this.addChild(this.hudRedGemsText);
+
         this.fillLives();
 
         game.add.existing(this);
     }
 
     update() {
+        this.hudGemsText.setText(this.player.gems.toString());
+        this.hudRedGemsText.setText(this.player.redGems.toString());
+        this.adjustFontSize();
+
         if (this.lives != this.player.lives) {
             this.lives = this.player.lives;
 
@@ -40,5 +55,17 @@ export class Hud extends Phaser.Sprite {
         this.hearts.forEach(function (heart) {
             heart.fixedToCamera = true;
         });
+    }
+
+    adjustFontSize() {
+        if(this.player.gems >= 100){
+            this.gemsFontSize = 12;
+            this.hudGemsText.fontSize = 12;
+        }
+        if(this.player.redGems >= 100){
+            this.redGemsFontSize = 12;
+            this.hudRedGemsText.fontSize = 12;
+        }
+            
     }
 }
