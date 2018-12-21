@@ -22,6 +22,7 @@ export class LevelBase {
     paralax3;
     paralax4;
     paralax5;
+    misc;
 
     constructor() {
     }

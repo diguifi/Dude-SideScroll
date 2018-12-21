@@ -15,6 +15,7 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('torch', 'assets/sprites/animated_torch.png?v=1', 8, 26, 9);
         this.game.load.spritesheet('shield', 'assets/sprites/shield.png?v=1', 16, 17, 6);
         this.game.load.image('heart', 'assets/sprites/itens/heart.png');
+        this.game.load.image('lumpofgrass', 'assets/sprites/lumpofgrass.png');
 
         this.game.load.image('logo', 'assets/images/logo.png');
 

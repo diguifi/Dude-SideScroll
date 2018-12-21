@@ -12,7 +12,7 @@ export class LevelManager {
     private soundManager: SoundManager;
     private playerRef: Player;
 
-    constructor(game, level, nextLevel, soundManager) {
+    constructor(game: Phaser.Game, level: LevelBase, nextLevel: string, soundManager: SoundManager) {
         this.game = game;
         this.level = level;
         this.nextLevel = nextLevel;
@@ -29,6 +29,7 @@ export class LevelManager {
         this.createGems();
         this.createRedGems();
         this.createItems();
+        this.createMisc();
     }
 
     public updateBasicLevelStuff(player: Player) {
@@ -37,6 +38,7 @@ export class LevelManager {
         this.updateGemsInteraction(player);
         this.updateEnemiesInteraction(player);
         this.updateItemsInteraction(player);
+        this.updateMiscInteraction(player);
         this.updateParallax(player.speed);
     }
 
@@ -128,6 +130,15 @@ export class LevelManager {
         }.bind(this));
     }
 
+    public createMisc() {
+        this.level.misc = this.game.add.physicsGroup();
+        this.level.map.createFromObjects('misc', 'lumpofgrass', 'lumpofgrass', 0, true, false, this.level.misc);
+
+        this.level.misc.forEach(function (misc) {
+            misc = this.miscSetup(misc);
+        }.bind(this));
+    }
+
     public updatePlayer(player: Player) {
         this.game.physics.arcade.collide(player, this.level.walls);
         if (player.position.x + 0.1 >= this.game.world.bounds.bottomRight.x)
@@ -162,6 +173,18 @@ export class LevelManager {
     public updateItemsInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.items, this.level.walls);
         this.game.physics.arcade.overlap(player, this.level.items, this.getItem.bind(this));
+    }
+
+    public updateMiscInteraction(player: Player) {
+        this.game.physics.arcade.collide(this.level.misc, this.level.walls);
+        this.game.physics.arcade.collide(player, this.level.misc, this.miscOverlap.bind(this));
+
+        this.level.misc.forEach(function (misc) {
+            if (!misc.inCamera) {
+                misc.x = misc.spawnX;
+                misc.y = misc.spawnY;
+            }
+        }.bind(this));
     }
 
     public updateBatsInteraction(player: Player) {
@@ -202,6 +225,11 @@ export class LevelManager {
         }
     }
 
+    private miscOverlap(player: Player, misc) {
+        if ((player.position.y) < (misc.position.y - (misc.height - 28)))
+            player.body.blocked.down = true;
+    }
+
     private getItem(player: Player, item) {
         if(item.name == 'shield') {
             player.hasShield = true;
@@ -219,6 +247,20 @@ export class LevelManager {
         gem.animations.play('shine');
 
         return gem;
+    }
+
+    private miscSetup(misc) {
+        misc.x = misc.x * 2;
+        misc.y = misc.y * 1.7;
+        misc.spawnX = misc.x;
+        misc.spawnY = misc.y;
+        misc.scale.setTo(2, 2);
+        misc.body.immovable = false;
+        misc.body.bounce.y = 0;
+        misc.body.drag.x = 200;
+        misc.body.drag.y = -200;
+        misc.body.setSize(32, 30, 0, 0);
+        return misc;
     }
 
     private gemsCollect(player, gem) {
