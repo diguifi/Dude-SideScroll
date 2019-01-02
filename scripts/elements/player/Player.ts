@@ -26,8 +26,12 @@ export class Player extends Phaser.Sprite {
         this.fadeComplete = false;
 
         // shield attributes
+        this.shieldMaxTime = 10;
+        this.shieldSeconds = this.shieldMaxTime;
+        this.lastShieldSeconds = 0;
+        this.shieldTimer = this.game.add.bitmapText(this.x, this.y + 10, 'carrier_command', this.shieldSeconds.toString(), 12);
+        this.shieldTimer.visible = false;
         this.hasShield = false;
-        this.shieldTimer = false;
         this.shieldSprite = this.game.add.sprite(this.x, this.y + 10, 'shield');
         this.shieldSprite.scale.setTo(2, 2);
         this.shieldSprite.anchor.setTo(0.5, 0);
@@ -60,7 +64,10 @@ export class Player extends Phaser.Sprite {
     }
 
     hasShield: boolean;
-    shieldTimer: boolean;
+    shieldMaxTime: number;
+    shieldTimer: Phaser.BitmapText;
+    shieldSeconds: number;
+    lastShieldSeconds: number;
     shieldSprite: Phaser.Sprite;
     spawnX: number;
     spawnY: number;
@@ -119,8 +126,16 @@ export class Player extends Phaser.Sprite {
     }
 
     public removeShield() {
-        this.hasShield = false;
-        this.shieldSprite.visible = false;
+        if (this.shieldSeconds === 0) {
+            this.hasShield = false;
+            this.shieldSprite.visible = false;
+            this.shieldTimer.visible = false;
+            this.shieldSeconds = this.shieldMaxTime;
+        }
+        else {
+            this.shieldSeconds--;
+            this.shieldTimer.setText(this.shieldSeconds.toString());
+        }
     }
 
     public playerDamage(soundManager: SoundManager) {
@@ -134,20 +149,18 @@ export class Player extends Phaser.Sprite {
 
     private checkShield() {
         if (this.hasShield) {
-            if (!this.shieldTimer) {
+            if (this.shieldSeconds !== this.lastShieldSeconds) {
+                this.lastShieldSeconds = this.shieldSeconds;
                 this.game.world.bringToTop(this.shieldSprite);
                 this.shieldSprite.visible = true;
-                this.game.time.events.add(10000, this.removeShield, this);
-                this.shieldTimer = true;
+                this.shieldTimer.visible = true;
+                this.game.time.events.add(1000, this.removeShield, this);
             }
             else {
                 this.shieldSprite.x = this.x - 1 * this.shieldSprite.scale.x;
                 this.shieldSprite.y = this.y + 10;
-            }
-        }
-        else {
-            if(this.shieldTimer) {
-                this.shieldTimer = false;
+                this.shieldTimer.position.x = this.x + 22;
+                this.shieldTimer.position.y = this.y + 2;
             }
         }
     }
