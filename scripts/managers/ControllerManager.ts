@@ -45,14 +45,23 @@ export class ControllerManager {
     }
 
     getVirtualButtonsInput(player) {
-        this.buttonjump = this.game.add.button(590, 310, 'buttonjump', null, this, 0, 1, 0, 1);
+        this.buttonjump = this.game.add.button(635, 355, 'buttonjump', null, this, 0, 1, 0, 1);
         this.buttonjump.fixedToCamera = true;
         this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)player.jump(); });
         this.buttonjump.events.onInputUp.add(function () { player.pressingUp = false; if (!player.body.blocked.down) player.fall(); });
+        this.buttonjump.anchor.setTo(0.5, 0.5);
 
-        this.buttonfire = this.game.add.button(700, 310, 'buttonfire', null, this, 0, 1, 0, 1);
+        this.buttonfire = this.game.add.button(748, 355, 'buttonfire', null, this, 0, 1, 0, 1);
         this.buttonfire.fixedToCamera = true;
-        this.buttonfire.events.onInputDown.add(function () { player.running = !player.running; });
+        this.buttonfire.events.onInputDown.add(function () { 
+            player.running = !player.running; 
+            if (player.running){ 
+                this.buttonfire.setFrames(1, 0, 1, 0);
+            } else {
+                this.buttonfire.setFrames(0, 1, 0, 1)
+            } 
+        }.bind(this));
+        this.buttonfire.anchor.setTo(0.5, 0.5);
 
         this.buttonleft = this.game.add.button(0, 310, 'buttonleft', null, this, 0, 1, 0, 1);
         this.buttonleft.fixedToCamera = true;
