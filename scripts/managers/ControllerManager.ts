@@ -45,7 +45,7 @@ export class ControllerManager {
     }
 
     getVirtualButtonsInput(player) {
-        this.buttonjump = this.game.add.button(600, 310, 'buttonjump', null, this, 0, 1, 0, 1);
+        this.buttonjump = this.game.add.button(590, 310, 'buttonjump', null, this, 0, 1, 0, 1);
         this.buttonjump.fixedToCamera = true;
         this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)player.jump(); });
         this.buttonjump.events.onInputUp.add(function () { player.pressingUp = false; if (!player.body.blocked.down) player.fall(); });
@@ -54,12 +54,12 @@ export class ControllerManager {
         this.buttonfire.fixedToCamera = true;
         this.buttonfire.events.onInputDown.add(function () { player.running = !player.running; });
 
-        this.buttonleft = this.game.add.button(0, 310, 'buttonhorizontal', null, this, 0, 1, 0, 1);
+        this.buttonleft = this.game.add.button(0, 310, 'buttonleft', null, this, 0, 1, 0, 1);
         this.buttonleft.fixedToCamera = true;
         this.buttonleft.events.onInputDown.add(function () { player.movingLeft = true; });
         this.buttonleft.events.onInputUp.add(function () { player.movingLeft = false; });
 
-        this.buttonright = this.game.add.button(160, 310, 'buttonhorizontal', null, this, 0, 1, 0, 1);
+        this.buttonright = this.game.add.button(160, 310, 'buttonright', null, this, 0, 1, 0, 1);
         this.buttonright.fixedToCamera = true;
         this.buttonright.events.onInputDown.add(function () { player.movingRight = true; });
         this.buttonright.events.onInputUp.add(function () { player.movingRight = false; });

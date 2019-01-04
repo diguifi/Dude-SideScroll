@@ -39,11 +39,10 @@ export class Preloader extends Phaser.State {
         this.game.load.image('arrowkeys', 'assets/sprites/arrows.png');
         this.game.load.image('shift', 'assets/sprites/shift.png');
 
-        this.game.load.spritesheet('buttonvertical', 'assets/buttons/button-vertical.png', 64, 64);
-        this.game.load.spritesheet('buttonhorizontal', 'assets/buttons/button-horizontal.png', 96, 64);
-        this.game.load.spritesheet('buttondiagonal', 'assets/buttons/button-diagonal.png', 64, 64);
-        this.game.load.spritesheet('buttonfire', 'assets/buttons/button-round-a.png', 96, 96);
-        this.game.load.spritesheet('buttonjump', 'assets/buttons/button-round-b.png', 96, 96);
+        this.game.load.spritesheet('buttonright', 'assets/buttons/btn_right.png', 96, 96);
+        this.game.load.spritesheet('buttonleft', 'assets/buttons/btn_left.png', 96, 96);
+        this.game.load.spritesheet('buttonfire', 'assets/buttons/btn_a.png', 96, 96);
+        this.game.load.spritesheet('buttonjump', 'assets/buttons/btn_b.png', 96, 96);
         this.game.load.spritesheet('buttonstart', 'assets/buttons/startbutton.png', 48, 16);
         this.game.load.spritesheet('buttonsound', 'assets/buttons/soundbutton.png', 16, 16);
 
