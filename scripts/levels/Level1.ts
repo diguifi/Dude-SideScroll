@@ -10,6 +10,8 @@ export class Level1 extends Phaser.State {
     hud: Hud;
     arrowKeysSprite: Phaser.Sprite;
     shiftSprite: Phaser.Sprite;
+    glowSpriteB: Phaser.Sprite;
+    glowSpriteA: Phaser.Sprite;
     levelManager: LevelManager;
     levelBase: LevelBase;
     soundManager: SoundManager;
@@ -44,6 +46,14 @@ export class Level1 extends Phaser.State {
         this.shiftSprite.scale.setTo(2.5);
         this.shiftSprite.alpha = 0;
 
+        this.glowSpriteB = this.game.add.sprite(180, 265, 'buttonglow');
+        this.glowSpriteB.anchor.setTo(0.5, 0.5);
+        this.glowSpriteB.alpha = 0;
+
+        this.glowSpriteA = this.game.add.sprite(180, 265, 'buttonglow');
+        this.glowSpriteA.anchor.setTo(0.5, 0.5);
+        this.glowSpriteA.alpha = 0;
+
         // ---- player
 
         this.player = new Player(this.game, 10, 300, 150, this.game.physics.arcade.gravity.y, 0, 0, 3, this.soundManager);
@@ -77,15 +87,31 @@ export class Level1 extends Phaser.State {
     }
 
     showMobileButtons() {
-        if (this.checkProximityFirstTutorial())
+        if (this.checkProximityFirstTutorial()) {
+            this.glowSpriteB.position.set(this.player.controller.buttonjump.x, this.player.controller.buttonjump.y);
             this.game.add.tween(this.player.controller.buttonjump.scale).to({ x: 1.2, y: 1.2 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
-        else
+            this.game.add.tween(this.glowSpriteB).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.game.add.tween(this.glowSpriteB.scale).to({ x: 1.2, y: 1.2 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+        }
+        else {
             this.game.add.tween(this.player.controller.buttonjump.scale).to({ x: 1, y: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.glowSpriteB.position.set(this.player.controller.buttonjump.x, this.player.controller.buttonjump.y);
+            this.game.add.tween(this.glowSpriteB).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.game.add.tween(this.glowSpriteB.scale).to({ x: 1, y: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+        } 
 
-        if (this.checkProximitySecondTutorial())
+        if (this.checkProximitySecondTutorial()) {
+            this.glowSpriteA.position.set(this.player.controller.buttonfire.x, this.player.controller.buttonfire.y);
             this.game.add.tween(this.player.controller.buttonfire.scale).to({ x: 1.2, y: 1.2 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
-        else
+            this.game.add.tween(this.glowSpriteA).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.game.add.tween(this.glowSpriteA.scale).to({ x: 1.2, y: 1.2 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+        }
+        else {
             this.game.add.tween(this.player.controller.buttonfire.scale).to({ x: 1, y: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.glowSpriteA.position.set(this.player.controller.buttonfire.x, this.player.controller.buttonfire.y);
+            this.game.add.tween(this.glowSpriteA).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+            this.game.add.tween(this.glowSpriteA.scale).to({ x: 1, y: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
+        } 
     }
 
     checkProximityFirstTutorial(){
