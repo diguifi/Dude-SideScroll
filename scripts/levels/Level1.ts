@@ -60,11 +60,13 @@ export class Level1 extends Phaser.State {
         this.game.camera.follow(this.player);
 
         // ---- set button glow position
-
-        this.glowSpriteB.position.set(this.player.controller.buttonjump.x, this.player.controller.buttonjump.y);
-        this.glowSpriteA.position.set(this.player.controller.buttonfire.x, this.player.controller.buttonfire.y);
-        this.glowSpriteB.fixedToCamera = true;
-        this.glowSpriteA.fixedToCamera = true;
+        
+        if (!this.game.device.desktop) {
+            this.glowSpriteB.position.set(this.player.controller.buttonjump.x, this.player.controller.buttonjump.y);
+            this.glowSpriteA.position.set(this.player.controller.buttonfire.x, this.player.controller.buttonfire.y);
+            this.glowSpriteB.fixedToCamera = true;
+            this.glowSpriteA.fixedToCamera = true;
+        }
 
         // ---- hud and game
 
