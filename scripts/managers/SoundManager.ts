@@ -6,6 +6,8 @@
     public enemydamage: Phaser.Sound;
     public fall: Phaser.Sound;
     public jump: Phaser.Sound;
+    public clickin: Phaser.Sound;
+    public clickout: Phaser.Sound;
     public music: Phaser.Sound;
     public musicMuted: boolean = false;
 
@@ -17,6 +19,8 @@
         this.enemydamage = this.game.add.audio('enemydamage');
         this.fall = this.game.add.audio('fall');
         this.jump = this.game.add.audio('jump');
+        this.clickin = this.game.add.audio('clickin');
+        this.clickout = this.game.add.audio('clickout');
         this.music = this.game.add.audio('bgmusic');
 
         this.game.sound.setDecodedCallback([this.gemcatch, this.damage,

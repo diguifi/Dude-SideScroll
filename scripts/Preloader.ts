@@ -14,6 +14,7 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('redgem', 'assets/sprites/itens/spr_coin_ver.png?v=1', 16, 16, 4);
         this.game.load.spritesheet('torch', 'assets/sprites/animated_torch.png?v=1', 8, 26, 9);
         this.game.load.spritesheet('shield', 'assets/sprites/shield.png?v=1', 16, 17, 6);
+        this.game.load.spritesheet('platform', 'assets/sprites/platform.png?v=1', 32, 8, 2);
         this.game.load.image('heart', 'assets/sprites/itens/heart.png');
         this.game.load.image('lumpofgrass', 'assets/sprites/lumpofgrass.png');
 
@@ -52,6 +53,8 @@ export class Preloader extends Phaser.State {
         this.game.load.audio('enemydamage', 'assets/sounds/sfx/enemy-damage.mp3');
         this.game.load.audio('fall', 'assets/sounds/sfx/fall.mp3');
         this.game.load.audio('jump', 'assets/sounds/sfx/jump.mp3');
+        this.game.load.audio('clickin', 'assets/sounds/sfx/click-in.mp3');
+        this.game.load.audio('clickout', 'assets/sounds/sfx/click-out.mp3');
         this.game.load.audio('bgmusic', 'assets/sounds/music/bg.mp3');
     }
 

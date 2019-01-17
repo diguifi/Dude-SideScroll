@@ -321,7 +321,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":39,
+ "nextobjectid":40,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -403,6 +403,19 @@
          "spacing":0,
          "tilecount":1,
          "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "columns":2,
+         "firstgid":758,
+         "image":"..\/sprites\/platform.png",
+         "imageheight":8,
+         "imagewidth":64,
+         "margin":0,
+         "name":"platform",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":8,
          "tilewidth":32
         }],
  "tilewidth":16,

@@ -4,6 +4,7 @@ import { Player } from "../elements/player/Player";
 import { Enemy } from "../elements/enemies/Enemy";
 import { Bat } from "../elements/enemies/Bat";
 import { Shield } from "../elements/items/Shield";
+import { Platform } from "../elements/objects/Platform";
 
 export class LevelManager {
     public level: LevelBase;
@@ -135,7 +136,15 @@ export class LevelManager {
         this.level.map.createFromObjects('misc', 'lumpofgrass', 'lumpofgrass', 0, true, false, this.level.misc);
 
         this.level.misc.forEach(function (misc) {
-            misc = this.miscSetup(misc);
+            if(misc.name == 'lumpofgrass') {
+                misc = this.miscSetup(misc);
+            }
+        }.bind(this));
+
+        this.level.map.objects.misc.forEach(function (data) {
+            if(data.name == 'platform') {
+                this.level.platforms.push(new Platform(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+            }
         }.bind(this));
     }
 
@@ -178,6 +187,11 @@ export class LevelManager {
     public updateMiscInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.misc, this.level.walls);
         this.game.physics.arcade.collide(player, this.level.misc, this.miscOverlap.bind(this));
+
+        if (this.level.platforms.length > 0) {
+            this.game.physics.arcade.collide(this.level.platforms, this.level.walls);
+            this.game.physics.arcade.overlap(player, this.level.platforms, this.platformOverlap.bind(this));
+        }
 
         this.level.misc.forEach(function (misc) {
             if (!misc.inCamera) {
@@ -230,6 +244,10 @@ export class LevelManager {
             player.body.blocked.down = true;
     }
 
+    private platformOverlap(player: Player, platform: Platform) {
+        platform.body.touching.none = false;
+    }
+
     private getItem(player: Player, item) {
         if(item.name == 'shield') {
             player.hasShield = true;
@@ -250,16 +268,19 @@ export class LevelManager {
     }
 
     private miscSetup(misc) {
-        misc.x = misc.x * 2;
-        misc.y = misc.y * 1.7;
-        misc.spawnX = misc.x;
-        misc.spawnY = misc.y;
-        misc.scale.setTo(2, 2);
-        misc.body.immovable = false;
-        misc.body.bounce.y = 0;
-        misc.body.drag.x = 200;
-        misc.body.drag.y = -200;
-        misc.body.setSize(32, 30, 0, 0);
+        if(misc.name == 'lumpofgrass') {
+            misc.x = misc.x * 2;
+            misc.y = misc.y * 1.7;
+            misc.spawnX = misc.x;
+            misc.spawnY = misc.y;
+            misc.scale.setTo(2, 2);
+            misc.body.immovable = false;
+            misc.body.bounce.y = 0;
+            misc.body.drag.x = 200;
+            misc.body.drag.y = -200;
+            misc.body.setSize(32, 30, 0, 0);
+        }
+        
         return misc;
     }
 
