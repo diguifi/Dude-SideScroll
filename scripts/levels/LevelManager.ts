@@ -5,6 +5,7 @@ import { Enemy } from "../elements/enemies/Enemy";
 import { Bat } from "../elements/enemies/Bat";
 import { Shield } from "../elements/items/Shield";
 import { Platform } from "../elements/objects/Platform";
+import { Lever } from "../elements/objects/Lever";
 
 export class LevelManager {
     public level: LevelBase;
@@ -145,6 +146,9 @@ export class LevelManager {
             if(data.name == 'platform') {
                 this.level.platforms.push(new Platform(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
+            if(data.name == 'lever') {
+                this.level.levers.push(new Lever(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+            }
         }.bind(this));
     }
 
@@ -191,6 +195,11 @@ export class LevelManager {
         if (this.level.platforms.length > 0) {
             this.game.physics.arcade.collide(this.level.platforms, this.level.walls);
             this.game.physics.arcade.overlap(player, this.level.platforms, this.platformOverlap.bind(this));
+        }
+
+        if (this.level.levers.length > 0) {
+            this.game.physics.arcade.collide(this.level.levers, this.level.walls);
+            this.game.physics.arcade.overlap(player, this.level.levers, this.leverOverlap.bind(this));
         }
 
         this.level.misc.forEach(function (misc) {
@@ -246,6 +255,11 @@ export class LevelManager {
 
     private platformOverlap(player: Player, platform: Platform) {
         platform.body.touching.none = false;
+    }
+
+    private leverOverlap(player: Player, lever: Lever) {
+        lever.body.touching.none = false;
+        lever.toggle();
     }
 
     private getItem(player: Player, item) {

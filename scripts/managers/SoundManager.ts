@@ -8,6 +8,7 @@
     public jump: Phaser.Sound;
     public clickin: Phaser.Sound;
     public clickout: Phaser.Sound;
+    public leverpull: Phaser.Sound;
     public music: Phaser.Sound;
     public musicMuted: boolean = false;
 
@@ -21,6 +22,7 @@
         this.jump = this.game.add.audio('jump');
         this.clickin = this.game.add.audio('clickin');
         this.clickout = this.game.add.audio('clickout');
+        this.leverpull = this.game.add.audio('leverpull');
         this.music = this.game.add.audio('bgmusic');
 
         this.game.sound.setDecodedCallback([this.gemcatch, this.damage,

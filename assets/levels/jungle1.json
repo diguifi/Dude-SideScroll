@@ -321,7 +321,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":40,
+ "nextobjectid":42,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -417,6 +417,19 @@
          "tilecount":2,
          "tileheight":8,
          "tilewidth":32
+        }, 
+        {
+         "columns":2,
+         "firstgid":760,
+         "image":"..\/sprites\/lever.png",
+         "imageheight":16,
+         "imagewidth":32,
+         "margin":0,
+         "name":"lever",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",

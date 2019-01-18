@@ -38,8 +38,6 @@ export class Platform extends Phaser.Sprite {
     }
 
     update() {
-        this.body.position.x = this.initialX;
-
         if(this.body.touching.none) {
             this.deactivate();
         }

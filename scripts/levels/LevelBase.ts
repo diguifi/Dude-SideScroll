@@ -3,6 +3,7 @@ import { Hud } from "../managers/Hud";
 import { Enemy } from "../elements/enemies/Enemy";
 import { Bat } from "../elements/enemies/Bat";
 import { Platform } from "../elements/objects/Platform";
+import { Lever } from "../elements/objects/Lever";
 
 export class LevelBase {
     music: Phaser.Sound;
@@ -13,6 +14,7 @@ export class LevelBase {
     bats: Bat[] = [];
     enemies: Enemy[] = [];
     platforms: Platform[] = [];
+    levers: Lever[] = [];
     items: [] = [];
     enemySpeed = 100;
     map;
