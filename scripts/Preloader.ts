@@ -17,6 +17,7 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('platform', 'assets/sprites/platform.png?v=1', 32, 8, 2);
         this.game.load.spritesheet('lever', 'assets/sprites/lever.png', 16, 16, 2);
         this.game.load.image('heart', 'assets/sprites/itens/heart.png');
+        this.game.load.image('gate', 'assets/sprites/gate.png');
         this.game.load.image('lumpofgrass', 'assets/sprites/lumpofgrass.png');
 
         this.game.load.image('logo', 'assets/images/logo.png');
@@ -57,6 +58,8 @@ export class Preloader extends Phaser.State {
         this.game.load.audio('clickin', 'assets/sounds/sfx/click-in.mp3');
         this.game.load.audio('clickout', 'assets/sounds/sfx/click-out.mp3');
         this.game.load.audio('leverpull', 'assets/sounds/sfx/lever-pull.mp3');
+        this.game.load.audio('gateopen', 'assets/sounds/sfx/gate-open.mp3');
+        this.game.load.audio('gateclose', 'assets/sounds/sfx/gate-close.mp3');
         this.game.load.audio('bgmusic', 'assets/sounds/music/bg.mp3');
     }
 

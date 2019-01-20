@@ -4,6 +4,7 @@ import { Enemy } from "../elements/enemies/Enemy";
 import { Bat } from "../elements/enemies/Bat";
 import { Platform } from "../elements/objects/Platform";
 import { Lever } from "../elements/objects/Lever";
+import { Gate } from "../elements/objects/Gate";
 
 export class LevelBase {
     music: Phaser.Sound;
@@ -15,6 +16,7 @@ export class LevelBase {
     enemies: Enemy[] = [];
     platforms: Platform[] = [];
     levers: Lever[] = [];
+    gate: Gate;
     items: [] = [];
     enemySpeed = 100;
     map;

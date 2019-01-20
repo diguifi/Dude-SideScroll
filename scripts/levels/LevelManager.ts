@@ -6,6 +6,7 @@ import { Bat } from "../elements/enemies/Bat";
 import { Shield } from "../elements/items/Shield";
 import { Platform } from "../elements/objects/Platform";
 import { Lever } from "../elements/objects/Lever";
+import { Gate } from "../elements/objects/Gate";
 
 export class LevelManager {
     public level: LevelBase;
@@ -144,10 +145,18 @@ export class LevelManager {
 
         this.level.map.objects.misc.forEach(function (data) {
             if(data.name == 'platform') {
-                this.level.platforms.push(new Platform(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+                this.level.platforms.push(new Platform(this.game, data.x * 2.1, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
             if(data.name == 'lever') {
                 this.level.levers.push(new Lever(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+            }
+        }.bind(this));
+
+        var totalActivables = this.level.levers.length + this.level.platforms.length;
+
+        this.level.map.objects.misc.forEach(function (data) {
+            if(data.name == 'gate') {
+                this.level.gate = new Gate(this.game, data.x * 2, data.y * 1.45, totalActivables, this.game.physics.arcade.gravity.y, this.soundManager);
             }
         }.bind(this));
     }
@@ -188,9 +197,27 @@ export class LevelManager {
         this.game.physics.arcade.overlap(player, this.level.items, this.getItem.bind(this));
     }
 
+    public updateGateInteraction(player: Player) {
+        this.game.physics.arcade.collide(this.level.gate, this.level.walls);
+        if (this.level.gate.visible)
+            this.game.physics.arcade.collide(player, this.level.gate);
+        var actives = 0;
+        this.level.platforms.forEach(platform => {
+            if (platform.active)
+                actives++;
+        });
+        this.level.levers.forEach(lever => {
+            if (lever.active)
+                actives++;
+        });
+        this.level.gate.activated = actives;
+    }
+
     public updateMiscInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.misc, this.level.walls);
         this.game.physics.arcade.collide(player, this.level.misc, this.miscOverlap.bind(this));
+
+        var activables = this.level.platforms.length > 0 || this.level.levers.length > 0;
 
         if (this.level.platforms.length > 0) {
             this.game.physics.arcade.collide(this.level.platforms, this.level.walls);
@@ -201,6 +228,9 @@ export class LevelManager {
             this.game.physics.arcade.collide(this.level.levers, this.level.walls);
             this.game.physics.arcade.overlap(player, this.level.levers, this.leverOverlap.bind(this));
         }
+
+        if (activables && this.level.gate)
+            this.updateGateInteraction(player);
 
         this.level.misc.forEach(function (misc) {
             if (!misc.inCamera) {

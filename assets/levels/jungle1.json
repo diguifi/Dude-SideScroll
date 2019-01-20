@@ -321,7 +321,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":42,
+ "nextobjectid":51,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -429,6 +429,19 @@
          "spacing":0,
          "tilecount":2,
          "tileheight":16,
+         "tilewidth":16
+        }, 
+        {
+         "columns":1,
+         "firstgid":762,
+         "image":"..\/sprites\/gate.png",
+         "imageheight":48,
+         "imagewidth":16,
+         "margin":0,
+         "name":"gate",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":48,
          "tilewidth":16
         }],
  "tilewidth":16,
