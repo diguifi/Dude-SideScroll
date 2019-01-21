@@ -1,6 +1,11 @@
 # Dude in the Side-Scrolling Land
 
-A side-scrolling adventure game, featuring Dude, from [Adventures of Dude in the Top-Down world](https://github.com/diguifi/Dude-TopDown)
+# [Play!](https://diguifi.github.io/Dude-SideScroll)
+
+A side-scrolling adventure game, featuring Dude, from [Adventures of Dude in the Top-Down world](https://github.com/diguifi/Dude-TopDown).
+
+Embrace this quest to save the princess "Princess" and bring peace once again to the kingdom!  
+Deal with evil little goblins and cool puzzles arround the forrest in order to find the kidnapped beauty and face the Master Evil Goblin! _(and maybe more)_
 
 ## Running the game
 ```
