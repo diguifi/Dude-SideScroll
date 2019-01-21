@@ -145,10 +145,10 @@ export class LevelManager {
 
         this.level.map.objects.misc.forEach(function (data) {
             if(data.name == 'platform') {
-                this.level.platforms.push(new Platform(this.game, data.x * 2.1, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+                this.level.platforms.push(new Platform(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
             if(data.name == 'lever') {
-                this.level.levers.push(new Lever(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
+                this.level.levers.push(new Lever(this.game, data.x * 2.01, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
         }.bind(this));
 
@@ -199,8 +199,10 @@ export class LevelManager {
 
     public updateGateInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.gate, this.level.walls);
-        if (this.level.gate.visible)
+        if (this.level.gate.visible) {
             this.game.physics.arcade.collide(player, this.level.gate);
+        }
+            
         var actives = 0;
         this.level.platforms.forEach(platform => {
             if (platform.active)
@@ -222,6 +224,7 @@ export class LevelManager {
         if (this.level.platforms.length > 0) {
             this.game.physics.arcade.collide(this.level.platforms, this.level.walls);
             this.game.physics.arcade.overlap(player, this.level.platforms, this.platformOverlap.bind(this));
+            this.game.physics.arcade.overlap(this.level.platforms, this.level.misc, this.platformOverlap.bind(this));
         }
 
         if (this.level.levers.length > 0) {
@@ -233,9 +236,11 @@ export class LevelManager {
             this.updateGateInteraction(player);
 
         this.level.misc.forEach(function (misc) {
-            if (!misc.inCamera) {
-                misc.x = misc.spawnX;
-                misc.y = misc.spawnY;
+            if (misc.body.touching.none) {
+                if (!misc.inCamera) {
+                    misc.x = misc.spawnX;
+                    misc.y = misc.spawnY;
+                }
             }
         }.bind(this));
     }
@@ -283,7 +288,8 @@ export class LevelManager {
             player.body.blocked.down = true;
     }
 
-    private platformOverlap(player: Player, platform: Platform) {
+    private platformOverlap(misc, platform: Platform) {
+        misc.body.touching.none = false;
         platform.body.touching.none = false;
     }
 
