@@ -28,6 +28,13 @@ export class Level4 extends Phaser.State {
     create() {
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level5', this.soundManager);
 
+        // ---- back to regular music
+        if (!this.soundManager.musicMuted) {
+            this.soundManager.musiclvl3.stop();
+            this.soundManager.music.loop = true;
+            this.soundManager.music.play();
+        }
+
         // ---- level genesis
 
         this.levelManager.createBasicLevelStuff('tileMap_level4');

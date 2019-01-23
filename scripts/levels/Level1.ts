@@ -27,8 +27,7 @@ export class Level1 extends Phaser.State {
     }
 
     create() {
-        if(!this.soundManager.musicMuted)
-            this.soundManager.music.volume = 0.1;
+        this.soundManager.music.volume = this.soundManager.inGameVolume;
 
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level2', this.soundManager);
 

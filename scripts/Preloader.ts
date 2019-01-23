@@ -61,6 +61,7 @@ export class Preloader extends Phaser.State {
         this.game.load.audio('gateopen', 'assets/sounds/sfx/gate-open.mp3');
         this.game.load.audio('gateclose', 'assets/sounds/sfx/gate-close.mp3');
         this.game.load.audio('bgmusic', 'assets/sounds/music/bg.mp3');
+        this.game.load.audio('bgmusiclvl3', 'assets/sounds/music/bg-lvl3.mp3');
     }
 
     create() {

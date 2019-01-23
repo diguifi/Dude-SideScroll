@@ -69,11 +69,11 @@ export class MainMenu extends Phaser.State {
 
     toggleMusic() {
         if(!this.soundManager.musicMuted) {
-            this.soundManager.music.volume = 0;
+            this.soundManager.music.pause();
             this.soundManager.musicMuted = true;
         }
         else {
-            this.soundManager.music.volume = 1;
+            this.soundManager.music.play();
             this.soundManager.musicMuted = false;
         }
     }
