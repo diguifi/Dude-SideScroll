@@ -199,6 +199,7 @@ export class LevelManager {
 
     public updateGateInteraction(player: Player) {
         this.game.physics.arcade.collide(this.level.gate, this.level.walls);
+        this.game.physics.arcade.collide(this.level.gate, this.level.enemies, this.enemyGateCollide.bind(this));
         if (this.level.gate.visible) {
             this.game.physics.arcade.collide(player, this.level.gate);
         }
@@ -280,6 +281,17 @@ export class LevelManager {
         } else {
             if (!player.hasShield)
                 player.playerDamage(this.soundManager);
+        }
+    }
+
+    private enemyGateCollide(gate: Gate, enemy: Enemy) {
+        if (enemy.movingRight) {
+            enemy.movingRight = false;
+            enemy.movingLeft = true;
+        }
+        else {
+            enemy.movingRight = true;
+            enemy.movingLeft = false;
         }
     }
 
