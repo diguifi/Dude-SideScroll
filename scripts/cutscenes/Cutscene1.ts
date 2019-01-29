@@ -12,7 +12,8 @@ export class Cutscene1 extends Phaser.State {
     skip: boolean = false;
     dudeSprite: Phaser.Sprite;
     index: number = 0;
-    narratorPhrase: string = '';
+    clickToSkip: Phaser.BitmapText;
+    narratorPhrase: Phaser.BitmapText;
     narratorLines: string[] = [
         " ",
         "This is Dude",
@@ -23,7 +24,7 @@ export class Cutscene1 extends Phaser.State {
         "he lives in a land ruled by a king",
         "and his daughter, the princess... Princess.",
         " ",
-        "Yes, the name of the princess is Princess",
+        "Yes, the name of the princess is 'Princess'",
         " ",
         "One day...",
         " ",
@@ -33,7 +34,7 @@ export class Cutscene1 extends Phaser.State {
         "and save the kingdom once and for all!",
         " ",
     ];
-    dudePhrase: string = '';
+    dudePhrase: Phaser.BitmapText;
     dudeLines: string[] = [
         " ",
         " ",
@@ -75,14 +76,20 @@ export class Cutscene1 extends Phaser.State {
         this.dudeSprite.scale.setTo(2, 2);
         this.dudeSprite.visible = false;
 
+        this.clickToSkip = this.game.add.bitmapText(400, 15, 'carrier_command', 'Click to skip', 9);
+        this.clickToSkip.anchor.x = 0.5;
+        this.narratorPhrase = this.game.add.bitmapText(400, 370, 'carrier_command', '', 11);
+        this.narratorPhrase.anchor.x = 0.5;
+        this.dudePhrase = this.game.add.bitmapText(290, 270, 'carrier_command', '', 10);
+
         this.nextLine();
     }
 
     updateLine() {
         this.dudeSprite.frame = 0;
 
-        this.narratorPhrase = this.narratorLines[this.index];
-        this.dudePhrase = this.dudeLines[this.index];
+        this.narratorPhrase.setText(this.narratorLines[this.index]);
+        this.dudePhrase.setText(this.dudeLines[this.index]);
 
         if (this.index == 2){
             this.soundManager.jump.play();
@@ -116,12 +123,6 @@ export class Cutscene1 extends Phaser.State {
     fadeOut() {
         this.game.camera.fade(0x00000, 500);
         this.game.camera.onFadeComplete.add(this.startGame,this);
-    }
-
-    render(){
-        this.game.debug.text(this.narratorPhrase, 290, 370);
-        this.game.debug.text(this.dudePhrase, 300, 270);
-        this.game.debug.text("Click to skip", 350, 20);
     }
 
     startGame() {
