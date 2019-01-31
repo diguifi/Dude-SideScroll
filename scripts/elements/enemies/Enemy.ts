@@ -13,10 +13,12 @@
 
         // sprite anchor
         this.anchor.setTo(0.5, 0);
+        this.animations.add('walk', [4, 3, 2, 3, 4, 1, 0, 1], 10, true);
+        this.animations.play('walk');
 
         // physics
         this.game.physics.arcade.enableBody(this);
-        this.body.setSize(23, 19, 0, 0);
+        this.body.setSize(21, 19, 0, 0);
         this.body.collideWorldBounds = true;
         this.body.gravity.y = gravity;
 
