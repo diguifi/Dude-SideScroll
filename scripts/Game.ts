@@ -1,6 +1,7 @@
 ﻿import { Preloader } from "./Preloader";
 import { MainMenu } from "./MainMenu";
 import { Cutscene1 } from "./cutscenes/Cutscene1";
+import { CutsceneDemoFinal } from "./cutscenes/CutsceneDemoFinal";
 import { Level1 } from "./levels/Level1";
 import { Level2 } from "./levels/Level2";
 import { Level3 } from "./levels/Level3";
@@ -24,6 +25,7 @@ export class Game{
         this.game.state.add('Preloader', Preloader, false);
         this.game.state.add('MainMenu', MainMenu, false);
         this.game.state.add('Cutscene1', Cutscene1, false);
+        this.game.state.add('CutsceneDemoFinal', CutsceneDemoFinal, false);
         this.game.state.add('Level1', Level1, false);
         this.game.state.add('Level2', Level2, false);
         this.game.state.add('Level3', Level3, false);

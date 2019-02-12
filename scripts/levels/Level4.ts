@@ -26,7 +26,7 @@ export class Level4 extends Phaser.State {
     }
 
     create() {
-        this.levelManager = new LevelManager(this.game, this.levelBase, 'Level5', this.soundManager);
+        this.levelManager = new LevelManager(this.game, this.levelBase, 'CutsceneDemoFinal', this.soundManager);
 
         // ---- back to regular music
         if (!this.soundManager.musicMuted) {
