@@ -1,4 +1,4 @@
-# Dude in the Side-Scrolling Land
+# Dude's Quest
 
 # [Play!](https://diguifi.github.io/Dude-SideScroll)
 
