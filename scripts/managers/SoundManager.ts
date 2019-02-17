@@ -13,6 +13,7 @@
     public gateclose: Phaser.Sound;
     public music: Phaser.Sound;
     public musiclvl3: Phaser.Sound;
+    public musicdemofinal: Phaser.Sound;
     public musicMuted: boolean = false;
     public inGameVolume: number = 0.1;
 
@@ -31,6 +32,7 @@
         this.gateclose = this.game.add.audio('gateclose');
         this.music = this.game.add.audio('bgmusic');
         this.musiclvl3 = this.game.add.audio('bgmusiclvl3');
+        this.musicdemofinal = this.game.add.audio('bgdemofinal');
 
         this.game.sound.setDecodedCallback([this.gemcatch, this.damage,
             this.enemydamage, this.fall,

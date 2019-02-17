@@ -32,6 +32,10 @@ export class CutsceneDemoFinal extends Phaser.State {
     }
 
     create() {
+        this.soundManager.music.stop();
+        this.soundManager.musicdemofinal.loop = true;
+        this.soundManager.musicdemofinal.play();
+
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level1', this.soundManager);
 
         this.input.onDown.addOnce(this.fadeOut, this);
@@ -82,6 +86,7 @@ export class CutsceneDemoFinal extends Phaser.State {
 
     startGame() {
         this.soundManager.music.stop();
+        this.soundManager.musicdemofinal.stop();
         this.soundManager = null;
 
         this.game.camera.onFadeComplete.removeAll();
