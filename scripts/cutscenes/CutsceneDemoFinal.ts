@@ -69,14 +69,14 @@ export class CutsceneDemoFinal extends Phaser.State {
         this.redGemsHint.anchor.x = 0.5;
         this.redGemsHint.alpha = 0;
 
-        this.rateMessage = this.game.add.bitmapText(this.game.world.centerX, 350, 'carrier_command', 'Please rate this demo!', 9);
+        this.rateMessage = this.game.add.bitmapText(400, 350, 'carrier_command', 'Please rate this demo!', 9);
         this.rateMessage.anchor.x = 0.5;
 
-        this.starButtons.push(this.game.add.button(this.game.world.centerX - 80, 365, 'buttonstar', this.actionOnClick(1), this, 1, 0, 1));
-        this.starButtons.push(this.game.add.button(this.game.world.centerX - 48, 365, 'buttonstar', this.actionOnClick(2), this, 1, 0, 1));
-        this.starButtons.push(this.game.add.button(this.game.world.centerX - 16, 365, 'buttonstar', this.actionOnClick(3), this, 1, 0, 1));
-        this.starButtons.push(this.game.add.button(this.game.world.centerX + 16, 365, 'buttonstar', this.actionOnClick(4), this, 1, 0, 1));
-        this.starButtons.push(this.game.add.button(this.game.world.centerX + 48, 365, 'buttonstar', this.actionOnClick(5), this, 1, 0, 1));
+        this.starButtons.push(this.game.add.button(400 - 80, 365, 'buttonstar', this.actionOnClick(1), this, 1, 0, 1));
+        this.starButtons.push(this.game.add.button(400 - 48, 365, 'buttonstar', this.actionOnClick(2), this, 1, 0, 1));
+        this.starButtons.push(this.game.add.button(400 - 16, 365, 'buttonstar', this.actionOnClick(3), this, 1, 0, 1));
+        this.starButtons.push(this.game.add.button(400 + 16, 365, 'buttonstar', this.actionOnClick(4), this, 1, 0, 1));
+        this.starButtons.push(this.game.add.button(400 + 48, 365, 'buttonstar', this.actionOnClick(5), this, 1, 0, 1));
 
         this.starButtons.forEach((button, index) => {
             button.scale.setTo(2);
