@@ -49,6 +49,7 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('buttonglow', 'assets/buttons/btn_glow.png', 144, 144);
         this.game.load.spritesheet('buttonstart', 'assets/buttons/startbutton.png', 48, 16);
         this.game.load.spritesheet('buttonsound', 'assets/buttons/soundbutton.png', 16, 16);
+        this.game.load.spritesheet('buttonstar', 'assets/buttons/starbutton.png', 16, 16);
 
         this.game.load.audio('coincatch', 'assets/sounds/sfx/coin-catch.mp3');
         this.game.load.audio('damage', 'assets/sounds/sfx/damage.mp3');
