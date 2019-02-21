@@ -7,6 +7,7 @@ import { Shield } from "../elements/items/Shield";
 import { Platform } from "../elements/objects/Platform";
 import { Lever } from "../elements/objects/Lever";
 import { Gate } from "../elements/objects/Gate";
+import { Light } from "../elements/items/Light";
 
 export class LevelManager {
     public level: LevelBase;
@@ -104,6 +105,14 @@ export class LevelManager {
         this.level.map.objects.items.forEach(function (data) {
             if(data.name == 'shield') {
                 this.level.items.push(new Shield(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
+            }
+        }.bind(this));
+    }
+
+    public createLights() {
+        this.level.map.objects.items.forEach(function (data) {
+            if(data.name == 'light') {
+                this.level.items.push(new Light(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
             }
         }.bind(this));
     }
@@ -313,6 +322,9 @@ export class LevelManager {
     private getItem(player: Player, item) {
         if(item.name == 'shield') {
             player.hasShield = true;
+        }
+        if(item.name == 'light') {
+            player.lightRadius = player.defaultLightRadius;
         }
         item.destroy();
     }

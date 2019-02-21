@@ -64,8 +64,10 @@ export class Level3 extends Phaser.State {
 
         this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
-        // ---- hud and game
+        // light item (after shadow to make it bright)
+        this.levelManager.createLights();
 
+        // ---- hud and game
         this.hud = new Hud(this.game, this.player);
         this.game.world.bringToTop(this.hud);
     }
@@ -79,21 +81,23 @@ export class Level3 extends Phaser.State {
         this.levelManager.updateEnemiesInteraction(this.player);
         this.levelManager.updateItemsInteraction(this.player);
         this.levelManager.updateBatsInteraction(this.player);
+
+        this.player.updateLightRadius();
     }
 
     updateShadowTexture() {
         this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
 
         this.shadowTexture.clear();
-        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.75)';
+        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.98)';
         this.shadowTexture.context.fillRect(-25, -25, this.game.width + 100, this.game.height + 100);
 
-        var radius = 150 + this.game.rnd.integerInRange(1, 20),
+        let radius = this.player.lightRadius + this.game.rnd.integerInRange(1, (this.player.lightRadius * 0.13)),
         torchX = this.player.position.x - this.game.camera.x,
-        torchY = this.player.position.y - this.game.camera.y;
+        torchY = this.player.position.y + 15 - this.game.camera.y;
 
-        var gradient = this.shadowTexture.context.createRadialGradient(
-            torchX, torchY, 100 * 0.75,
+        let gradient = this.shadowTexture.context.createRadialGradient(
+            torchX, torchY, (this.player.lightRadius * 0.66) * 0.75,
             torchX, torchY, radius);
         gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');

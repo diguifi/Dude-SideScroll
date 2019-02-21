@@ -24,6 +24,8 @@ export class Player extends Phaser.Sprite {
         this.pressingUp = false;
         this.dead = false;
         this.fadeComplete = false;
+        this.defaultLightRadius = 250;
+        this.lightRadius = this.defaultLightRadius;
 
         // shield attributes
         this.shieldMaxTime = 10;
@@ -69,6 +71,8 @@ export class Player extends Phaser.Sprite {
     shieldSeconds: number;
     lastShieldSeconds: number;
     shieldSprite: Phaser.Sprite;
+    lightRadius: number;
+    defaultLightRadius: number;
     spawnX: number;
     spawnY: number;
     animSpeeds;
@@ -125,6 +129,11 @@ export class Player extends Phaser.Sprite {
         }
     }
 
+    public updateLightRadius() {
+        if (this.lightRadius > 60)
+            this.lightRadius -= 0.2;
+    }
+
     public removeShield() {
         if (this.shieldSeconds === 0) {
             this.hasShield = false;
@@ -176,6 +185,7 @@ export class Player extends Phaser.Sprite {
         this.position.x = this.spawnX;
         this.position.y = this.spawnY;
         this.dead = false;
+        this.lightRadius = this.defaultLightRadius;
 
         if (this.lives < 0){
             this.soundManager.music.stop();
