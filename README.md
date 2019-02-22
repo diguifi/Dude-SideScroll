@@ -44,5 +44,5 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 [Jesse M - Jungle Pack](https://jesse-m.itch.io/jungle-pack)  
 [La Red Games - Gems / Coins Free](https://piclet.itch.io/gems-coins-free)
 
-## Cheers if you liked the game
-[![Beerpay](https://beerpay.io/diguifi/Dude-SideScroll/badge.svg)](https://beerpay.io/diguifi/Dude-SideScroll)
+### Consider giving me a cup of coffee if you enjoyed the game ☕️😌
+<a href="https://www.buymeacoffee.com/N4liRbtdQ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
