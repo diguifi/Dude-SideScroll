@@ -1,4 +1,7 @@
 # Dude's Quest
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/31022286/53242999-45bbda00-3685-11e9-88d5-78c1cb259fba.gif"/>
+</p>
 
 # [Play!](https://diguifi.github.io/Dude-SideScroll)
 
@@ -6,6 +9,8 @@ A side-scrolling adventure game, featuring Dude, from [Adventures of Dude in the
 
 Embrace this quest to save the princess "Princess" and bring peace once again to the kingdom!  
 Deal with evil little goblins and cool puzzles arround the forrest in order to find the kidnapped beauty and face the Master Evil Goblin! _(and maybe more)_
+
+**this game is a just a demo** (full game in development)
 
 ## Running the game
 ```
