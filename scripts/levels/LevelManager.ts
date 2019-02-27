@@ -8,6 +8,7 @@ import { Platform } from "../elements/objects/Platform";
 import { Lever } from "../elements/objects/Lever";
 import { Gate } from "../elements/objects/Gate";
 import { Light } from "../elements/items/Light";
+import { HangGlider } from "../elements/items/HangGlider";
 
 export class LevelManager {
     public level: LevelBase;
@@ -105,6 +106,9 @@ export class LevelManager {
         this.level.map.objects.items.forEach(function (data) {
             if(data.name == 'shield') {
                 this.level.items.push(new Shield(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
+            }
+            if(data.name == 'hangglider') {
+                this.level.items.push(new HangGlider(this.game, data.x * 2, data.y * 1.5, this.game.physics.arcade.gravity.y));
             }
         }.bind(this));
     }
@@ -276,10 +280,12 @@ export class LevelManager {
                 this.soundManager.enemydamage.play();
                 enemy.body.enable = false;
                 player.jumping = false;
-                if (player.pressingUp)
+                if (player.pressingUp) {
                     player.body.velocity.y = -player.jumpStrength - player.jumpBonus - 2;
-                else
+                }
+                else {
                     player.body.velocity.y = -player.jumpStrength/2;
+                }
                 enemy.destroy();
             }
             else {
@@ -326,7 +332,14 @@ export class LevelManager {
         if(item.name == 'light') {
             player.lightRadius = player.defaultLightRadius;
         }
-        item.destroy();
+        if(item.name == 'hangglider') {
+            player.hangGliderReference = item;
+            player.hasHangGlider = true;
+        }
+
+        if (item.name != 'hangglider') {
+            item.destroy();
+        }
     }
 
     private gemSetup(gem) {

@@ -6,7 +6,7 @@ export class Preloader extends Phaser.State {
     ready: boolean = false;
 
     preload() {
-        this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 8);
+        this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 9);
         this.game.load.spritesheet('enemy1', 'assets/sprites/enemy.png?v=1', 21, 22, 5);
         this.game.load.spritesheet('bat', 'assets/sprites/bat_spritesheet.png?v=1', 16, 16, 10);
 
@@ -18,6 +18,7 @@ export class Preloader extends Phaser.State {
         this.game.load.spritesheet('platform', 'assets/sprites/platform.png?v=1', 32, 8, 2);
         this.game.load.spritesheet('lever', 'assets/sprites/lever.png', 16, 16, 2);
         this.game.load.image('heart', 'assets/sprites/itens/heart.png');
+        this.game.load.image('hangglider', 'assets/sprites/hangglider.png');
         this.game.load.image('gate', 'assets/sprites/gate.png');
         this.game.load.image('lumpofgrass', 'assets/sprites/lumpofgrass.png');
 

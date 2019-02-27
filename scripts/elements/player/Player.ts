@@ -1,5 +1,6 @@
 ﻿import { SoundManager } from "../../managers/SoundManager";
 import { ControllerManager } from "../../managers/ControllerManager";
+import { HangGlider } from "../items/HangGlider";
 
 export class Player extends Phaser.Sprite {
 
@@ -29,15 +30,26 @@ export class Player extends Phaser.Sprite {
 
         // shield attributes
         this.shieldMaxTime = 10;
+        this.hangGliderMaxTime = 15;
         this.shieldSeconds = this.shieldMaxTime;
+        this.hangGliderSeconds = this.hangGliderMaxTime;
         this.lastShieldSeconds = 0;
+        this.lastHangGliderSeconds = 0;
         this.shieldTimer = this.game.add.bitmapText(this.x, this.y + 10, 'carrier_command', this.shieldSeconds.toString(), 12);
         this.shieldTimer.visible = false;
+        this.hangGliderTimer = this.game.add.bitmapText(this.x, this.y + 10, 'carrier_command', this.hangGliderSeconds.toString(), 12);
+        this.hangGliderTimer.visible = false;
         this.hasShield = false;
+        this.hasHangGlider = false;
         this.shieldSprite = this.game.add.sprite(this.x, this.y + 10, 'shield');
         this.shieldSprite.scale.setTo(2, 2);
         this.shieldSprite.anchor.setTo(0.5, 0);
         this.shieldSprite.visible = false;
+        this.hangGliderSprite = this.game.add.sprite(this.x, this.y + 10, 'hangglider');
+        this.hangGliderSprite.scale.setTo(2, 2);
+        this.hangGliderSprite.anchor.setTo(0.5, 0);
+        this.hangGliderSprite.visible = false;
+        this.hangGliderGravityFactor = 1.4;
 
         // sprite size
         this.size = 1.8;
@@ -66,11 +78,19 @@ export class Player extends Phaser.Sprite {
     }
 
     hasShield: boolean;
+    hasHangGlider: boolean;
     shieldMaxTime: number;
+    hangGliderMaxTime: number;
     shieldTimer: Phaser.BitmapText;
+    hangGliderTimer: Phaser.BitmapText;
     shieldSeconds: number;
+    hangGliderSeconds: number;
     lastShieldSeconds: number;
+    lastHangGliderSeconds: number;
     shieldSprite: Phaser.Sprite;
+    hangGliderSprite: Phaser.Sprite;
+    hangGliderReference: HangGlider;
+    hangGliderGravityFactor: number;
     lightRadius: number;
     defaultLightRadius: number;
     spawnX: number;
@@ -98,30 +118,47 @@ export class Player extends Phaser.Sprite {
 
     update() {
         this.body.velocity.x = 0;
-        if (!this.dead){
-            if (this.movingRight)
-            this.moveRight();
-            else if (this.movingLeft)
+        if (!this.dead) {
+            if (this.movingRight) {
+                this.moveRight();
+            }
+            else if (this.movingLeft) {
                 this.moveLeft();
-            else
-                this.animations.frame = 0
-
+            }
+            else {
+                this.animations.frame = 0;
+                this.animations.stop();
+            }
 
             if (this.playingOnDesktop)
                 this.controller.getKeyboardInput(this);
-
+            
             if (this.jumping) {
+                if (this.hasHangGlider) {
+                    if (this.body.velocity.y > 0) {
+                        this.body.gravity.y = -this.localGravity/this.hangGliderGravityFactor;
+                    }
+                }
+                else {
+                    if (this.body.velocity.y > 0) {
+                        this.body.gravity.y = this.localGravity;
+                    }
+                }
+
                 if (this.body.blocked.down) {
                     this.soundManager.fall.volume = 0.3;
                     this.soundManager.fall.play();
                     this.jumping = false;
+                    this.body.gravity.y = this.localGravity;
                 }
             }
 
             if (this.y > 450)
                 this.playerDamage(this.soundManager);
-
+                
             this.checkShield();
+            this.checkHangGlider();
+            this.applyHangGliderEffects();
         }
         else {
             if (this.fadeComplete)
@@ -134,6 +171,33 @@ export class Player extends Phaser.Sprite {
             this.lightRadius -= 0.2;
     }
 
+    private applyHangGliderEffects() {
+        if (this.jumping) {
+            if (this.hasHangGlider) {
+                this.animations.frame = 8;
+                this.animations.stop();
+                if (this.body.velocity.y > 0) {
+                    this.body.gravity.y = -this.localGravity/this.hangGliderGravityFactor;
+                }
+            }
+            else {
+                this.body.gravity.y = this.localGravity;
+            }
+        }
+        if (this.hasHangGlider) {
+            if (this.body.velocity.y < 0) {
+                this.body.gravity.y = this.localGravity;
+            }
+            else {
+                this.animations.frame = 8;
+                this.body.gravity.y = -this.localGravity/this.hangGliderGravityFactor;
+            }
+        }
+        else {
+            this.body.gravity.y = this.localGravity;
+        }
+    }
+
     public removeShield() {
         if (this.shieldSeconds === 0) {
             this.hasShield = false;
@@ -144,6 +208,21 @@ export class Player extends Phaser.Sprite {
         else {
             this.shieldSeconds--;
             this.shieldTimer.setText(this.shieldSeconds.toString());
+        }
+    }
+
+    public removeHangGlider() {
+        if (this.hangGliderSeconds === 0) {
+            this.hasHangGlider = false;
+            this.hangGliderSprite.visible = false;
+            this.hangGliderTimer.visible = false;
+            this.hangGliderSeconds = this.hangGliderMaxTime;
+
+            this.hangGliderReference.caught = false;
+        }
+        else {
+            this.hangGliderSeconds--;
+            this.hangGliderTimer.setText(this.hangGliderSeconds.toString());
         }
     }
 
@@ -174,6 +253,25 @@ export class Player extends Phaser.Sprite {
         }
     }
 
+    private checkHangGlider() {
+        if (this.hasHangGlider) {
+            if (this.hangGliderSeconds !== this.lastHangGliderSeconds) {
+                this.lastHangGliderSeconds = this.hangGliderSeconds;
+                this.game.world.bringToTop(this.hangGliderSprite);
+                this.hangGliderSprite.visible = true;
+                this.hangGliderTimer.visible = true;
+                this.hangGliderReference.caught = true;
+                this.game.time.events.add(1000, this.removeHangGlider, this);
+            }
+            else {
+                this.hangGliderSprite.x = this.x + 10 * this.hangGliderSprite.scale.x;
+                this.hangGliderSprite.y = this.y - 42;
+                this.hangGliderTimer.position.x = this.x + 22;
+                this.hangGliderTimer.position.y = this.y + 10;
+            }
+        }
+    }
+
     private fadeCompleted(){
         this.fadeComplete = true;
     }
@@ -198,11 +296,25 @@ export class Player extends Phaser.Sprite {
     moveRight() {
         if (this.position.x < this.game.world.bounds.bottomRight.x) {
             if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
+                if (!this.hasHangGlider) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                }
+                else {
+                    if (this.body.blocked.down) {
+                        this.animations.play('walk').speed = this.animSpeeds[1];
+                    }
+                }
                 this.body.velocity.x = this.speed + this.speedBonus;
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
+                if (!this.hasHangGlider) {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                }
+                else {
+                    if (this.body.blocked.down) {
+                        this.animations.play('walk').speed = this.animSpeeds[0];
+                    }
+                }
                 this.body.velocity.x = this.speed;
             }
 
@@ -210,6 +322,7 @@ export class Player extends Phaser.Sprite {
             if (this.scale.x == -this.size) {
                 this.scale.x = this.size;
                 this.shieldSprite.scale.x = -2;
+                this.hangGliderSprite.scale.x = 2;
             }
         }
         else {
@@ -221,11 +334,25 @@ export class Player extends Phaser.Sprite {
     moveLeft() {
         if (this.position.x > 4) {
             if (this.running) {
-                this.animations.play('walk').speed = this.animSpeeds[1];
+                if (!this.hasHangGlider) {
+                    this.animations.play('walk').speed = this.animSpeeds[1];
+                }
+                else {
+                    if (this.body.blocked.down) {
+                        this.animations.play('walk').speed = this.animSpeeds[1];
+                    }
+                }
                 this.body.velocity.x = -this.speed - this.speedBonus;
             }
             else {
-                this.animations.play('walk').speed = this.animSpeeds[0];
+                if (!this.hasHangGlider) {
+                    this.animations.play('walk').speed = this.animSpeeds[0];
+                }
+                else {
+                    if (this.body.blocked.down) {
+                        this.animations.play('walk').speed = this.animSpeeds[0];
+                    }
+                }
                 this.body.velocity.x = -this.speed;
             }
 
@@ -233,6 +360,7 @@ export class Player extends Phaser.Sprite {
             if (this.scale.x == this.size) {
                 this.scale.x = -this.size;
                 this.shieldSprite.scale.x = 2;
+                this.hangGliderSprite.scale.x = -2;
             }
         }
         else {
@@ -257,18 +385,26 @@ export class Player extends Phaser.Sprite {
             if (this.movingRight) {
                 this.scale.x = this.size;
                 this.shieldSprite.scale.x = -2;
+                this.hangGliderSprite.scale.x = 2;
             }
             else if (this.movingLeft) {
                 this.scale.x = -this.size;
                 this.shieldSprite.scale.x = 2;
+                this.hangGliderSprite.scale.x = -2;
             }
         }
     }
 
     fall() {
         if (this.jumping) {
-            if (this.body.velocity.y < 0)
-                this.body.velocity.y = -this.body.velocity.y/4;
+            if (this.body.velocity.y < 0) {
+                if (this.hasHangGlider) {
+                    this.body.velocity.y = -this.body.velocity.y/10;
+                }
+                else {
+                    this.body.velocity.y = -this.body.velocity.y/4;
+                }
+            }
         }
     }
 }

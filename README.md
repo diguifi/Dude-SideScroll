@@ -1,4 +1,4 @@
-# Dude's Quest
+﻿# Dude's Quest
 [![CodeFactor](https://www.codefactor.io/repository/github/diguifi/dude-sidescroll/badge/master)](https://www.codefactor.io/repository/github/diguifi/dude-sidescroll/overview/master)
 ![GitHub last commit](https://img.shields.io/github/last-commit/diguifi/Dude-SideScroll.svg?style=popout)
 ![GitHub stars](https://img.shields.io/github/stars/diguifi/Dude-SideScroll.svg?style=popout)
@@ -8,6 +8,7 @@
 </p>
 
 # [Play!](https://diguifi.github.io/Dude-SideScroll)
+_(not fully supported on Edge)_
 
 A side-scrolling adventure game, featuring Dude, from [Adventures of Dude in the Top-Down world](https://github.com/diguifi/Dude-TopDown).
 
@@ -37,8 +38,7 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 - ~Music and sound effects~
 - ~Main menu~
 - ~Some item(s)~
-- 10 levels
-- ...
+- ~Demo with 4 levels~
 
 ## Art
 [Jesse M - Jungle Pack](https://jesse-m.itch.io/jungle-pack)  
