@@ -7,7 +7,7 @@
   <img src="https://user-images.githubusercontent.com/31022286/53242999-45bbda00-3685-11e9-88d5-78c1cb259fba.gif"/>
 </p>
 
-# [Play!](https://diguifi.github.io/Dude-SideScroll)
+# [Play!](https://diguifi.itch.io/dudes-quest)
 _(not fully supported on Edge)_
 
 A side-scrolling adventure game, featuring Dude, from [Adventures of Dude in the Top-Down world](https://github.com/diguifi/Dude-TopDown).
