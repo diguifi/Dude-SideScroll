@@ -45,4 +45,4 @@ This game was created using [Phaser 2](https://phaser.io/) and written in [TypeS
 [La Red Games - Gems / Coins Free](https://piclet.itch.io/gems-coins-free)
 
 ### Consider giving me a cup of coffee if you enjoyed the game ☕️😌
-<a href="https://www.buymeacoffee.com/N4liRbtdQ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+<a href="https://www.buymeacoffee.com/diguifi" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
