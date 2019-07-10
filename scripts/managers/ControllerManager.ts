@@ -45,7 +45,7 @@ export class ControllerManager {
                 player.fall();
     }
 
-    public getVirtualButtonsInput(player) {
+    public getVirtualButtonsInput(player: Player) {
         this.buttonjump = this.game.add.button(635, 355, 'buttonjump', null, this, 0, 1, 0, 1);
         this.buttonjump.fixedToCamera = true;
         this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)player.jump(); });

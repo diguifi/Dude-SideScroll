@@ -1,6 +1,7 @@
 export class Shield extends Phaser.Sprite {
     public game: Phaser.Game;
     public name: string = 'shield';
+    public respawns: boolean = false;
     private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {

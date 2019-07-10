@@ -337,7 +337,7 @@ export class LevelManager {
             player.hasHangGlider = true;
         }
 
-        if (item.name != 'hangglider') {
+        if (!item.respawns) {
             item.destroy();
         }
     }
@@ -383,10 +383,23 @@ export class LevelManager {
         gem.destroy();
     }
 
+    private setGarbage() {
+        this.level.enemies.splice(0);
+        this.level.map = null;
+        this.level.walls = null;
+        this.level.paralax1 = null;
+        this.level.paralax2 = null;
+        this.level.paralax3 = null;
+        this.level.paralax4 = null;
+        this.level.paralax5 = null;
+    }
+
     private goNextLevel(player: Player) {
-        this.level.enemies.forEach(function (enemy) {
+        this.level.enemies.forEach((enemy) => {
             enemy.destroy();
         });
+        this.setGarbage();
+        
         this.game.state.start(this.nextLevel, true, false, player, this.soundManager, this.level, this);
     }
 }

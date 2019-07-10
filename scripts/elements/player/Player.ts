@@ -292,6 +292,7 @@ export class Player extends Phaser.Sprite {
 
         if (this.lives < 0){
             this.soundManager.music.stop();
+            this.soundManager.musiclvl3.stop();
             this.soundManager = null;
             this.game.state.start('MainMenu');
         }

@@ -1,6 +1,7 @@
 export class Light extends Phaser.Sprite {
     public game: Phaser.Game;
     public name: string = 'light';
+    public respawns: boolean = false;
     private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {

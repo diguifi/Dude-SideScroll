@@ -9,6 +9,8 @@ import { Level4 } from './levels/Level4';
 
 export class Game{
 
+    public game: Phaser.Game;
+
     constructor() {
         this.game = new Phaser.Game(
             800, 400,
@@ -32,8 +34,6 @@ export class Game{
         this.game.state.add('Level4', Level4, false);
     }
 
-    game: Phaser.Game;
-
     private preload() {
         this.game.time.advancedTiming = true;
     }
@@ -43,7 +43,7 @@ export class Game{
         this.game.renderer.renderSession.roundPixels = true;
 
         if (this.game.device.desktop) {
-            this.game.scale.pageAlignHorizontally = true;
+            this.game.scale.pageAlignHorizontally = false;
         }
         else {
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -59,5 +59,5 @@ export class Game{
 
 
 window.onload = () => {
-    var game = new Game();
+    const game = new Game();
 };

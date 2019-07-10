@@ -2,6 +2,7 @@ export class HangGlider extends Phaser.Sprite {
     public game: Phaser.Game;
     public caught: boolean = false;
     public name: string = 'hangglider';
+    public respawns: boolean = true;
     private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {

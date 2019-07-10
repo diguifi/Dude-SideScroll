@@ -44,7 +44,7 @@ export class MainMenu extends Phaser.State {
 
     private fadeOut() {
         this.game.camera.fade(0x00000, 500);
-        var tween = this.add.tween(this.logo).to({ y: 800 }, 2000, Phaser.Easing.Linear.None, true);
+        this.add.tween(this.logo).to({ y: 800 }, 2000, Phaser.Easing.Linear.None, true);
         this.game.camera.onFadeComplete.add(this.startGame,this);
     }
 
@@ -117,5 +117,4 @@ export class MainMenu extends Phaser.State {
         this.game.camera.onFadeComplete.removeAll();
         this.game.state.start('Cutscene1', true, false, this.soundManager, this);
     }
-
 }

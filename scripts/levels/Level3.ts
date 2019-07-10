@@ -87,7 +87,7 @@ export class Level3 extends Phaser.State {
         this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
 
         this.shadowTexture.clear();
-        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.87)';
+        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.85)';
         this.shadowTexture.context.fillRect(-25, -25, this.game.width + 100, this.game.height + 100);
 
         let radius = this.player.lightRadius + this.game.rnd.integerInRange(1, (this.player.lightRadius * 0.13)),
