@@ -1,19 +1,18 @@
-﻿import { SoundManager } from "./managers/SoundManager";
+﻿import { SoundManager } from './managers/SoundManager';
 
 export class MainMenu extends Phaser.State {
 
-    logo: Phaser.Sprite;
-    startButton: Phaser.Button;
-    soundButton: Phaser.Button;
-    soundManager: SoundManager;
-    paralaxSpeed: number = 450;
-    paralax2: Phaser.TileSprite;
-    paralax3: Phaser.TileSprite;
-    paralax4: Phaser.TileSprite;
-    paralax5: Phaser.TileSprite;
-    mute: boolean = false;
+    private logo: Phaser.Sprite;
+    private startButton: Phaser.Button;
+    private soundButton: Phaser.Button;
+    private soundManager: SoundManager;
+    private paralaxSpeed: number = 450;
+    private paralax2: Phaser.TileSprite;
+    private paralax3: Phaser.TileSprite;
+    private paralax4: Phaser.TileSprite;
+    private paralax5: Phaser.TileSprite;
 
-    create() {
+    public create() {
         this.createParallax(450);
 
         this.logo = this.add.sprite(this.game.camera.width/2, -300, 'logo');
@@ -24,32 +23,32 @@ export class MainMenu extends Phaser.State {
         this.startButton = this.game.add.button(this.game.camera.width/2 - 72, 275, 'buttonstart', this.fadeOut, this, 0, 0, 1, 0);
         this.startButton.scale.setTo(3);
         this.startButton.alpha = 0;
-        this.add.tween(this.startButton).to({ alpha: 1 }, 1000, "Linear", true);
+        this.add.tween(this.startButton).to({ alpha: 1 }, 1000, 'Linear', true);
 
         this.soundButton = this.game.add.button(this.game.camera.width/2 - this.game.camera.width/2.5, 350, 'buttonsound', this.toggleMusic, this);
         this.soundButton.scale.setTo(2);
         this.soundButton.onInputUp.add(this.btnSoundUp, this);
         this.soundButton.onInputDown.add(this.btnSoundDown, this);
         this.soundButton.alpha = 0;
-        this.add.tween(this.soundButton).to({ alpha: 1 }, 1000, "Linear", true);
+        this.add.tween(this.soundButton).to({ alpha: 1 }, 1000, 'Linear', true);
 
         this.soundManager = new SoundManager(this.game);
     }
 
-    update() {
+    public update() {
         this.paralax5.tilePosition.x -= this.paralaxSpeed / 1000;
         this.paralax4.tilePosition.x -= this.paralaxSpeed / 1875;
         this.paralax3.tilePosition.x -= this.paralaxSpeed / 6000;
         this.paralax2.tilePosition.x -= this.paralaxSpeed / 10000;
     }
 
-    fadeOut() {
+    private fadeOut() {
         this.game.camera.fade(0x00000, 500);
         var tween = this.add.tween(this.logo).to({ y: 800 }, 2000, Phaser.Easing.Linear.None, true);
         this.game.camera.onFadeComplete.add(this.startGame,this);
     }
 
-    btnSoundDown() {
+    private btnSoundDown() {
         if(!this.soundManager.musicMuted) {
             this.soundButton.frame = 1;
         }
@@ -58,7 +57,7 @@ export class MainMenu extends Phaser.State {
         }
     }
 
-    btnSoundUp() {
+    private btnSoundUp() {
         if(!this.soundManager.musicMuted) {
             this.soundButton.frame = 0;
         }
@@ -67,7 +66,7 @@ export class MainMenu extends Phaser.State {
         }
     }
 
-    toggleMusic() {
+    private toggleMusic() {
         if(!this.soundManager.musicMuted) {
             this.soundManager.music.pause();
             this.soundManager.musicMuted = true;
@@ -78,7 +77,7 @@ export class MainMenu extends Phaser.State {
         }
     }
 
-    public createParallax(compensationHeight: number) {
+    private createParallax(compensationHeight: number) {
         this.paralax2 = this.game.add.tileSprite(0,
             this.game.world.height - compensationHeight,
             this.game.world.width + 50,
@@ -114,7 +113,7 @@ export class MainMenu extends Phaser.State {
         this.paralax5.checkWorldBounds = true;
     }
 
-    startGame() {
+    private startGame() {
         this.game.camera.onFadeComplete.removeAll();
         this.game.state.start('Cutscene1', true, false, this.soundManager, this);
     }

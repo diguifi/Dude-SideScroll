@@ -1,6 +1,15 @@
-import { Player } from "../player/Player";
+import { Player } from '../player/Player';
 
 export class Bat extends Phaser.Sprite {
+
+    private player: Player;
+    private flyAnim: Phaser.Animation;
+    private wakeAnim: Phaser.Animation;
+    private isSleeping: boolean;
+    private isChasing: boolean;
+    private fieldOfView: number;
+    private size: number;
+    private speed: number = 125;
 
     constructor(game: Phaser.Game, x: number, y: number, 
         gravity: number, speed: number, player: Player) {
@@ -29,25 +38,10 @@ export class Bat extends Phaser.Sprite {
         this.body.collideWorldBounds = true;
         this.body.gravity.y = -gravity;
 
-        // initialize movement
-        this.movingRight = true;
-
         game.add.existing(this);
     }
-        
-    player: Player;
-    flyAnim: Phaser.Animation;
-    wakeAnim: Phaser.Animation;
-    isSleeping: boolean;
-    isChasing: boolean;
-    fieldOfView: number;
-    size: number;
-    speed: number = 125;
-    localGravity: number;
-    movingLeft: boolean;
-    movingRight: boolean;
 
-    update() {
+    public update() {
         this.body.velocity.x = 0;
 
         if (this.isSleeping) {

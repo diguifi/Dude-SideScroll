@@ -1,21 +1,19 @@
-﻿import { Player } from "../elements/player/Player";
+﻿import { Player } from '../elements/player/Player';
 
 export class Hud extends Phaser.Sprite {
-    player: Player;
-    lives: number;
-    hearts: Phaser.Sprite[] = [];
-    gemsFontSize: number = 16;
-    redGemsFontSize: number = 16;
-    hudGemsText: Phaser.BitmapText;
-    hudRedGemsText: Phaser.BitmapText;
+    private player: Player;
+    private lives: number;
+    private hearts: Phaser.Sprite[] = [];
+    private gemsFontSize: number = 16;
+    private redGemsFontSize: number = 16;
+    private hudGemsText: Phaser.BitmapText;
+    private hudRedGemsText: Phaser.BitmapText;
 
     constructor(game: Phaser.Game, player: Player) {
         super(game, 0, 0, 'hud', 0);            
 
         this.fixedToCamera = true;
-
         this.player = player;
-
         this.lives = player.lives;
 
         this.adjustFontSize();
@@ -30,7 +28,7 @@ export class Hud extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    update() {
+    public update() {
         this.hudGemsText.setText(this.player.gems.toString());
         this.hudRedGemsText.setText(this.player.redGems.toString());
         this.adjustFontSize();
@@ -42,7 +40,7 @@ export class Hud extends Phaser.Sprite {
         }
     }
 
-    fillLives() {
+    public fillLives() {
         this.hearts.forEach(function (heart) {
             heart.destroy();
         });
@@ -57,7 +55,7 @@ export class Hud extends Phaser.Sprite {
         });
     }
 
-    adjustFontSize() {
+    public adjustFontSize() {
         if(this.player.gems >= 100){
             this.gemsFontSize = 12;
             this.hudGemsText.fontSize = 12;
@@ -66,6 +64,5 @@ export class Hud extends Phaser.Sprite {
             this.redGemsFontSize = 12;
             this.hudRedGemsText.fontSize = 12;
         }
-            
     }
 }

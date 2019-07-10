@@ -1,67 +1,64 @@
-import { SoundManager } from "../managers/SoundManager";
-import { LevelManager } from "../levels/LevelManager";
-import { LevelBase } from "../levels/LevelBase";
+import { SoundManager } from '../managers/SoundManager';
+import { LevelManager } from '../levels/LevelManager';
+import { LevelBase } from '../levels/LevelBase';
 
 export class Cutscene1 extends Phaser.State {
 
-    logo: Phaser.Sprite;
-    background: Phaser.Sprite;
-    soundManager: SoundManager;
-    levelManager: LevelManager;
-    levelBase: LevelBase;
-    skip: boolean = false;
-    dudeSprite: Phaser.Sprite;
-    index: number = 0;
-    clickToSkip: Phaser.BitmapText;
-    narratorPhrase: Phaser.BitmapText;
-    narratorLines: string[] = [
-        " ",
-        "This is Dude",
-        " ",
-        "he has the most generic name ever",
-        " ",
-        "yet he is a very happy dude",
-        "he lives in a land ruled by a king",
-        "and his daughter, the princess... Princess.",
-        " ",
-        "Yes, the name of the princess is 'Princess'",
-        " ",
-        "One day...",
-        " ",
-        "Yes she was kidnapped",
-        "By an evil goblin!",
-        "Immeditially, Dude presented himself to rescue her",
-        "and save the kingdom once and for all!",
-        " ",
+    private soundManager: SoundManager;
+    private levelManager: LevelManager;
+    private levelBase: LevelBase;
+    private dudeSprite: Phaser.Sprite;
+    private index: number = 0;
+    private clickToSkip: Phaser.BitmapText;
+    private narratorPhrase: Phaser.BitmapText;
+    private narratorLines: string[] = [
+        ' ',
+        'This is Dude',
+        ' ',
+        'he has the most generic name ever',
+        ' ',
+        'yet he is a very happy dude',
+        'he lives in a land ruled by a king',
+        'and his daughter, the princess... Princess.',
+        ' ',
+        'Yes, the name of the princess is "Princess"',
+        ' ',
+        'One day...',
+        ' ',
+        'Yes she was kidnapped',
+        'By an evil goblin!',
+        'Immeditialy, Dude presented himself to rescue her',
+        'and save the kingdom once and for all!',
+        ' ',
     ];
-    dudePhrase: Phaser.BitmapText;
-    dudeLines: string[] = [
-        " ",
-        " ",
-        "sup",
-        " ",
-        "Thanks",
-        " ",
-        " ",
-        " ",
-        "wtf, her name is 'Princess'?!",
-        " ",
-        "jesus, you suck at names",
-        " ",
-        "Let me guess, she was kidnapped",
-        " ",
-        " ",
-        " ",
-        " ",
-        "Let's do this!",
+    private dudePhrase: Phaser.BitmapText;
+    private dudeLines: string[] = [
+        ' ',
+        ' ',
+        'sup',
+        ' ',
+        'Thanks',
+        ' ',
+        ' ',
+        ' ',
+        'wtf, her name is "Princess"?!',
+        ' ',
+        'jesus, you suck at names',
+        ' ',
+        'Let me guess, she was kidnapped',
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        'Let\'s do this!',
     ];
 
-    init(soundManager, mainMenu) {
+    public init(soundManager: SoundManager, mainMenu: any) {
         this.soundManager = soundManager;
         mainMenu = null;
     }
 
-    create() {
+    public create() {
         this.levelBase = new LevelBase();
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level1', this.soundManager);
 
@@ -85,7 +82,7 @@ export class Cutscene1 extends Phaser.State {
         this.nextLine();
     }
 
-    updateLine() {
+    private updateLine() {
         this.dudeSprite.frame = 0;
 
         this.narratorPhrase.setText(this.narratorLines[this.index]);
@@ -107,7 +104,7 @@ export class Cutscene1 extends Phaser.State {
     
     }
 
-    nextLine() {
+    private nextLine() {
         this.game.time.events.removeAll();
 
         this.index++;
@@ -120,12 +117,12 @@ export class Cutscene1 extends Phaser.State {
         }
     }
 
-    fadeOut() {
+    private fadeOut() {
         this.game.camera.fade(0x00000, 500);
         this.game.camera.onFadeComplete.add(this.startGame,this);
     }
 
-    startGame() {
+    private startGame() {
         this.index = 0;
         this.game.camera.onFadeComplete.removeAll();
         this.game.state.start('Level1', true, false, this.soundManager, this.levelBase, this.levelManager, this);

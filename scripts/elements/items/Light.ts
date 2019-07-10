@@ -1,7 +1,7 @@
 export class Light extends Phaser.Sprite {
-    game: Phaser.Game;
-    size: number;
-    name: string = 'light';
+    public game: Phaser.Game;
+    public name: string = 'light';
+    private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {
         super(game, x, y, 'light', 0);
@@ -26,9 +26,5 @@ export class Light extends Phaser.Sprite {
         this.body.gravity.y = gravity;
 
         game.add.existing(this);
-    }
-
-    update() {
-        
     }
 }

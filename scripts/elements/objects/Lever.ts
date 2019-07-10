@@ -1,11 +1,11 @@
-import { SoundManager } from "../../managers/SoundManager";
+import { SoundManager } from '../../managers/SoundManager';
 
 export class Lever extends Phaser.Sprite {
-    game: Phaser.Game;
-    active: boolean;
-    wasTouching: boolean;
-    size: number;
-    soundManager: SoundManager;
+    public game: Phaser.Game;
+    public active: boolean;
+    private wasTouching: boolean;
+    private size: number;
+    private soundManager: SoundManager;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number, soundManager: SoundManager) {
         super(game, x, y, 'lever', 0);
@@ -31,7 +31,7 @@ export class Lever extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    update() {
+    public update() {
         this.wasTouching = !this.body.touching.none;
     }
 

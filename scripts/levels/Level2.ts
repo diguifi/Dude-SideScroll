@@ -1,21 +1,22 @@
-﻿import { Player } from "../elements/player/Player";
-import { SoundManager } from "../managers/SoundManager";
-import { LevelManager } from "./LevelManager";
-import { LevelBase } from "./LevelBase";
-import { Hud } from "../managers/Hud";
+﻿import { Player } from '../elements/player/Player';
+import { SoundManager } from '../managers/SoundManager';
+import { LevelManager } from './LevelManager';
+import { LevelBase } from './LevelBase';
+import { Hud } from '../managers/Hud';
 
 export class Level2 extends Phaser.State {
 
-    music: Phaser.Sound;
-    player: Player;
-    lastPlayer: Player;
-    hud: Hud;
-    levelManager: LevelManager;
-    levelBase: LevelBase;
-    soundManager: SoundManager;
+    private player: Player;
+    private lastPlayer: Player;
+    private hud: Hud;
+    private levelManager: LevelManager;
+    private levelBase: LevelBase;
+    private soundManager: SoundManager;
 
-    init(player: Player, soundManager: SoundManager,
-        previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
+    public init(player: Player,
+        soundManager: SoundManager,
+        previousLevelBase: LevelBase,
+        previousLevelManager: LevelManager) {
         this.lastPlayer = player;
         this.soundManager = soundManager;
         this.levelBase = previousLevelBase;
@@ -25,7 +26,7 @@ export class Level2 extends Phaser.State {
         previousLevelManager = null;
     }
 
-    create() {
+    public create() {
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level3', this.soundManager);
 
         // ---- level genesis
@@ -42,8 +43,7 @@ export class Level2 extends Phaser.State {
         this.game.world.bringToTop(this.hud);
     }
 
-    update() {
+    public update() {
         this.levelManager.updateBasicLevelStuff(this.player);
     }
-
 }

@@ -1,11 +1,11 @@
-﻿import { Preloader } from "./Preloader";
-import { MainMenu } from "./MainMenu";
-import { Cutscene1 } from "./cutscenes/Cutscene1";
-import { CutsceneDemoFinal } from "./cutscenes/CutsceneDemoFinal";
-import { Level1 } from "./levels/Level1";
-import { Level2 } from "./levels/Level2";
-import { Level3 } from "./levels/Level3";
-import { Level4 } from "./levels/Level4";
+﻿import { Preloader } from './Preloader';
+import { MainMenu } from './MainMenu';
+import { Cutscene1 } from './cutscenes/Cutscene1';
+import { CutsceneDemoFinal } from './cutscenes/CutsceneDemoFinal';
+import { Level1 } from './levels/Level1';
+import { Level2 } from './levels/Level2';
+import { Level3 } from './levels/Level3';
+import { Level4 } from './levels/Level4';
 
 export class Game{
 
@@ -34,11 +34,11 @@ export class Game{
 
     game: Phaser.Game;
 
-    preload() {
+    private preload() {
         this.game.time.advancedTiming = true;
     }
 
-    create() {
+    private create() {
         this.game.time.desiredFps = 60;
         this.game.renderer.renderSession.roundPixels = true;
 
@@ -51,7 +51,7 @@ export class Game{
             
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = 200;
-        this.game.stage.backgroundColor = "#aedecb";
+        this.game.stage.backgroundColor = '#aedecb';
 
         this.game.state.start('Preloader');
     }
@@ -59,7 +59,5 @@ export class Game{
 
 
 window.onload = () => {
-
     var game = new Game();
-
 };

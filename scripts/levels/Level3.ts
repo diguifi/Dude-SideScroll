@@ -1,23 +1,24 @@
-﻿import { Player } from "../elements/player/Player";
-import { SoundManager } from "../managers/SoundManager";
-import { LevelManager } from "./LevelManager";
-import { LevelBase } from "./LevelBase";
-import { Hud } from "../managers/Hud";
+﻿import { Player } from '../elements/player/Player';
+import { SoundManager } from '../managers/SoundManager';
+import { LevelManager } from './LevelManager';
+import { LevelBase } from './LevelBase';
+import { Hud } from '../managers/Hud';
 
 export class Level3 extends Phaser.State {
 
-    music: Phaser.Sound;
-    player: Player;
-    lastPlayer: Player;
-    hud: Hud;
-    levelManager: LevelManager;
-    levelBase: LevelBase;
-    soundManager: SoundManager;
-    shadowTexture: Phaser.BitmapData;
-    lightSprite: Phaser.Image;
+    private player: Player;
+    private lastPlayer: Player;
+    private hud: Hud;
+    private levelManager: LevelManager;
+    private levelBase: LevelBase;
+    private soundManager: SoundManager;
+    private shadowTexture: Phaser.BitmapData;
+    private lightSprite: Phaser.Image;
 
-    init(player: Player, soundManager: SoundManager,
-        previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
+    public init(player: Player,
+        soundManager: SoundManager,
+        previousLevelBase: LevelBase,
+        previousLevelManager: LevelManager) {
         this.lastPlayer = player;
         this.soundManager = soundManager;
         this.levelBase = previousLevelBase;
@@ -27,11 +28,10 @@ export class Level3 extends Phaser.State {
         previousLevelManager = null;
     }
 
-    create() {
+    public create() {
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level4', this.soundManager);
 
         // ---- custom lvl 3 music
-
         if (!this.soundManager.musicMuted) {
             this.soundManager.music.stop();
             this.soundManager.musiclvl3.loop = true;
@@ -40,7 +40,6 @@ export class Level3 extends Phaser.State {
         }
         
         // ---- level genesis (without parallax, so must set each one)
-
         this.levelManager.createMap('tileMap_level3');
         this.game.world.bringToTop(this.levelManager.level.back);
         this.game.world.bringToTop(this.levelManager.level.walls);
@@ -54,7 +53,6 @@ export class Level3 extends Phaser.State {
         this.game.camera.follow(this.player);
 
         // ---- bats
-
         this.levelManager.createBats(this.player);
 
         // shadow setup
@@ -72,7 +70,7 @@ export class Level3 extends Phaser.State {
         this.game.world.bringToTop(this.hud);
     }
 
-    update() {
+    public update() {
         this.updateShadowTexture();
 
         this.levelManager.updatePlayer(this.player);
@@ -85,11 +83,11 @@ export class Level3 extends Phaser.State {
         this.player.updateLightRadius();
     }
 
-    updateShadowTexture() {
+    private updateShadowTexture() {
         this.lightSprite.reset(this.game.camera.x, this.game.camera.y);
 
         this.shadowTexture.clear();
-        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.98)';
+        this.shadowTexture.context.fillStyle = 'rgb(10, 10, 10, 0.87)';
         this.shadowTexture.context.fillRect(-25, -25, this.game.width + 100, this.game.height + 100);
 
         let radius = this.player.lightRadius + this.game.rnd.integerInRange(1, (this.player.lightRadius * 0.13)),
@@ -109,5 +107,4 @@ export class Level3 extends Phaser.State {
 
         this.shadowTexture.dirty = true;
     }
-
 }

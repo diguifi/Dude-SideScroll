@@ -1,19 +1,16 @@
-import { SoundManager } from "../../managers/SoundManager";
+import { SoundManager } from '../../managers/SoundManager';
 
 export class Platform extends Phaser.Sprite {
-    game: Phaser.Game;
-    active: boolean;
-    initialX: number;
-    size: number;
-    soundManager: SoundManager;
-    canPlaySound: boolean;
+    public game: Phaser.Game;
+    public active: boolean;
+    private size: number;
+    private soundManager: SoundManager;
+    private canPlaySound: boolean;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number, soundManager: SoundManager) {
         super(game, x, y, 'platform', 0);
         this.game = game;
 
-        // properties
-        this.initialX = x;
         this.active = false;
 
         // sprite size
@@ -37,7 +34,7 @@ export class Platform extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    update() {
+    public update() {
         if(this.body.touching.none) {
             this.deactivate();
         }

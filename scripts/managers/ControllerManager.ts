@@ -1,6 +1,13 @@
-﻿import { Player } from "../elements/player/Player";
+﻿import { Player } from '../elements/player/Player';
 
 export class ControllerManager {
+
+    private game: Phaser.Game;
+    public buttonjump: Phaser.Button;
+    public buttonfire: Phaser.Button;
+    public buttonright: Phaser.Button;
+    public buttonleft: Phaser.Button;
+
     constructor(player: Player, game: Phaser.Game) {
         this.game = game;
 
@@ -8,13 +15,7 @@ export class ControllerManager {
             this.getVirtualButtonsInput(player);
     }
 
-    game: Phaser.Game;
-    buttonjump: Phaser.Button;
-    buttonfire: Phaser.Button;
-    buttonright: Phaser.Button;
-    buttonleft: Phaser.Button;
-
-    getKeyboardInput(player) {
+    public getKeyboardInput(player: Player) {
         if (this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT))
             player.running = true;
         else
@@ -44,7 +45,7 @@ export class ControllerManager {
                 player.fall();
     }
 
-    getVirtualButtonsInput(player) {
+    public getVirtualButtonsInput(player) {
         this.buttonjump = this.game.add.button(635, 355, 'buttonjump', null, this, 0, 1, 0, 1);
         this.buttonjump.fixedToCamera = true;
         this.buttonjump.events.onInputDown.add(function () { player.pressingUp = true; if (player.body.blocked.down)player.jump(); });
@@ -53,14 +54,14 @@ export class ControllerManager {
 
         this.buttonfire = this.game.add.button(748, 355, 'buttonfire', null, this, 0, 1, 0, 1);
         this.buttonfire.fixedToCamera = true;
-        this.buttonfire.events.onInputDown.add(function () { 
+        this.buttonfire.events.onInputDown.add(() => { 
             player.running = !player.running; 
             if (player.running){ 
                 this.buttonfire.setFrames(1, 0, 1, 0);
             } else {
                 this.buttonfire.setFrames(0, 1, 0, 1)
             } 
-        }.bind(this));
+        });
         this.buttonfire.anchor.setTo(0.5, 0.5);
 
         this.buttonleft = this.game.add.button(0, 310, 'buttonleft', null, this, 0, 1, 0, 1);

@@ -1,10 +1,13 @@
 ﻿export class Enemy extends Phaser.Sprite {
 
+    private size: number;
+    private speed: number;
+    private movingRight: boolean;
+
     constructor(game: Phaser.Game, x: number, y: number, gravity, speed) {
         super(game, x, y, 'enemy1', 0);
 
         // attributes
-        this.localGravity = 200;
         this.speed = speed;
 
         // sprite size
@@ -27,32 +30,24 @@
 
         game.add.existing(this);
     }
-        
-    size: number;
-    speed: number;
-    localGravity: number;
-    movingLeft: boolean;
-    movingRight: boolean;
 
-    update() {
+    public update() {
         this.body.velocity.x = 0;
 
         if (this.movingRight)
             this.moveRight();
-        else if (this.movingLeft)
+        else
             this.moveLeft();
 
         if (this.body.blocked.right) {
             this.movingRight = false;
-            this.movingLeft = true;
         }
         if (this.body.blocked.left) {
             this.movingRight = true;
-            this.movingLeft = false;
         }
     }
 
-    moveRight() {
+    private moveRight() {
         this.body.velocity.x = this.speed;
 
         if (this.scale.x == -this.size) {
@@ -60,7 +55,7 @@
         }
     }
 
-    moveLeft() {
+    private moveLeft() {
         this.body.velocity.x = -this.speed;
 
         if (this.scale.x == this.size) {

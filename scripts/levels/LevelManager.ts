@@ -1,14 +1,14 @@
-﻿import { SoundManager } from "../managers/SoundManager";
-import { LevelBase } from "./LevelBase";
-import { Player } from "../elements/player/Player";
-import { Enemy } from "../elements/enemies/Enemy";
-import { Bat } from "../elements/enemies/Bat";
-import { Shield } from "../elements/items/Shield";
-import { Platform } from "../elements/objects/Platform";
-import { Lever } from "../elements/objects/Lever";
-import { Gate } from "../elements/objects/Gate";
-import { Light } from "../elements/items/Light";
-import { HangGlider } from "../elements/items/HangGlider";
+﻿import { SoundManager } from '../managers/SoundManager';
+import { LevelBase } from './LevelBase';
+import { Player } from '../elements/player/Player';
+import { Enemy } from '../elements/enemies/Enemy';
+import { Bat } from '../elements/enemies/Bat';
+import { Shield } from '../elements/items/Shield';
+import { Platform } from '../elements/objects/Platform';
+import { Lever } from '../elements/objects/Lever';
+import { Gate } from '../elements/objects/Gate';
+import { Light } from '../elements/items/Light';
+import { HangGlider } from '../elements/items/HangGlider';
 
 export class LevelManager {
     public level: LevelBase;
@@ -97,81 +97,81 @@ export class LevelManager {
     }
 
     public createGreenEnemies() {
-        this.level.map.objects.enemies.forEach(function (data) {
+        this.level.map.objects.enemies.forEach((data: any) => {
             this.level.enemies.push(new Enemy(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y, this.level.enemySpeed));
-        }.bind(this));
+        });
     }
 
     public createItems() {
-        this.level.map.objects.items.forEach(function (data) {
+        this.level.map.objects.items.forEach((data: any) => {
             if(data.name == 'shield') {
                 this.level.items.push(new Shield(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
             }
             if(data.name == 'hangglider') {
                 this.level.items.push(new HangGlider(this.game, data.x * 2, data.y * 1.5, this.game.physics.arcade.gravity.y));
             }
-        }.bind(this));
+        });
     }
 
     public createLights() {
-        this.level.map.objects.items.forEach(function (data) {
+        this.level.map.objects.items.forEach((data: any) => {
             if(data.name == 'light') {
                 this.level.items.push(new Light(this.game, data.x * 2, data.y * 1.7, this.game.physics.arcade.gravity.y));
             }
-        }.bind(this));
+        });
     }
 
     public createBats(player: Player) {
         this.playerRef = player;
-        this.level.map.objects.bats.forEach(function (data) {
+        this.level.map.objects.bats.forEach((data: any) => {
             this.level.bats.push(new Bat(this.game, data.x * 2, data.y * 1.5, this.game.physics.arcade.gravity.y, 125, this.playerRef));
-        }.bind(this));
+        });
     }
 
     public createGems() {
         this.level.gems = this.game.add.physicsGroup();
         this.level.map.createFromObjects('gems', 'gem1', 'greygem', 0, true, false, this.level.gems);
 
-        this.level.gems.forEach(function (gem) {
+        this.level.gems.forEach((gem: any) => {
             gem = this.gemSetup(gem);
-        }.bind(this));
+        });
     }
 
     public createRedGems() {
         this.level.redGems = this.game.add.physicsGroup();
         this.level.map.createFromObjects('redgems', 'redgem', 'redgem', 0, true, false, this.level.redGems);
 
-        this.level.redGems.forEach(function (gem) {
+        this.level.redGems.forEach((gem: any) => {
             gem = this.gemSetup(gem);
-        }.bind(this));
+        });
     }
 
     public createMisc() {
         this.level.misc = this.game.add.physicsGroup();
         this.level.map.createFromObjects('misc', 'lumpofgrass', 'lumpofgrass', 0, true, false, this.level.misc);
 
-        this.level.misc.forEach(function (misc) {
+        this.level.misc.forEach((misc: any) => {
             if(misc.name == 'lumpofgrass') {
                 misc = this.miscSetup(misc);
             }
-        }.bind(this));
+        });
 
-        this.level.map.objects.misc.forEach(function (data) {
+        this.level.map.objects.misc.forEach((data: any) => {
             if(data.name == 'platform') {
                 this.level.platforms.push(new Platform(this.game, data.x * 2, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
             if(data.name == 'lever') {
                 this.level.levers.push(new Lever(this.game, data.x * 2.01, data.y * 1.9, this.game.physics.arcade.gravity.y, this.soundManager));
             }
-        }.bind(this));
+        });
 
         var totalActivables = this.level.levers.length + this.level.platforms.length;
 
-        this.level.map.objects.misc.forEach(function (data) {
+        this.level.map.objects.misc.forEach((data: any) => {
             if(data.name == 'gate') {
                 this.level.gate = new Gate(this.game, data.x * 2, data.y * 1.45, totalActivables, this.game.physics.arcade.gravity.y, this.soundManager);
             }
-        }.bind(this));
+        });
     }
 
     public updatePlayer(player: Player) {
@@ -249,14 +249,14 @@ export class LevelManager {
         if (activables && this.level.gate)
             this.updateGateInteraction(player);
 
-        this.level.misc.forEach(function (misc) {
+        this.level.misc.forEach((misc: any) => {
             if (misc.body.touching.none) {
                 if (!misc.inCamera) {
                     misc.x = misc.spawnX;
                     misc.y = misc.spawnY;
                 }
             }
-        }.bind(this));
+        });
     }
 
     public updateBatsInteraction(player: Player) {
@@ -274,7 +274,7 @@ export class LevelManager {
         this.game.physics.arcade.overlap(player, this.level.redGems, this.redGemsCollect.bind(this), null, this);
     }
 
-    private enemyOverlap(player: Player, enemy) {
+    private enemyOverlap(player: Player, enemy: any) {
         if (player.body.touching.down) {
             if ((player.position.y) < (enemy.position.y - (enemy.height - 5))) {
                 this.soundManager.enemydamage.play();
@@ -299,7 +299,7 @@ export class LevelManager {
         }
     }
 
-    private enemyGateCollide(gate: Gate, enemy: Enemy) {
+    private enemyGateCollide(gate: Gate, enemy: any) {
         if (enemy.movingRight) {
             enemy.movingRight = false;
             enemy.movingLeft = true;
@@ -310,12 +310,12 @@ export class LevelManager {
         }
     }
 
-    private miscOverlap(player: Player, misc) {
+    private miscOverlap(player: Player, misc: any) {
         if ((player.position.y) < (misc.position.y - (misc.height - 28)))
             player.body.blocked.down = true;
     }
 
-    private platformOverlap(misc, platform: Platform) {
+    private platformOverlap(misc: any, platform: Platform) {
         misc.body.touching.none = false;
         platform.body.touching.none = false;
     }
@@ -325,12 +325,12 @@ export class LevelManager {
         lever.toggle();
     }
 
-    private getItem(player: Player, item) {
+    private getItem(player: Player, item: any) {
         if(item.name == 'shield') {
             player.hasShield = true;
         }
         if(item.name == 'light') {
-            player.lightRadius = player.defaultLightRadius;
+            player.lightRadius = player.defaultMaxLightRadius;
         }
         if(item.name == 'hangglider') {
             player.hangGliderReference = item;
@@ -342,7 +342,7 @@ export class LevelManager {
         }
     }
 
-    private gemSetup(gem) {
+    private gemSetup(gem: any) {
         gem.x = gem.x * 2;
         gem.y = gem.y * 1.7;
         gem.scale.setTo(1.8, 2);
@@ -354,7 +354,7 @@ export class LevelManager {
         return gem;
     }
 
-    private miscSetup(misc) {
+    private miscSetup(misc: any) {
         if(misc.name == 'lumpofgrass') {
             misc.x = misc.x * 2;
             misc.y = misc.y * 1.7;
@@ -371,19 +371,19 @@ export class LevelManager {
         return misc;
     }
 
-    private gemsCollect(player, gem) {
+    private gemsCollect(player: Player, gem: any) {
         this.soundManager.gemcatch.play();
         player.gems++;
         gem.destroy();
     }
 
-    private redGemsCollect(player, gem) {
+    private redGemsCollect(player: Player, gem: any) {
         this.soundManager.gemcatch.play();
         player.redGems++;
         gem.destroy();
     }
 
-    private goNextLevel(player) {
+    private goNextLevel(player: Player) {
         this.level.enemies.forEach(function (enemy) {
             enemy.destroy();
         });

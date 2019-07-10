@@ -1,15 +1,15 @@
-import { SoundManager } from "../../managers/SoundManager";
+import { SoundManager } from '../../managers/SoundManager';
 
 export class Gate extends Phaser.Sprite {
-    game: Phaser.Game;
-    open: boolean;
-    lastStatus: boolean;
-    activationFee: number;
-    activated: number;
-    activationsLeft: number;
-    size: number;
-    soundManager: SoundManager;
-    activationFeeText: Phaser.BitmapText;
+    public game: Phaser.Game;
+    public open: boolean;
+    public activated: number;
+    public activationFee: number;
+    private lastStatus: boolean;
+    private activationsLeft: number;
+    private size: number;
+    private soundManager: SoundManager;
+    private activationFeeText: Phaser.BitmapText;
 
     constructor(game: Phaser.Game, x: number, y: number, activationFee: number, gravity: number, soundManager: SoundManager) {
         super(game, x, y, 'gate', 0);
@@ -47,7 +47,7 @@ export class Gate extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    update() {
+    public update() {
         this.activationsLeft = this.activationFee - this.activated;
         this.activationFeeText.setText(this.activationsLeft.toString());
 
