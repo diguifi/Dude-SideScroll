@@ -1,29 +1,31 @@
-import { SoundManager } from "../managers/SoundManager";
-import { LevelManager } from "../levels/LevelManager";
-import { LevelBase } from "../levels/LevelBase";
-import { Player } from "../elements/player/Player";
+import { SoundManager } from '../managers/SoundManager';
+import { LevelManager } from '../levels/LevelManager';
+import { LevelBase } from '../levels/LevelBase';
+import { Player } from '../elements/player/Player';
 
 export class CutsceneDemoFinal extends Phaser.State {
 
-    lastPlayer: Player;
-    soundManager: SoundManager;
-    levelManager: LevelManager;
-    levelBase: LevelBase;
-    gemSprite: Phaser.Sprite;
-    redGemSprite: Phaser.Sprite;
-    demoMessage: Phaser.BitmapText;
-    gemsAmount: Phaser.BitmapText;
-    redGemsAmount: Phaser.BitmapText;
-    redGemsHint: Phaser.BitmapText;
-    redGemsHintText: string = '';
-    maxRedGems: number = 4;
-    maxGems: number = 55;
-    rateMessage: Phaser.BitmapText;
-    starButtons: Phaser.Button[] = [];
-    voted: boolean = false;
+    private lastPlayer: Player;
+    private soundManager: SoundManager;
+    private levelManager: LevelManager;
+    private levelBase: LevelBase;
+    private gemSprite: Phaser.Sprite;
+    private redGemSprite: Phaser.Sprite;
+    private demoMessage: Phaser.BitmapText;
+    private gemsAmount: Phaser.BitmapText;
+    private redGemsAmount: Phaser.BitmapText;
+    private redGemsHint: Phaser.BitmapText;
+    private redGemsHintText: string = '';
+    private maxRedGems: number = 4;
+    private maxGems: number = 55;
+    private rateMessage: Phaser.BitmapText;
+    private starButtons: Phaser.Button[] = [];
+    private voted: boolean = false;
 
-    init(player: Player, soundManager: SoundManager,
-        previousLevelBase: LevelBase, previousLevelManager: LevelManager) {
+    public init(player: Player,
+        soundManager: SoundManager,
+        previousLevelBase: LevelBase,
+        previousLevelManager: LevelManager) {
         this.lastPlayer = player;
         this.soundManager = soundManager;
         this.levelBase = previousLevelBase;
@@ -33,7 +35,7 @@ export class CutsceneDemoFinal extends Phaser.State {
         previousLevelManager = null;
     }
 
-    create() {
+    public create() {
         this.soundManager.music.stop();
         this.soundManager.musicdemofinal.loop = true;
         this.soundManager.musicdemofinal.play();
@@ -87,7 +89,7 @@ export class CutsceneDemoFinal extends Phaser.State {
         this.game.time.events.add(Phaser.Timer.SECOND * 5, this.showMisteriousMessage, this);
     }
 
-    hoverStar(starIndex: number): Function {
+    private hoverStar(starIndex: number): Function {
         return function mouseOver() {
             this.starButtons.forEach((button, index) => {
                 if (index <= starIndex)
@@ -96,7 +98,7 @@ export class CutsceneDemoFinal extends Phaser.State {
         }
     }
 
-    notHoveringStars() {
+    private notHoveringStars() {
         if (!this.voted) {
             this.starButtons.forEach((button, index) => {
                 button.frame = 0;
@@ -104,7 +106,7 @@ export class CutsceneDemoFinal extends Phaser.State {
         }
     }
 
-    actionOnClick(index: number): Function {
+    private actionOnClick(index: number): Function {
         return function castVote() {
             if (!this.voted) {
                 this.voted = true;
@@ -127,28 +129,27 @@ export class CutsceneDemoFinal extends Phaser.State {
                         notas.push(index);
 
                         xhttpPut.open('PUT', 'https://www.jsonstore.io/16824c0f7a1696d7acfabe21392bd07d8afcc0ba76cb366ab189dfa94186dc08', true);
-                        xhttpPut.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                        xhttpPut.send(JSON.stringify({ "notas": notas }));
+                        xhttpPut.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                        xhttpPut.send(JSON.stringify({ 'notas': notas }));
                     }
                 };
-
                 xhttpGet.open('GET', 'https://www.jsonstore.io/16824c0f7a1696d7acfabe21392bd07d8afcc0ba76cb366ab189dfa94186dc08', true);
                 xhttpGet.send();
             }
         };
     }
 
-    showMisteriousMessage() {
+    private showMisteriousMessage() {
         this.game.time.events.removeAll();
-        this.add.tween(this.redGemsHint).to({ alpha: 1 }, 1000, "Linear", true);
+        this.add.tween(this.redGemsHint).to({ alpha: 1 }, 1000, 'Linear', true);
     }
 
-    fadeOut() {
+    private fadeOut() {
         this.game.camera.fade(0x00000, 500);
         this.game.camera.onFadeComplete.add(this.startGame,this);
     }
 
-    startGame() {
+    private startGame() {
         this.soundManager.music.stop();
         this.soundManager.musicdemofinal.stop();
         this.soundManager = null;
@@ -156,5 +157,4 @@ export class CutsceneDemoFinal extends Phaser.State {
         this.game.camera.onFadeComplete.removeAll();
         this.game.state.start('MainMenu', true, false);
     }
-
 }

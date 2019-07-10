@@ -1,7 +1,8 @@
 export class Shield extends Phaser.Sprite {
-    game: Phaser.Game;
-    size: number;
-    name: string = 'shield';
+    public game: Phaser.Game;
+    public name: string = 'shield';
+    public respawns: boolean = false;
+    private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {
         super(game, x, y, 'shield', 0);
@@ -28,9 +29,5 @@ export class Shield extends Phaser.Sprite {
         this.body.gravity.y = gravity;
 
         game.add.existing(this);
-    }
-
-    update() {
-        
     }
 }

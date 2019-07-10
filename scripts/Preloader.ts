@@ -1,11 +1,6 @@
-﻿
+﻿export class Preloader extends Phaser.State {
 
-export class Preloader extends Phaser.State {
-
-    preloadBar: Phaser.Sprite;
-    ready: boolean = false;
-
-    preload() {
+    public preload() {
         this.game.load.spritesheet('dude', 'assets/sprites/dude_spritesheet.png?v=1', 16, 25, 9);
         this.game.load.spritesheet('enemy1', 'assets/sprites/enemy.png?v=1', 21, 22, 5);
         this.game.load.spritesheet('bat', 'assets/sprites/bat_spritesheet.png?v=1', 16, 16, 10);
@@ -68,7 +63,7 @@ export class Preloader extends Phaser.State {
         this.game.load.audio('bgdemofinal', 'assets/sounds/music/bg-demofinal.mp3');
     }
 
-    create() {
+    public create() {
         this.game.state.start('MainMenu');
     }
 }

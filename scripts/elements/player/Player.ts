@@ -1,8 +1,48 @@
-﻿import { SoundManager } from "../../managers/SoundManager";
-import { ControllerManager } from "../../managers/ControllerManager";
-import { HangGlider } from "../items/HangGlider";
+﻿import { SoundManager } from '../../managers/SoundManager';
+import { ControllerManager } from '../../managers/ControllerManager';
+import { HangGlider } from '../items/HangGlider';
 
 export class Player extends Phaser.Sprite {
+
+    public hasShield: boolean;
+    public hasHangGlider: boolean;
+    public shieldMaxTime: number;
+    public hangGliderMaxTime: number;
+    public shieldTimer: Phaser.BitmapText;
+    public hangGliderTimer: Phaser.BitmapText;
+    public shieldSeconds: number;
+    public hangGliderSeconds: number;
+    public lastShieldSeconds: number;
+    public lastHangGliderSeconds: number;
+    public shieldSprite: Phaser.Sprite;
+    public hangGliderSprite: Phaser.Sprite;
+    public hangGliderReference: HangGlider;
+    public hangGliderGravityFactor: number;
+    public lightRadius: number;
+    public defaultMaxLightRadius: number;
+    public defaultMinLightRadius: number;
+    public spawnX: number;
+    public spawnY: number;
+    public animSpeeds: number[];
+    public controller: ControllerManager;
+    public soundManager: SoundManager;
+    public lives: number;
+    public dead: boolean;
+    public fadeComplete: boolean;
+    public gems: number;
+    public redGems: number;
+    public size: number;
+    public speed: number;
+    public speedBonus: number;
+    public jumpStrength: number;
+    public jumpBonus: number;
+    public jumping: boolean;
+    public pressingUp: boolean;
+    public running: boolean;
+    public localGravity: number;
+    public movingLeft: boolean;
+    public movingRight: boolean;
+    public playingOnDesktop: boolean;
 
     constructor(game: Phaser.Game, x: number, y: number, speed: number,
         gravity: number, gems: number, redGems:number, lives: number, soundManager: SoundManager) {
@@ -25,8 +65,9 @@ export class Player extends Phaser.Sprite {
         this.pressingUp = false;
         this.dead = false;
         this.fadeComplete = false;
-        this.defaultLightRadius = 250;
-        this.lightRadius = this.defaultLightRadius;
+        this.defaultMaxLightRadius = 250;
+        this.defaultMinLightRadius = 120;
+        this.lightRadius = this.defaultMaxLightRadius;
 
         // shield attributes
         this.shieldMaxTime = 10;
@@ -66,7 +107,6 @@ export class Player extends Phaser.Sprite {
         this.body.setSize(16, 21, 0, 0);
         this.body.collideWorldBounds = false;
         this.body.gravity.y = gravity;
-        this.body.bounce.y = 0.2;
 
         // controls
         this.controller = new ControllerManager(this, this.game);
@@ -77,46 +117,7 @@ export class Player extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    hasShield: boolean;
-    hasHangGlider: boolean;
-    shieldMaxTime: number;
-    hangGliderMaxTime: number;
-    shieldTimer: Phaser.BitmapText;
-    hangGliderTimer: Phaser.BitmapText;
-    shieldSeconds: number;
-    hangGliderSeconds: number;
-    lastShieldSeconds: number;
-    lastHangGliderSeconds: number;
-    shieldSprite: Phaser.Sprite;
-    hangGliderSprite: Phaser.Sprite;
-    hangGliderReference: HangGlider;
-    hangGliderGravityFactor: number;
-    lightRadius: number;
-    defaultLightRadius: number;
-    spawnX: number;
-    spawnY: number;
-    animSpeeds;
-    controller: ControllerManager;
-    soundManager: SoundManager;
-    lives: number;
-    dead: boolean;
-    fadeComplete: boolean;
-    gems: number;
-    redGems: number;
-    size: number;
-    speed: number;
-    speedBonus: number;
-    jumpStrength: number;
-    jumpBonus: number;
-    jumping: boolean;
-    pressingUp: boolean;
-    running: boolean;
-    localGravity: number;
-    movingLeft: boolean;
-    movingRight: boolean;
-    playingOnDesktop: boolean;
-
-    update() {
+    public update() {
         this.body.velocity.x = 0;
         if (!this.dead) {
             if (this.movingRight) {
@@ -167,7 +168,7 @@ export class Player extends Phaser.Sprite {
     }
 
     public updateLightRadius() {
-        if (this.lightRadius > 60)
+        if (this.lightRadius > this.defaultMinLightRadius)
             this.lightRadius -= 0.2;
     }
 
@@ -185,11 +186,15 @@ export class Player extends Phaser.Sprite {
             }
         }
         if (this.hasHangGlider) {
-            if (this.body.velocity.y < 0) {
+            let isGoingUp = this.body.velocity.y < 0;
+
+            if (isGoingUp) {
                 this.body.gravity.y = this.localGravity;
             }
             else {
-                this.animations.frame = 8;
+                if (!this.body.blocked.down) {
+                    this.animations.frame = 8;
+                }
                 this.body.gravity.y = -this.localGravity/this.hangGliderGravityFactor;
             }
         }
@@ -283,17 +288,18 @@ export class Player extends Phaser.Sprite {
         this.position.x = this.spawnX;
         this.position.y = this.spawnY;
         this.dead = false;
-        this.lightRadius = this.defaultLightRadius;
+        this.lightRadius = this.defaultMaxLightRadius;
 
         if (this.lives < 0){
             this.soundManager.music.stop();
+            this.soundManager.musiclvl3.stop();
             this.soundManager = null;
             this.game.state.start('MainMenu');
         }
         this.fadeComplete = false;
     }
 
-    moveRight() {
+    public moveRight() {
         if (this.position.x < this.game.world.bounds.bottomRight.x) {
             if (this.running) {
                 if (!this.hasHangGlider) {
@@ -331,7 +337,7 @@ export class Player extends Phaser.Sprite {
             
     }
 
-    moveLeft() {
+    public moveLeft() {
         if (this.position.x > 4) {
             if (this.running) {
                 if (!this.hasHangGlider) {
@@ -368,7 +374,7 @@ export class Player extends Phaser.Sprite {
         }
     }
 
-    jump() {
+    public jump() {
         if (!this.jumping) {
             if (this.running)
                 if (this.body.velocity.x != 0)
@@ -395,7 +401,7 @@ export class Player extends Phaser.Sprite {
         }
     }
 
-    fall() {
+    public fall() {
         if (this.jumping) {
             if (this.body.velocity.y < 0) {
                 if (this.hasHangGlider) {

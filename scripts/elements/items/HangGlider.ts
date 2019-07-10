@@ -1,8 +1,9 @@
 export class HangGlider extends Phaser.Sprite {
-    game: Phaser.Game;
-    size: number;
-    caught: boolean = false;
-    name: string = 'hangglider';
+    public game: Phaser.Game;
+    public caught: boolean = false;
+    public name: string = 'hangglider';
+    public respawns: boolean = true;
+    private size: number;
 
     constructor(game: Phaser.Game, x: number, y: number, gravity: number) {
         super(game, x, y, 'hangglider', 0);
@@ -24,7 +25,7 @@ export class HangGlider extends Phaser.Sprite {
         game.add.existing(this);
     }
 
-    update() {
+    public update() {
         if (this.caught) {
             this.body.enable = false;
             this.visible = false;

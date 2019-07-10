@@ -1,23 +1,25 @@
-﻿import { Player } from "../elements/player/Player";
-import { SoundManager } from "../managers/SoundManager";
-import { LevelManager } from "./LevelManager";
-import { LevelBase } from "./LevelBase";
-import { Hud } from "../managers/Hud";
+﻿import { Player } from '../elements/player/Player';
+import { SoundManager } from '../managers/SoundManager';
+import { LevelManager } from './LevelManager';
+import { LevelBase } from './LevelBase';
+import { Hud } from '../managers/Hud';
 
 export class Level1 extends Phaser.State {
 
-    player: Player;
-    hud: Hud;
-    arrowKeysSprite: Phaser.Sprite;
-    shiftSprite: Phaser.Sprite;
-    glowSpriteB: Phaser.Sprite;
-    glowSpriteA: Phaser.Sprite;
-    levelManager: LevelManager;
-    levelBase: LevelBase;
-    soundManager: SoundManager;
+    private player: Player;
+    private hud: Hud;
+    private arrowKeysSprite: Phaser.Sprite;
+    private shiftSprite: Phaser.Sprite;
+    private glowSpriteB: Phaser.Sprite;
+    private glowSpriteA: Phaser.Sprite;
+    private levelManager: LevelManager;
+    private levelBase: LevelBase;
+    private soundManager: SoundManager;
 
-    init(soundManager: SoundManager,
-        previousLevelBase: LevelBase, previousLevelManager: LevelManager, cutscene1) {
+    public init(soundManager: SoundManager,
+        previousLevelBase: LevelBase,
+        previousLevelManager: LevelManager,
+        cutscene1: any) {
         this.soundManager = soundManager;
         this.levelBase = previousLevelBase;
 
@@ -26,7 +28,7 @@ export class Level1 extends Phaser.State {
         cutscene1 = null;
     }
 
-    create() {
+    public create() {
         this.soundManager.music.volume = this.soundManager.inGameVolume;
 
         this.levelManager = new LevelManager(this.game, this.levelBase, 'Level2', this.soundManager);
@@ -73,7 +75,7 @@ export class Level1 extends Phaser.State {
         this.game.world.bringToTop(this.hud);
     }
 
-    update() {
+    public update() {
         if (this.game.device.desktop)
             this.showDesktopButtons();
         else
@@ -82,7 +84,7 @@ export class Level1 extends Phaser.State {
         this.levelManager.updateBasicLevelStuff(this.player);
     }
 
-    showDesktopButtons() {
+    private showDesktopButtons() {
         if (this.checkProximityFirstTutorial())
             this.game.add.tween(this.arrowKeysSprite).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
         else
@@ -94,7 +96,7 @@ export class Level1 extends Phaser.State {
             this.game.add.tween(this.shiftSprite).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
     }
 
-    showMobileButtons() {
+    private showMobileButtons() {
         if (this.checkProximityFirstTutorial()) {
             this.game.add.tween(this.player.controller.buttonjump.scale).to({ x: 1.2, y: 1.2 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
             this.game.add.tween(this.glowSpriteB).to({ alpha: 1 }, 300, Phaser.Easing.Linear.None, true, 0, 0, true);
@@ -118,11 +120,11 @@ export class Level1 extends Phaser.State {
         } 
     }
 
-    checkProximityFirstTutorial(){
+    private checkProximityFirstTutorial(){
         return (this.player.x > this.arrowKeysSprite.x - 120 && this.player.x < this.arrowKeysSprite.x + 100);
     }
 
-    checkProximitySecondTutorial(){
+    private checkProximitySecondTutorial(){
         return (this.player.x > this.shiftSprite.x - 100 && this.player.x < this.shiftSprite.x + 170);
     }
 }
