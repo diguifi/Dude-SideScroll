@@ -2,6 +2,7 @@
     private game: Phaser.Game;
     public loaded: boolean = false;
     public gemcatch: Phaser.Sound;
+    public redgemcatch: Phaser.Sound;
     public damage: Phaser.Sound;
     public enemydamage: Phaser.Sound;
     public fall: Phaser.Sound;
@@ -21,6 +22,7 @@
         this.game = game;
 
         this.gemcatch = this.game.add.audio('coincatch');
+        this.redgemcatch = this.game.add.audio('redcoincatch');
         this.damage = this.game.add.audio('damage');
         this.enemydamage = this.game.add.audio('enemydamage');
         this.fall = this.game.add.audio('fall');
@@ -34,8 +36,8 @@
         this.musiclvl3 = this.game.add.audio('bgmusiclvl3');
         this.musicdemofinal = this.game.add.audio('bgdemofinal');
 
-        this.game.sound.setDecodedCallback([this.gemcatch, this.damage,
-            this.enemydamage, this.fall,
+        this.game.sound.setDecodedCallback([this.gemcatch, this.redgemcatch,
+            this.damage, this.enemydamage, this.fall,
             this.jump, this.music], this.loadComplete, this);
     }
 

@@ -378,7 +378,7 @@ export class LevelManager {
     }
 
     private redGemsCollect(player: Player, gem: any) {
-        this.soundManager.gemcatch.play();
+        this.soundManager.redgemcatch.play();
         player.redGems++;
         gem.destroy();
     }

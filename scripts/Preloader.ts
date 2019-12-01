@@ -49,6 +49,7 @@
         this.game.load.spritesheet('buttonstar', 'assets/buttons/starbutton.png', 16, 16);
 
         this.game.load.audio('coincatch', 'assets/sounds/sfx/coin-catch.mp3');
+        this.game.load.audio('redcoincatch', 'assets/sounds/sfx/red-coin-catch.mp3');
         this.game.load.audio('damage', 'assets/sounds/sfx/damage.mp3');
         this.game.load.audio('enemydamage', 'assets/sounds/sfx/enemy-damage.mp3');
         this.game.load.audio('fall', 'assets/sounds/sfx/fall.mp3');
